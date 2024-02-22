@@ -1,0 +1,17 @@
+input[type="text"]{
+    width: 80%;
+    // border-radius: 2rem;
+    background-color: #031926;
+    border: none;
+    border-bottom: 5px solid #fff;
+    margin-bottom: 5rem;
+    padding: 2rem;
+    color: #fff;
+    text-align: center;
+
+    &::placeholder{
+        color: #fff;
+
+    }
+
+}

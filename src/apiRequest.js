@@ -8,10 +8,9 @@ const apiKey =
   "xxxd2949a554bfb15d5e80dbd8a3c0f7e59832df65460dcdd7979a94a4d7443f424abd2a60ff927fc1ec19fca7b842fd2d7d8";
 
 export const getPodcastData = async () => {
-  const dataFromDisk = localStorage.getItem("getPodcastData");
-  console.log(JSON.parse(dataFromDisk))
+  const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
   if (dataFromDisk) {
-    store.dispatch(storeApiData(JSON.parse(dataFromDisk)));
+    store.dispatch(storeApiData(dataFromDisk));
     return;
   }
 
@@ -20,13 +19,19 @@ export const getPodcastData = async () => {
       endPoint,
       {
         query: `{
-            searchForTerm(term:"This American Life", filterForTypes:PODCASTSERIES){
+            searchForTerm(term:"This American Life", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true ){
               searchId
               podcastSeries{
                 uuid
                 name
                 description
                 imageUrl
+                episodes{
+                    uuid
+                    name
+                    description
+                    audioUrl
+                  }
               }
             }
           }`,

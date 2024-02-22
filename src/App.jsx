@@ -1,5 +1,5 @@
 import React from "react";
-import "./generic.css";
+import "./Components/CSS/generic.css"
 import Search from "./Components/Search";
 import PodcastResults from "./Components/PodcastResults";
 import { getPodcastData } from "./apiRequest";
@@ -9,7 +9,6 @@ const App = () => {
   return (
     <>
       <Search />
-      <PodcastResults/>
     </>
   );
 };
