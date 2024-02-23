@@ -6,7 +6,7 @@ import LibraryPodcast from "./LibraryPodcast";
 const LibraryResults = () => {
   const library = useSelector(selectLibrary);
   return library.map((podcast) => {
-    return <LibraryPodcast podcast={podcast} />;
+    return <LibraryPodcast podcast={podcast}  key={podcast.uuid}/>;
   });
 };
 

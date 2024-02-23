@@ -6,11 +6,13 @@ import Podcast from "./Podcast";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
-  return podcastSeries.map((podcast) => {
-    return (
-    <Podcast podcast={podcast} key={podcast.uuid} />
-    );
-  });
+  return !podcastSeries ? (
+    <Spinner />
+  ) : (
+    podcastSeries.map((podcast) => {
+      return <Podcast podcast={podcast} key={podcast.uuid} />;
+    })
+  );
 };
 
 export default PodcastResults;

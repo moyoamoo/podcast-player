@@ -14,7 +14,6 @@ const App = () => {
       <Routes>
         <Route path="search" element={<Search />} />
         <Route path="library" element={<Library />} />
-        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );

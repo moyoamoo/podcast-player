@@ -1,6 +1,6 @@
 import React from "react";
 import defaultImage from "./CSS/assets/podcast-icon.jpg";
-import "./CSS/libraryPodcasts.scss"
+import "./CSS/libraryPodcasts.scss";
 
 const LibraryPodcast = ({ podcast }) => {
   return (
@@ -13,10 +13,8 @@ const LibraryPodcast = ({ podcast }) => {
           e.onError = null;
         }}
       />
-<div class="podcastName">
-  
-        <h2>{podcast.name}</h2>
-</div>
+
+      <h2>{podcast.name}</h2>
     </div>
   );
 };
