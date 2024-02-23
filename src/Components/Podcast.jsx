@@ -6,7 +6,6 @@ import defaultImage from "./CSS/assets/podcast-icon.jpg";
 import { FaPlus } from "react-icons/fa6";
 
 const Podcast = ({ podcast }) => {
-   
   return (
     <>
       <div className="podcastContainer">
@@ -18,17 +17,15 @@ const Podcast = ({ podcast }) => {
             e.onerror = null;
           }}
         />
-        <div className="podcastText">
-         <div className="podcastHeading">
-            
-              <h2>{podcast.name}</h2>
-              <button onClick={()=>{
-                store.dispatch(addToLibrary(podcast))
-              }}>
-                Subscribe <FaPlus />
-              </button>
-         </div>
-          <p>{podcast.description}</p>
+        <div className="podcastHeading">
+          <h2>{podcast.name}</h2>
+          <button
+            onClick={() => {
+              store.dispatch(addToLibrary(podcast));
+            }}
+          >
+            Subscribe <FaPlus />
+          </button>
         </div>
       </div>
     </>
