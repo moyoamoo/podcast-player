@@ -43,6 +43,7 @@ export const getPodcastData = async () => {
         },
       }
     );
+    
     console.log(data);
     store.dispatch(storeApiData(data.data));
     localStorage.setItem("getPodcastData", JSON.stringify(data.data));

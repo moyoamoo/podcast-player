@@ -5,9 +5,10 @@ import { getLibrary } from "../redux/librarySlice";
 
 const Library  = () => {
     const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-    console.log(userLibrary)
     store.dispatch(getLibrary(userLibrary))
+
     return ( <><h1>My Library</h1>
+    <input type='text' placeholder='Search Library'/>
     <LibraryResults/></>);
 }
  

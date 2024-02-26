@@ -1,5 +1,6 @@
 h1 {
   color: #fff;
+  font-size: 3.2rem;
 }
 
 .libraryPodcastContainer {
@@ -24,5 +25,28 @@ h1 {
 
   img {
     width: 100%;
+    border-top-left-radius: 0.7rem;
+    border-top-right-radius: 0.7rem;
+  }
+}
+
+.deleteBtn {
+  background: #bc2c1a;
+  border: none;
+  border-radius: 10rem;
+  width: 25px;
+  height: 25px;
+  margin-bottom: -20px;
+  z-index: 1;
+
+  &:hover {
+    background-color: #fff;
+  }
+  svg {
+    color: #fff;
+
+    &:hover {
+      color: #bc2c1a;
+    }
   }
 }

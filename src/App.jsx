@@ -7,6 +7,7 @@ import Header from "./Components/Header";
 import { Route, Routes } from "react-router-dom";
 import Episodes from "./Components/Episodes";
 import LibraryPodcast from "./Components/LibraryPodcast";
+import Footer from "./Components/Footer";
 
 const App = () => {
   getPodcastData();
@@ -18,8 +19,10 @@ const App = () => {
         <Route path="library" element={<Library />} />
         <Route path="episodes" element={<Episodes/>}/>        
         <Route path="library/podcasts" element={<LibraryPodcast/>}/>
+  
 
       </Routes>
+      <Footer/>
     </>
   );
 };

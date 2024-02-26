@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import podcastSlice from "./podcastSlice";
 
 const initialState = {
   value: 0,
   status: "idle",
-
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
@@ -25,13 +25,23 @@ export const librarySlice = createSlice({
       }
     },
 
+    deletefromLibrary: (state, { payload }) => {
+      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
+      const indexOf = userLibrary.findIndex((podcast) => {
+        podcast.uuid === payload;
+      });
+      userLibrary.splice(indexOf, 1);
+      localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
+    },
+
     getLibrary: (state, { payload }) => {
-        state.userLibrary = payload
+      state.userLibrary = payload;
     },
   },
 });
 
-export const { addToLibrary, getLibrary } = librarySlice.actions;
+export const { addToLibrary, getLibrary, deletefromLibrary } =
+  librarySlice.actions;
 
 export const selectLibrary = (state) => state.library.userLibrary;
 export default librarySlice.reducer;
