@@ -4,6 +4,7 @@ import podcastSlice from "./podcastSlice";
 const initialState = {
   value: 0,
   status: "idle",
+//   userLibrary: {},
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
@@ -32,16 +33,22 @@ export const librarySlice = createSlice({
       });
       userLibrary.splice(indexOf, 1);
       localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
+      state.userLibrary.splice(indexOf, 1);
     },
 
     getLibrary: (state, { payload }) => {
       state.userLibrary = payload;
     },
+
+    searchLibraryPodcast: (state, { payload }) => {
+      state.searchTerm = payload;
+    },
   },
 });
 
-export const { addToLibrary, getLibrary, deletefromLibrary } =
+export const { addToLibrary, getLibrary, deletefromLibrary, searchLibraryPodcast} =
   librarySlice.actions;
 
 export const selectLibrary = (state) => state.library.userLibrary;
+export const selectSearchTerm = (state) => state.library.searchTerm;
 export default librarySlice.reducer;

@@ -17,7 +17,7 @@ const App = () => {
       <Routes>
         <Route path="search" element={<Search />} />
         <Route path="library" element={<Library />} />
-        <Route path="episodes" element={<Episodes/>}/>        
+        <Route path="/episodes/:id" element={<Episodes/>}/>        
         <Route path="library/podcasts" element={<LibraryPodcast/>}/>
   
 

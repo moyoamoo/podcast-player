@@ -9,7 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 
 const LibraryPodcast = ({ podcast }) => {
   return (
-    <>
+    <div>
       <button
         className="deleteBtn"
         onClick={() => {
@@ -18,7 +18,7 @@ const LibraryPodcast = ({ podcast }) => {
       >
         <RxCross2 />
       </button>
-      <Link to="/episodes" state={{ podcast }}>
+      <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
         <div className="libraryPodcastContainer">
           <img
             src={podcast.imageUrl}
@@ -32,7 +32,7 @@ const LibraryPodcast = ({ podcast }) => {
           <h2>{podcast.name}</h2>
         </div>
       </Link>
-    </>
+    </div>
   );
 };
 

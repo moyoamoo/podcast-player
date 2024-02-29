@@ -6,6 +6,7 @@ import { getEpisode } from "../redux/playerSlice";
  
 const Episode = ({ episode }) => {
   const [showDescription, setDescription] = useState(false);
+
   const toggleDescription = () => {
     setDescription(!showDescription);
   };

@@ -9,7 +9,7 @@ const SearchBar = () => {
         type="text"
         placeholder="Search Podcast Series"
         onInput={(e) => {
-          getPodcastData(e.target.value);
+          getPodcastData(e.target.value, 1);
         }}
       />
     </div>

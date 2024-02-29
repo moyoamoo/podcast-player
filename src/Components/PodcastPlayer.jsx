@@ -7,12 +7,14 @@ import { selectEpisode } from "../redux/playerSlice";
 const PodcastPlayer = () => {
   const episode = useSelector(selectEpisode);
   return (
- <>
-       <div className="podcastPlayer">
-       {episode && <p>{episode.episode.name}</p>}
-        {episode && <audio src={episode.episode.audioUrl} controls />}
-      </div>
- </>
+    <>
+      {episode && (
+        <div className="podcastPlayer">
+          <p>{episode.name}</p>
+          <audio src={episode.audioUrl} controls />
+        </div>
+      )}
+    </>
   );
 };
 

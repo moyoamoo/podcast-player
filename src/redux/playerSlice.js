@@ -17,5 +17,5 @@ export const playerSlice = createSlice({
 
 export const { getEpisode } = playerSlice.actions;
 
-export const selectEpisode = (state) => state.player;
+export const selectEpisode = (state) => state.player.episode;
 export default playerSlice.reducer;
