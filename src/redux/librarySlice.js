@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import podcastSlice from "./podcastSlice";
+import playerSlice from "./playerSlice";
+import sha256 from "sha256";
 
 const initialState = {
   value: 0,
   status: "idle",
-//   userLibrary: {},
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
@@ -43,12 +44,27 @@ export const librarySlice = createSlice({
     searchLibraryPodcast: (state, { payload }) => {
       state.searchTerm = payload;
     },
+
+    setNewUser: (state, { payload }) => {
+      payload.password = sha256(payload.password + "ZhmyyeQaVRwu7wf");
+      state.user = payload;
+    },
+
+    setWindow: (state, { payload }) => {
+      state.window = payload;
+    },
   },
 });
 
-export const { addToLibrary, getLibrary, deletefromLibrary, searchLibraryPodcast} =
-  librarySlice.actions;
+export const {
+  addToLibrary,
+  getLibrary,
+  deletefromLibrary,
+  searchLibraryPodcast,
+  setNewUser,
+} = librarySlice.actions;
 
 export const selectLibrary = (state) => state.library.userLibrary;
 export const selectSearchTerm = (state) => state.library.searchTerm;
+export const selectWindow = (state) => state.library.window;
 export default librarySlice.reducer;

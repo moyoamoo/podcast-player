@@ -6,6 +6,7 @@ import Header from "./Components/Header";
 import { Route, Routes } from "react-router-dom";
 import Episodes from "./Components/Episodes";
 import Footer from "./Components/Footer";
+import Index from "./Components/Library/Index";
 
 const App = () => {
   return (
@@ -14,9 +15,10 @@ const App = () => {
       <Routes>
         <Route path="search" element={<Search />} />
         <Route path="library" element={<Library />} />
-        <Route path="/episodes/:id" element={<Episodes/>}/>        
+        <Route path="/episodes/:id" element={<Episodes />} />
+        <Route path="/" element={<Index/>} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -6,7 +6,7 @@ import { selectEpisodeLength } from "../redux/podcastSlice";
 
 const ShowMoreEpisodesBtn = ({ podcastUuid }) => {
   const [page, setPage] = useState(1);
-  let episodeLength = useSelector(selectEpisodeLength);
+  // let episodeLength = useSelector(selectEpisodeLength);
 
   const addPage = () => {
     setPage(page + 1);
