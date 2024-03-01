@@ -1,18 +1,18 @@
 import axios from "axios";
 import { store } from "./redux/store";
-import { storeApiData, storeAdditionalApiData } from "./redux/podcastSlice";
+import { storeApiData, storeAdditionalApiData, storeEpisodeLength} from "./redux/podcastSlice";
 
 const endPoint = "https://api.taddy.org";
 const userID = "1098";
 const apiKey =
   "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
 
-export const getPodcastData = async (searchTerm, page) => {
-  //   const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
-  //   if (dataFromDisk) {
-  //     store.dispatch(storeApiData(dataFromDisk));
-  //     return;
-  //   }
+ export const getPodcastData = async (searchTerm, page) => {
+    const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
+    if (dataFromDisk) {
+      store.dispatch(storeApiData(dataFromDisk));
+      return;
+    }
 
   try {
     const { data } = await axios.post(
@@ -29,10 +29,11 @@ export const getPodcastData = async (searchTerm, page) => {
                 childrenHash
                 description
                 imageUrl
-                episodes(page: ${page}, limitPerPage: 1){
+                episodes(sortOrder:LATEST, page: ${page}, limitPerPage: 10){
                     uuid
                     name
                     description
+                    datePublished
                     audioUrl
                   }
               }
@@ -67,10 +68,11 @@ export const getEpisodeData = async (uuid, page) => {
                   name
                   hash
                   childrenHash
-                 episodes(page:${page} limitPerPage: 1){
+                  episodes(sortOrder:LATEST, page:${page}, limitPerPage:10){
                   name 
                   uuid
                   description
+                  audioUrl
                   datePublished
                  }
                 }
@@ -83,7 +85,9 @@ export const getEpisodeData = async (uuid, page) => {
         },
       }
     );
+    console.log(data.data)
     store.dispatch(storeAdditionalApiData(data.data));
+    store.dispatch(storeEpisodeLength(data.data.getPodcastSeries.episodes.length))
   } catch (error) {
     console.log(error);
   }

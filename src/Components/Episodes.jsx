@@ -1,21 +1,18 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Episode from "./Episode";
 import "./CSS/episodes.scss"
 import ShowMoreEpisodesBtn from "./ShowMoreEpisodesBtn";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectPodcast } from "../redux/podcastSlice";
 
 const Episodes = () => {
-  const { state } = useLocation();
-  console.log(state)
-  const { podcast } = state;
-  console.log(podcast);
-
-  const [page, setPage] = useState(1);
-
-  const addPage = () =>{
-    setPage(page + 1)
-  }
+  const {id} = useParams();
+  console.log(id)
+  const podcast = useSelector(selectPodcast(id))
+  console.log(podcast)
+  
   
   return (
     <>
@@ -28,7 +25,7 @@ const Episodes = () => {
       {podcast.episodes.map((episode)=>{
         return <Episode episode={episode}/>
       })}
-      <ShowMoreEpisodesBtn podcastUuid={podcast.uuid} page={page} addPage={addPage}/>
+      <ShowMoreEpisodesBtn podcastUuid={podcast.uuid}/>
     </>
   );
 };

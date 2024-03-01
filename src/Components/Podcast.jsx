@@ -17,7 +17,7 @@ const Podcast = ({ podcast }) => {
   return (
     <>
       <div className="podcastContainer">
-        <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
+        <Link to={"/episodes/" + podcast.uuid} state={{podcast}}>
           <img
             src={podcast.imageUrl}
             alt={podcast.name}

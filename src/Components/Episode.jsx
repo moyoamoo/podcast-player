@@ -14,6 +14,7 @@ const Episode = ({ episode }) => {
     <div className="episodeContainer">
       <div className="epHeader">
         <h3>{episode.name}</h3>
+        <p>{new Date(episode.datePublished * 1000).toDateString()}</p>
         <button
           onClick={() => {
             store.dispatch(getEpisode(episode));
