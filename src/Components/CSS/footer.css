@@ -1,0 +1,13 @@
+footer {
+  position: fixed;
+  bottom: 0;
+}
+
+.podcastPlayer {
+  width: 100vw;
+  height: 150px;
+  background-color: #000;
+}
+.podcastPlayer p {
+  color: #fff;
+}/*# sourceMappingURL=footer.css.map */

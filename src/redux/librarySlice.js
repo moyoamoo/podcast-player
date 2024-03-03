@@ -1,45 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import podcastSlice from "./podcastSlice";
-import playerSlice from "./playerSlice";
+
 import sha256 from "sha256";
 
 const initialState = {
   value: 0,
   status: "idle",
+  window: 1,
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
   initialState,
   reducers: {
-    addToLibrary: (state, { payload }) => {
-      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-      if (userLibrary) {
-        const duplicate = userLibrary.some((pod) => {
-          return pod.uuid == payload.uuid;
-        });
-        if (duplicate) {
-          return;
-        }
-        userLibrary.push(payload);
-        localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
-      } else {
-        localStorage.setItem("userLibrary", JSON.stringify([payload]));
-      }
-    },
-
-    deletefromLibrary: (state, { payload }) => {
-      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-      const indexOf = userLibrary.findIndex((podcast) => {
-        podcast.uuid === payload;
-      });
-      userLibrary.splice(indexOf, 1);
-      localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
-      state.userLibrary.splice(indexOf, 1);
-    },
-
-    getLibrary: (state, { payload }) => {
-      state.userLibrary = payload;
-    },
+  
 
     searchLibraryPodcast: (state, { payload }) => {
       state.searchTerm = payload;
@@ -53,18 +25,30 @@ export const librarySlice = createSlice({
     setWindow: (state, { payload }) => {
       state.window = payload;
     },
+
+    setMessage: (state, { payload }) => {
+      state.message = payload;
+      localStorage.setItem("message", JSON.stringify(state.message));
+    },
+
+    setLoggedIn: (state) => {
+      state.loggedIn = !state.loggedIn;
+    },
   },
 });
 
 export const {
-  addToLibrary,
-  getLibrary,
-  deletefromLibrary,
   searchLibraryPodcast,
   setNewUser,
+  setWindow,
+  setMessage,
+  setLoggedIn,
 } = librarySlice.actions;
 
-export const selectLibrary = (state) => state.library.userLibrary;
+
 export const selectSearchTerm = (state) => state.library.searchTerm;
 export const selectWindow = (state) => state.library.window;
+export const selectUser = (state) => state.library.user;
+export const selectMessage = (state) => state.library.message;
+
 export default librarySlice.reducer;

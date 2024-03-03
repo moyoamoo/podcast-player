@@ -1,0 +1,71 @@
+.episodesContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+.episodesContainer p {
+  margin: 2rem;
+}
+.episodesContainer h2 {
+  font-size: 3rem;
+  color: #fff;
+  margin: 2rem;
+}
+.episodesContainer .line {
+  border-top: 1rem solid #fff;
+  width: 25%;
+}
+.episodesContainer .podcastDescription {
+  color: #fff;
+  line-height: 25px;
+}
+.episodesContainer img {
+  width: 15rem;
+  border-radius: 0.7rem;
+}
+
+.epHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.epHeader button {
+  background: none;
+  border: none;
+  width: 30px;
+}
+.epHeader button svg {
+  width: 30px;
+  height: 30px;
+  color: #666a86;
+}
+
+.episodeContainer {
+  margin: 2rem;
+  padding: 1rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1803921569);
+}
+
+.showBtn {
+  border: 1px solid #fff;
+  background-color: #666a86;
+  padding: 0.5rem;
+  color: #fff;
+  border-radius: 2rem;
+  font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
+}
+
+.epDescriptionNone {
+  display: none;
+}
+
+.epDescription {
+  display: block;
+}/*# sourceMappingURL=episodes.css.map */

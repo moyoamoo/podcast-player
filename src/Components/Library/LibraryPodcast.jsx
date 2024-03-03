@@ -1,10 +1,10 @@
 import React from "react";
-import defaultImage from "./CSS/assets/podcast-icon.jpg";
-import { store } from "../redux/store";
+import { store } from "../../redux/store";
+import defaultImage from "../CSS/assets/podcast-icon.jpg";
 
-import "./CSS/libraryPodcasts.scss";
+import "../CSS/libraryPodcasts.scss";
 import { Link } from "react-router-dom";
-import { deletefromLibrary } from "../redux/librarySlice";
+import { deletefromLibrary } from "../../redux/podcastSlice";
 import { RxCross2 } from "react-icons/rx";
 
 const LibraryPodcast = ({ podcast }) => {
