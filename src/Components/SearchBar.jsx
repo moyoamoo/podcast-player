@@ -4,21 +4,24 @@ import { useState } from "react";
 import "./CSS/SearchBar.scss";
 
 const SearchBar = () => {
-
-const [searchTerm, setSearchTerm] = useState();
-
+  const [searchTerm, setSearchTerm] = useState();
+  console.log(searchTerm);
   return (
     <div>
       <input
         type="text"
         placeholder="Search Podcast Series"
         onInput={(e) => {
-         setSearchTerm(e.target.value)
+          setSearchTerm(e.target.value);
         }}
       />
-      <button  onClick={()=>{
-        getPodcastData(searchTerm)
-      }}>Search Podcast</button>
+      <button
+        onClick={() => {
+          getPodcastData(searchTerm, 1);
+        }}
+      >
+        Search Podcast
+      </button>
     </div>
   );
 };
