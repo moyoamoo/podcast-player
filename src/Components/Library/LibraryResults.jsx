@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import LibraryPodcast from "./LibraryPodcast";
 import { selectPodcastsSeries } from "../../redux/podcastSlice";
 
-const LibraryResults = ({librarySeries}) => {
+const LibraryResults = ({libraryPodcasts}) => {
  
 
-  return librarySeries.map((podcast) => {
+  return libraryPodcasts.map((podcast) => {
     return <LibraryPodcast podcast={podcast} key={podcast.uuid} />;
   });
 };

@@ -3,8 +3,8 @@ const initialState = {
   value: 0,
   status: "idle",
   apiData: { searchForTerm: { podcastSeries: [] } },
+  userLibrary: [],
 };
-
 
 export const podcastSlice = createSlice({
   name: "podcastSlice",
@@ -14,6 +14,7 @@ export const podcastSlice = createSlice({
       state.apiData = payload;
     },
 
+    //adds new episodes
     storeAdditionalApiData: (state, { payload }) => {
       console.log(payload.getPodcastSeries.uuid);
       const indexOf = state.apiData.searchForTerm.podcastSeries.findIndex(
@@ -31,56 +32,35 @@ export const podcastSlice = createSlice({
       );
     },
 
+    appendApiData: (state, { payload }) => {
+      payload["library"] = true;
+      state.apiData.searchForTerm.podcastSeries.push(payload);
+      console.log(state.apiData.searchForTerm.podcastSeries);
+    },
+
     deletefromLibrary: (state, { payload }) => {
-      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-      const indexOf = userLibrary.findIndex((podcast) => {
+      const indexOf = state.userLibrary.findIndex((podcast) => {
         podcast.uuid === payload;
       });
-      userLibrary.splice(indexOf, 1);
-      localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
-      state.apiData.searchForTerm.podcastSeries.splice(indexOf, 1);
+      state.userLibrary.splice(indexOf, 1);
     },
 
     storeEpisodeLength: (state, { payload }) => {
       state.episodeLength = payload;
     },
 
-    getLibrary: (state, { payload }) => {
-      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-      if (Object.keys(state.apiData.searchForTerm.podcastSeries).length === 0) {
-        state.apiData.searchForTerm.podcastSeries.push(...userLibrary);
-        return;
-      // } else {
-      //   let library = userLibrary.filter((libpod) => {
-      //     return state.apiData.searchForTerm.podcastSeries.map((statepod) => {
-      //       return libpod.uuid != statepod;
-      //     });
-      //   });
-      //   console.log(library);
-        // state.apiData.searchForTerm.podcastSeries.push(...library);
-      }
-    },
-
     setPodcastSearchTerm: (state, { payload }) => {
       state.searchTerm = payload;
-      console.log(payload)
+      console.log(payload);
     },
 
     addToLibrary: (state, { payload }) => {
-      const libraryPodcast = { ...payload, library: true };
-      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-      if (userLibrary) {
-        const duplicate = userLibrary.some((podcast) => {
-          return podcast.uuid === libraryPodcast.uuid;
-        });
-        if (duplicate) {
+      for (let i = 0; i < state.userLibrary.length; i++) {
+        if (state.userLibrary[i] === payload) {
           return;
         }
-        userLibrary.push(libraryPodcast);
-        localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
-      } else {
-        localStorage.setItem("userLibrary", JSON.stringify([libraryPodcast]));
       }
+      state.userLibrary.push(payload);
     },
   },
 });
@@ -93,7 +73,8 @@ export const {
   addToLibrary,
   deletefromLibrary,
   setPodcastSearchTerm,
-  getLibraryState
+  getLibraryState,
+  appendApiData,
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>
@@ -105,12 +86,12 @@ export const selectPodcast = (id) => (state) => {
 };
 export const selectLibrary = (state) => {
   return state.podcast.userLibrary;
-  
 };
 
-export const selectSearchTerm = (state) =>{
+
+export const selectSearchTerm = (state) => {
   return state.podcast.searchTerm;
-}
+};
 export const selectEpisodeLength = (state) => {
   state.podcast.episodeLength;
 };

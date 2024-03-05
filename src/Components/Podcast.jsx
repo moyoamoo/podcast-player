@@ -4,10 +4,25 @@ import { store } from "../redux/store";
 import { addToLibrary } from "../redux/podcastSlice";
 import defaultImage from "./CSS/assets/podcast-icon.jpg";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedIn, setMessage } from "../redux/librarySlice";
 
 const Podcast = ({ podcast }) => {
+  const loggedIn = useSelector(selectLoggedIn);
+  const dispatch = useDispatch();
+
+  const addPodcastToLibrary = () => {
+    console.log(podcast.uuid)
+    dispatch(addToLibrary(podcast.uuid));
+
+    // if (loggedIn) {
+    //   dispatch(addToLibrary(podcast.uuid));
+    //   dispatch(setMessage("Added to Library"));
+    //   return;
+    // } else {
+    //   dispatch(setMessage("Sign in to add podcast to library"));
+    // }
+  };
   return (
     <>
       <div className="podcastContainer">
@@ -26,15 +41,7 @@ const Podcast = ({ podcast }) => {
           <h2>{podcast.name}</h2>
           <button
             onClick={() => {
-              // const loggedIn = useSelector(selectLoggedIn);
-              // if (loggedIn) {
-              //   store.dispatch(addToLibrary(podcast));
-              //   store.dispatch(setMessage("Added to Library"));
-              //   return;
-              // } else {
-              //   store.dispatch(setMessage("Sign in to add podcast to library"));
-              // }
-              store.dispatch(addToLibrary(podcast));
+              addPodcastToLibrary();
             }}
           >
             Subscribe
