@@ -1,27 +1,27 @@
 import React from "react";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import { store } from "../../redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectWindow, setWindow } from "../../redux/librarySlice";
 import Library from "./Library";
 
 const Index = () => {
   const window = useSelector(selectWindow);
+  const dispatch = useDispatch();
 
   return (
     <>
       <div>
         <button
           onClick={() => {
-            store.dispatch(setWindow(0));
+            dispatch(setWindow(0));
           }}
         >
           Sign Up
         </button>
         <button
           onClick={() => {
-            store.dispatch(setWindow(1));
+            dispatch(setWindow(1));
           }}
         >
           Login

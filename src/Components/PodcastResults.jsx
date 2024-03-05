@@ -8,11 +8,18 @@ import Podcast from "./Podcast";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
-  console.log(podcastSeries)
+  let filteredPodcastSeries;
+
+  filteredPodcastSeries = podcastSeries.filter((podcast)=>{
+    if(!podcast.library === true){
+      return true
+    }
+  })
+
   return !podcastSeries ? (
     <Spinner />
   ) : (
-    podcastSeries.map((podcast) => {
+    filteredPodcastSeries.map((podcast) => {
       return (
           <Podcast podcast={podcast} key={podcast.uuid} />
       );

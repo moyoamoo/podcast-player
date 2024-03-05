@@ -1,15 +1,13 @@
 import React from "react";
 import "./css/podcast.scss";
 import { store } from "../redux/store";
-import { addToLibrary, getLibraryState, selectLibrary } from "../redux/podcastSlice";
+import { addToLibrary } from "../redux/podcastSlice";
 import defaultImage from "./CSS/assets/podcast-icon.jpg";
-import { FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useSelector } from "react-redux";
+import { selectLoggedIn, setMessage } from "../redux/librarySlice";
 
 const Podcast = ({ podcast }) => {
-
   return (
     <>
       <div className="podcastContainer">
@@ -28,6 +26,14 @@ const Podcast = ({ podcast }) => {
           <h2>{podcast.name}</h2>
           <button
             onClick={() => {
+              // const loggedIn = useSelector(selectLoggedIn);
+              // if (loggedIn) {
+              //   store.dispatch(addToLibrary(podcast));
+              //   store.dispatch(setMessage("Added to Library"));
+              //   return;
+              // } else {
+              //   store.dispatch(setMessage("Sign in to add podcast to library"));
+              // }
               store.dispatch(addToLibrary(podcast));
             }}
           >

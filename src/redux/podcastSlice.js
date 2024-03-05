@@ -4,6 +4,8 @@ const initialState = {
   status: "idle",
   apiData: { searchForTerm: { podcastSeries: [] } },
 };
+
+
 export const podcastSlice = createSlice({
   name: "podcastSlice",
   initialState,
@@ -56,13 +58,6 @@ export const podcastSlice = createSlice({
       //   });
       //   console.log(library);
         // state.apiData.searchForTerm.podcastSeries.push(...library);
-      }
-    },
-
-    getLibraryState: (state, { payload }) => {
-      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-      if (userLibrary) {
-        state.userLibrary = userLibrary;
       }
     },
 

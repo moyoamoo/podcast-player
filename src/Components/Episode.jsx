@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 import { store } from "../redux/store";
 import { addtoQueue, getEpisode } from "../redux/playerSlice";
+import { setMessage } from "../redux/librarySlice";
 
 const Episode = ({ episode }) => {
   const [showDescription, setDescription] = useState(false);
@@ -34,9 +35,10 @@ const Episode = ({ episode }) => {
         Add to queue
       </button>
 
-      <p className={showDescription ? "epDescription" : "epDescriptionNone"}>
-        {episode.description}
-      </p>
+      <div
+        dangerouslySetInnerHTML={{__html:episode.description}}
+        className={showDescription ? "epDescription" : "epDescriptionNone"}
+      ></div>
     </div>
   );
 };

@@ -50,5 +50,6 @@ export const selectSearchTerm = (state) => state.library.searchTerm;
 export const selectWindow = (state) => state.library.window;
 export const selectUser = (state) => state.library.user;
 export const selectMessage = (state) => state.library.message;
+export const selectLoggedIn = (state) => state.library.loggedIn;
 
 export default librarySlice.reducer;
