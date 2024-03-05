@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 import { store } from "../redux/store";
-import { getEpisode } from "../redux/playerSlice";
- 
+import { addtoQueue, getEpisode } from "../redux/playerSlice";
+
 const Episode = ({ episode }) => {
   const [showDescription, setDescription] = useState(false);
 
@@ -26,11 +26,17 @@ const Episode = ({ episode }) => {
       <button className="showBtn" onClick={toggleDescription}>
         {showDescription ? "Hide Description" : "Show Description"}
       </button>
+      <button
+        onClick={() => {
+          store.dispatch(addtoQueue(episode));
+        }}
+      >
+        Add to queue
+      </button>
 
       <p className={showDescription ? "epDescription" : "epDescriptionNone"}>
         {episode.description}
       </p>
-
     </div>
   );
 };

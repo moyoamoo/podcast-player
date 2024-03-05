@@ -1,31 +1,14 @@
 import React from "react";
 import "./css/podcast.scss";
 import { store } from "../redux/store";
-import { addToLibrary } from "../redux/podcastSlice";
+import { addToLibrary, getLibraryState, selectLibrary } from "../redux/podcastSlice";
 import defaultImage from "./CSS/assets/podcast-icon.jpg";
 import { FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Podcast = ({ podcast }) => {
-  const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
-  // const [inLibrary, setInLibrary] = useState(false);
-
-  // if (userLibrary) {
-  //   let librarySeries = userLibrary.filter((podcast) => {
-  //     return podcast.library === true;
-  //   });
-
-  //   const checkLibrary = () => {
-  //     librarySeries.map((libraryPod) => {
-  //       if (libraryPod.uuid === podcast.uuid) {
-  //         return setInLibrary(true);
-  //       }
-  //     });
-  //   };
-
-  //   checkLibrary();
-  // }
 
   return (
     <>

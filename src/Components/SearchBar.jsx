@@ -17,7 +17,7 @@ const [searchTerm, setSearchTerm] = useState();
         }}
       />
       <button  onClick={()=>{
-        getPodcastData(searchTerm, 1)
+        getPodcastData(searchTerm)
       }}>Search Podcast</button>
     </div>
   );

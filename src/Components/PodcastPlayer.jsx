@@ -6,6 +6,7 @@ import { selectEpisode } from "../redux/playerSlice";
 
 const PodcastPlayer = () => {
   const episode = useSelector(selectEpisode);
+  console.log(episode)
   return (
     <>
       {episode && (

@@ -48,19 +48,27 @@ export const podcastSlice = createSlice({
       if (Object.keys(state.apiData.searchForTerm.podcastSeries).length === 0) {
         state.apiData.searchForTerm.podcastSeries.push(...userLibrary);
         return;
-      } else {
-        let library = userLibrary.filter((libpod) => {
-          return state.apiData.searchForTerm.podcastSeries.map((statepod) => {
-            return libpod.uuid != statepod;
-          });
-        });
-        console.log(library);
+      // } else {
+      //   let library = userLibrary.filter((libpod) => {
+      //     return state.apiData.searchForTerm.podcastSeries.map((statepod) => {
+      //       return libpod.uuid != statepod;
+      //     });
+      //   });
+      //   console.log(library);
         // state.apiData.searchForTerm.podcastSeries.push(...library);
+      }
+    },
+
+    getLibraryState: (state, { payload }) => {
+      const userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
+      if (userLibrary) {
+        state.userLibrary = userLibrary;
       }
     },
 
     setPodcastSearchTerm: (state, { payload }) => {
       state.searchTerm = payload;
+      console.log(payload)
     },
 
     addToLibrary: (state, { payload }) => {
@@ -90,6 +98,7 @@ export const {
   addToLibrary,
   deletefromLibrary,
   setPodcastSearchTerm,
+  getLibraryState
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>
@@ -99,11 +108,14 @@ export const selectPodcast = (id) => (state) => {
     return podcast.uuid == id;
   });
 };
-// export const selectLibrary = (state) => {
-//   return state.podcast.apiData.searchForTerm.podcastSeries.filter((podcast) => {
-//     return (podcast.library === true);
-//   });
-// };
+export const selectLibrary = (state) => {
+  return state.podcast.userLibrary;
+  
+};
+
+export const selectSearchTerm = (state) =>{
+  return state.podcast.searchTerm;
+}
 export const selectEpisodeLength = (state) => {
   state.podcast.episodeLength;
 };

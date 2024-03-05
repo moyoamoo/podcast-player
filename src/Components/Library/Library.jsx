@@ -3,6 +3,7 @@ import LibraryResults from "./LibraryResults";
 import { store } from "../../redux/store";
 import {
   selectPodcastsSeries,
+  selectSearchTerm,
   setPodcastSearchTerm,
 } from "../../redux/podcastSlice";
 import { getLibrary } from "../../redux/podcastSlice";
@@ -17,13 +18,29 @@ const Library = () => {
     return podcast.library === true;
   });
 
+  let newFiltered;
+  const searchTerm = useSelector(selectSearchTerm);
+  if (searchTerm) {
+    newFiltered = librarySeries.filter((podcast) => {
+      if (podcast.name.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+    });
+  }
+
   return (
     <>
       <div></div>
       <h1>My Library</h1>
-      <input type="text" placeholder="Search Library" />
+      <input
+        type="text"
+        placeholder="Search Library"
+        onInput={(e) => {
+          store.dispatch(setPodcastSearchTerm(e.target.value));
+        }}
+      />
       <LibraryResults
-        librarySeries={librarySeries}
+        librarySeries={searchTerm ? newFiltered : librarySeries}
         onInput={(e) => {
           store.dispatch(setPodcastSearchTerm(e.target.value));
         }}

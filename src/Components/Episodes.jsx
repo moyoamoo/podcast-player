@@ -12,18 +12,28 @@ const Episodes = () => {
   console.log(id)
   const podcast = useSelector(selectPodcast(id))
   console.log(podcast)
-  
-  
+    
+let genre;
+let formattedGenres = [];
+for (let i = 0; i < podcast.genres.length; i++) {
+  genre = podcast.genres[i].split("PODCASTSERIES_")
+  formattedGenres.push(genre[1].replaceAll("_", " ").toLowerCase())
+}
   return (
     <>
    <div className="episodesContainer">
           <h2>{podcast.name}</h2>
           <div><img src={podcast.imageUrl}/></div>
           <p className="podcastDescription">{podcast.description}</p>
+          <div>
+            {formattedGenres.map((genre)=>{
+              return <p className="genres">{genre}</p>
+            })}
+          </div>
 
    </div>
       {podcast.episodes.map((episode)=>{
-        return <Episode episode={episode}/>
+        return <Episode episode={episode} key={episode.uuid}/>
       })}
       <ShowMoreEpisodesBtn podcastUuid={podcast.uuid}/>
     </>
