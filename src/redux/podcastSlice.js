@@ -4,6 +4,8 @@ const initialState = {
   status: "idle",
   apiData: { searchForTerm: { podcastSeries: [] } },
   userLibrary: [],
+  sortOrder: "2",
+  emptySearch: false,
 };
 
 export const podcastSlice = createSlice({
@@ -49,9 +51,48 @@ export const podcastSlice = createSlice({
       state.episodeLength = payload;
     },
 
+    sortEpisodeOrder: (state, { payload }) => {
+      console.log(payload);
+      const indexOf = state.apiData.searchForTerm.podcastSeries.findIndex(
+        (podcast) => {
+          return podcast.uuid === payload.uuid;
+        }
+      );
+      console.log(indexOf);
+      state.apiData.searchForTerm.podcastSeries[indexOf].episodes.length = 0;
+      state.apiData.searchForTerm.podcastSeries[indexOf].episodes.push(
+        ...payload.episodes
+      );
+    },
+
     setPodcastSearchTerm: (state, { payload }) => {
       state.searchTerm = payload;
-      console.log(payload);
+    },
+
+    sortPodcasts: (state, { payload }) => {
+      switch (payload) {
+        case "sortAsc":
+          state.apiData.searchForTerm.podcastSeries.sort((a, b) => {
+            if (a.name > b.name) {
+              return 1;
+            } else if (a.name < b.name) {
+              return -1;
+            }
+          });
+          break;
+        case "sortDesc":
+          state.apiData.searchForTerm.podcastSeries.sort((a, b) => {
+            if (a.name < b.name) {
+              return 1;
+            } else if (a.name > b.name) {
+              return -1;
+            }
+          });
+          break;
+
+        default:
+          break;
+      }
     },
 
     addToLibrary: (state, { payload }) => {
@@ -61,6 +102,14 @@ export const podcastSlice = createSlice({
         }
       }
       state.userLibrary.push(payload);
+    },
+
+    setOrder: (state, { payload }) => {
+      state.sortOrder = payload;
+    },
+
+    setEmptySearch: (state, { payload }) => {
+      state.emptySearch = payload;
     },
   },
 });
@@ -75,6 +124,11 @@ export const {
   setPodcastSearchTerm,
   getLibraryState,
   appendApiData,
+  sortEpisodeOrder,
+  setOrder,
+  sortPodcasts,
+  setEmptySearch
+
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>
@@ -88,9 +142,15 @@ export const selectLibrary = (state) => {
   return state.podcast.userLibrary;
 };
 
-
+export const selectEmptySearch = (state) =>{
+  return state.podcast.emptySearch;
+}
 export const selectSearchTerm = (state) => {
   return state.podcast.searchTerm;
+};
+
+export const selectSortOrder = (state) => {
+  return state.podcast.sortOrder;
 };
 export const selectEpisodeLength = (state) => {
   state.podcast.episodeLength;

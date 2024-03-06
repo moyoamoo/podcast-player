@@ -5,6 +5,7 @@ import {
   selectPodcastsSeries,
   selectSearchTerm,
   setPodcastSearchTerm,
+  sortPodcasts,
 } from "../../redux/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -41,7 +42,7 @@ const Library = () => {
 
   let newFiltered;
   if (searchTerm) {
-    newFiltered = librarySeries.filter((podcast) => {
+    newFiltered = libraryPodcasts.filter((podcast) => {
       if (podcast.name.toLowerCase().includes(searchTerm)) {
         return true;
       }
@@ -52,6 +53,19 @@ const Library = () => {
     <>
       <div></div>
       <h1>My Library</h1>
+
+      <div>
+        <label htmlFor="sortLibrary">Sort Library</label>
+        <select name="sortLibrary" 
+          onChange={(e) => {
+            dispatch(sortPodcasts(e.target.value));
+          }}
+        >
+          <option>---Sort By---</option>
+          <option value="sortAsc">A-Z</option>
+          <option value="sortDesc">Z-A</option>
+        </select>
+      </div>
       <input
         type="text"
         placeholder="Search Library"
@@ -61,7 +75,7 @@ const Library = () => {
       />
       {libraryPodcasts.length > 0 ? (
         <LibraryResults
-          libraryPodcasts={searchTerm ? newFiltered : librarySeries}
+          libraryPodcasts={searchTerm ? newFiltered : libraryPodcasts}
         />
       ) : (
         <p>No podcasts in Library</p>

@@ -4,16 +4,16 @@ import Episode from "./Episode";
 import "./CSS/episodes.scss";
 import ShowMoreEpisodesBtn from "./ShowMoreEpisodesBtn";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectPodcast } from "../redux/podcastSlice";
-import { selectEpisodeLength } from "../redux/podcastSlice";
+import { selectEpisodeLength, setOrder } from "../redux/podcastSlice";
+import { getSortedData } from "../apiRequest";
 
 const Episodes = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const podcast = useSelector(selectPodcast(id));
   const epLength = useSelector(selectEpisodeLength);
-  console.log(epLength)
-
 
   let genre;
   let formattedGenres = [];
@@ -34,17 +34,25 @@ const Episodes = () => {
             return <p className="genres">{genre}</p>;
           })}
         </div>
+        <div>
+          <select
+            onChange={(e) => {
+              getSortedData(podcast.uuid, e.target.value, 1);
+              dispatch(setOrder(e.target.value));
+            }}
+          >
+            <option>---Sort By---</option>
+            <option value="1">Sort by Oldest</option>
+            <option value="2">Sort by Newest</option>
+          </select>
+        </div>
       </div>
       {podcast.episodes.map((episode) => {
         return <Episode episode={episode} key={episode.uuid} />;
       })}
-      {!epLength ? (
+     
         <ShowMoreEpisodesBtn podcastUuid={podcast.uuid} />
-      ) : epLength < 10 ? (
-        <button></button>
-      ) : (
-        <ShowMoreEpisodesBtn podcastUuid={podcast.uuid} />
-      )}
+     
     </>
   );
 };
