@@ -6,16 +6,18 @@ import "../CSS/libraryPodcasts.scss";
 import { Link } from "react-router-dom";
 import { deletefromLibrary } from "../../redux/podcastSlice";
 import { RxCross2 } from "react-icons/rx";
+import { useDispatch } from "react-redux";
 
 const LibraryPodcast = ({ podcast }) => {
  
+  const dispatch = useDispatch()
 
  return (
     <div>
       <button
         className="deleteBtn"
         onClick={() => {
-          store.dispatch(deletefromLibrary(podcast.uuid));
+          dispatch(deletefromLibrary(podcast.uuid));
         }}
       >
         <RxCross2 />

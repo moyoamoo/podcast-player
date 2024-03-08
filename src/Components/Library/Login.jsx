@@ -3,10 +3,11 @@ import "../CSS/login.scss";
 import { selectUser, setLoggedIn, setMessage, setWindow} from "../../redux/librarySlice";
 import { store } from "../../redux/store";
 import sha256 from "sha256";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [userInput, setUserInput] = useState({});
+  const dispatch = useDispatch()
   const user = useSelector(selectUser)
 
   const onInput = (e) => {
@@ -18,11 +19,11 @@ const Login = () => {
     const hashedPassword = sha256(userInput.password + "ZhmyyeQaVRwu7wf")
 
     if (user.password === hashedPassword){
-        store.dispatch(setMessage("Password Correct"))
-        store.dispatch(setWindow(2))
-        store.dispatch(setLoggedIn())
+        dispatch(setMessage("Password Correct"))
+        dispatch(setWindow(2))
+        dispatch(setLoggedIn())
     } else {
-        store.dispatch(setMessage("Email and Password are Incorrect! Try Again"))
+        dispatch(setMessage("Email and Password are Incorrect! Try Again"))
     }
 
   };

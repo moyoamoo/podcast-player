@@ -16,7 +16,7 @@ const ShowMoreEpisodesBtn = ({ podcastUuid }) => {
 
   return (
     <>
-      <button
+      <button className="showMoreEps"
         onClick={() => {
           console.log(podcastUuid);
           getEpisodeData(podcastUuid, sortBy, page + 1);

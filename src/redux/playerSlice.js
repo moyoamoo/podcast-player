@@ -15,13 +15,18 @@ export const playerSlice = createSlice({
       state.episode = payload ;
     },
 
+    getPodcast: (state, {payload}) =>{
+      state.podcast = payload
+    },
+
     addtoQueue: (state, {payload}) =>{
       state.queue.push(payload)
     }
   },
 });
 
-export const { getEpisode, addtoQueue } = playerSlice.actions;
+export const { getEpisode, addtoQueue, getPodcast } = playerSlice.actions;
 
 export const selectEpisode = (state) => state.player.episode;
+export const selectPodcast = (state) => state.player.podcast;
 export default playerSlice.reducer;

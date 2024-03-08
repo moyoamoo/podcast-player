@@ -38,12 +38,11 @@
   button {
     background: none;
     border: none;
-    width:30px;
+    width: 30px;
     svg {
       width: 30px;
       height: 30px;
       color: #666a86;
-
     }
   }
 }
@@ -78,5 +77,15 @@
 }
 
 .genres {
- text-transform: capitalize;
+  text-transform: capitalize;
+}
+
+.showMoreEps {
+  border: 1px solid #fff;
+  background-color: #666a86;
+  padding: 0.5rem;
+  color: #fff;
+  border-radius: 2rem;
+  font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
+  margin-bottom: 12rem;
 }

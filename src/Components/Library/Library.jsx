@@ -1,6 +1,7 @@
 import React from "react";
 import LibraryResults from "./LibraryResults";
 import {
+  clearApiData,
   selectLibrary,
   selectPodcastsSeries,
   selectSearchTerm,
@@ -12,6 +13,7 @@ import { useEffect } from "react";
 import { selectLoggedIn } from "../../redux/librarySlice";
 import { useNavigate } from "react-router-dom";
 import { getLibraryData } from "../../apiRequest";
+import "../CSS/libraryPodcasts.scss";
 
 const Library = () => {
   const navigate = useNavigate();
@@ -26,13 +28,14 @@ const Library = () => {
     if (!loggedIn) {
       navigate("/");
     } else {
+      dispatch(clearApiData())
       if (libraryPodcastsUuid.length > 0) {
-        libraryPodcastsUuid.map((uuid) => {
-          return getLibraryData(uuid, 1);
+        libraryPodcastsUuid.forEach((uuid) => {
+           getLibraryData(uuid, 1);
         });
       }
     }
-  }, [loggedIn]);
+  }, [loggedIn, libraryPodcastsUuid]);
 
   libraryPodcasts = podcasts.filter((podcast) => {
     if (podcast.library) {
@@ -54,9 +57,17 @@ const Library = () => {
       <div></div>
       <h1>My Library</h1>
 
+      <input
+        type="text"
+        placeholder="Search Library"
+        onInput={(e) => {
+          dispatch(setPodcastSearchTerm(e.target.value));
+        }}
+      />
       <div>
         <label htmlFor="sortLibrary">Sort Library</label>
-        <select name="sortLibrary" 
+        <select
+          name="sortLibrary"
           onChange={(e) => {
             dispatch(sortPodcasts(e.target.value));
           }}
@@ -66,19 +77,14 @@ const Library = () => {
           <option value="sortDesc">Z-A</option>
         </select>
       </div>
-      <input
-        type="text"
-        placeholder="Search Library"
-        onInput={(e) => {
-          dispatch(setPodcastSearchTerm(e.target.value));
-        }}
-      />
       {libraryPodcasts.length > 0 ? (
         <LibraryResults
           libraryPodcasts={searchTerm ? newFiltered : libraryPodcasts}
         />
       ) : (
-        <p>No podcasts in Library</p>
+        <div class="validation">
+          <p>No Podcasts Found</p>
+        </div>
       )}
     </>
   );

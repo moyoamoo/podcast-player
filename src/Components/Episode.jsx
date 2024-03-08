@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 import { store } from "../redux/store";
-import { addtoQueue, getEpisode } from "../redux/playerSlice";
+import { addtoQueue, getEpisode, getPodcast } from "../redux/playerSlice";
 import { setMessage } from "../redux/librarySlice";
 
-const Episode = ({ episode }) => {
+const Episode = ({ episode, podcast}) => {
   const [showDescription, setDescription] = useState(false);
 
   const toggleDescription = () => {
@@ -19,6 +19,7 @@ const Episode = ({ episode }) => {
         <button
           onClick={() => {
             store.dispatch(getEpisode(episode));
+            store.dispatch(getPodcast(podcast))
           }}
         >
           <FaPlay />

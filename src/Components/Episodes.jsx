@@ -48,7 +48,7 @@ const Episodes = () => {
         </div>
       </div>
       {podcast.episodes.map((episode) => {
-        return <Episode episode={episode} key={episode.uuid} />;
+        return <Episode episode={episode} podcast={podcast} key={episode.uuid} />;
       })}
      
         <ShowMoreEpisodesBtn podcastUuid={podcast.uuid} />

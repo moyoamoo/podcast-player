@@ -8,13 +8,14 @@ import Footer from "./Components/Footer";
 import Index from "./Components/Library/Index";
 import { useEffect } from "react";
 import { store } from "./redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectMessage, setMessage } from "./redux/librarySlice";
 import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 
 const App = () => {
   const message = useSelector(selectMessage);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!message) return;
@@ -22,7 +23,7 @@ const App = () => {
     toast(message);
 
     setTimeout(() => {
-      store.dispatch(setMessage(""));
+      dispatch(setMessage(""));
     }, 3000);
   }, [message]);
 

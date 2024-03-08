@@ -6,6 +6,7 @@ const initialState = {
   value: 0,
   status: "idle",
   window: 1,
+  loggedIn: true
 };
 export const librarySlice = createSlice({
   name: "librarySlice",

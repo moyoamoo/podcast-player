@@ -5,7 +5,7 @@ const initialState = {
   apiData: { searchForTerm: { podcastSeries: [] } },
   userLibrary: [],
   sortOrder: "2",
-  emptySearch: false,
+  // emptySearch: false,
 };
 
 export const podcastSlice = createSlice({
@@ -41,8 +41,8 @@ export const podcastSlice = createSlice({
     },
 
     deletefromLibrary: (state, { payload }) => {
-      const indexOf = state.userLibrary.findIndex((podcast) => {
-        podcast.uuid === payload;
+      const indexOf = state.userLibrary.findIndex((uuid) => {
+        uuid === payload;
       });
       state.userLibrary.splice(indexOf, 1);
     },
@@ -95,6 +95,10 @@ export const podcastSlice = createSlice({
       }
     },
 
+    clearApiData : (state) =>{
+      state.apiData = initialState.apiData
+    },
+
     addToLibrary: (state, { payload }) => {
       for (let i = 0; i < state.userLibrary.length; i++) {
         if (state.userLibrary[i] === payload) {
@@ -127,7 +131,8 @@ export const {
   sortEpisodeOrder,
   setOrder,
   sortPodcasts,
-  setEmptySearch
+  setEmptySearch, 
+  clearApiData
 
 } = podcastSlice.actions;
 

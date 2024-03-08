@@ -15,15 +15,15 @@ const apiKey =
   "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
 
 export const getPodcastData = async (searchTerm, page) => {
-  if (!searchTerm) {
-    store.dispatch(setEmptySearch(true));
-    return;
-  }
-  // const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
-  // if (dataFromDisk) {
-  //   store.dispatch(storeApiData(dataFromDisk));
+  // if (!searchTerm) {
+  //   store.dispatch(setEmptySearch(true));
   //   return;
   // }
+  const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
+  if (dataFromDisk) {
+    store.dispatch(storeApiData(dataFromDisk));
+    return;
+  }
 
   try {
     const { data } = await axios.post(
@@ -58,9 +58,9 @@ export const getPodcastData = async (searchTerm, page) => {
         },
       }
     );
-    store.dispatch(setEmptySearch(false));
+    // store.dispatch(setEmptySearch(false));
     store.dispatch(storeApiData(data.data));
-    // localStorage.setItem("getPodcastData", JSON.stringify(data.data));
+    localStorage.setItem("getPodcastData", JSON.stringify(data.data));
   } catch (error) {
     console.log(error);
   }
@@ -112,6 +112,7 @@ export const getEpisodeData = async (uuid, order, page) => {
 };
 
 export const getLibraryData = async (uuid, page) => {
+  console.log("uuid:", uuid);
   try {
     const { data } = await axios.post(
       endPoint,

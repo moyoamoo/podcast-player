@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "../CSS/login.scss";
 import { setNewUser, setWindow, setMessage } from "../../redux/librarySlice";
 import { store } from "../../redux/store";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const [userInput, setUserInput] = useState({});
+  const dispatch = useDispatch();
 
   const onInput = (e) => {
     setUserInput({ ...userInput, [e.target.id]: e.target.value });
@@ -12,9 +14,9 @@ const SignUp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    store.dispatch(setNewUser(userInput));
-    store.dispatch(setWindow(1));
-    store.dispatch(setMessage("Account Created"));
+    dispatch(setNewUser(userInput));
+    dispatch(setWindow(1));
+    dispatch(setMessage("Account Created"));
   };
   console.log(userInput);
   return (
