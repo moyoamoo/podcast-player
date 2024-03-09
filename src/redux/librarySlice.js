@@ -29,7 +29,7 @@ export const librarySlice = createSlice({
 
     setMessage: (state, { payload }) => {
       state.message = payload;
-      localStorage.setItem("message", JSON.stringify(state.message));
+      // localStorage.setItem("message", JSON.stringify(state.message));
     },
 
     setLoggedIn: (state) => {

@@ -25,15 +25,15 @@ footer {
   display: flex;
 }
 
-.playbackControls{
+.playbackControls {
   display: flex;
   justify-content: center;
   margin-bottom: 5px;
 }
-.playBtn {
+.controlBtn  {
   background: none;
   border: none;
- 
+
   svg {
     color: #5cd5eb;
     width: 100%;
@@ -71,11 +71,10 @@ footer {
   margin-bottom: 20px;
 }
 
-
-.volumeControls{
+.volumeControls {
   display: flex;
   justify-content: right;
-  margin-right:50px;
+  margin-right: 50px;
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -98,5 +97,4 @@ footer {
     width: 12px;
     border-radius: 55px;
   }
-  
 }
