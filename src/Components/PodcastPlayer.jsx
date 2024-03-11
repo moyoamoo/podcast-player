@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CSS/footer.scss";
 import { useSelector } from "react-redux";
-import { selectEpisode, selectPodcast } from "../redux/playerSlice";
+import { selectQueue } from "../redux/playerSlice";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
-import { format } from "date-fns";
 import {
   IoVolumeLow,
   IoVolumeMedium,
@@ -12,10 +11,18 @@ import {
   IoVolumeOff,
   IoVolumeMute,
 } from "react-icons/io5";
-import { TbRepeat, TbRepeatOff } from "react-icons/tb";
+import { FaForwardStep, FaBackwardStep } from "react-icons/fa6";
+
+import {
+  TbRepeat,
+  TbRepeatOff,
+  TbRewindForward30,
+  TbRewindBackward30,
+} from "react-icons/tb";
+
 const PodcastPlayer = () => {
-  const episode = useSelector(selectEpisode);
-  const podcast = useSelector(selectPodcast);
+  let queue = useSelector(selectQueue);
+  const [queueIndex, setQueueIndex] = useState(0);
   const [podDuration, setpodDuration] = useState(1);
   const [remainingDuration, setRemainingDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -29,6 +36,18 @@ const PodcastPlayer = () => {
   const audioRef = useRef();
   const podDurationRef = useRef();
   const volumeRef = useRef();
+
+  const skipForward = () => {
+    if (audioRef.current.duration - audioRef.current.currentTime != 30) {
+      audioRef.current.currentTime += 30;
+    }
+  };
+
+  const skipBackward = () => {
+    if (!(audioRef.current.currentTime <= 30)) {
+      audioRef.current.currentTime -= 30;
+    }
+  };
 
   const loopPodcast = () => {
     audioRef.current.loop = !audioRef.current.loop;
@@ -61,25 +80,28 @@ const PodcastPlayer = () => {
   };
 
   useEffect(() => {
-    if (episode) {
+    if (queue.length > 0) {
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
     }
-  }, [isPlaying, audioRef]);
+  }, [isPlaying, audioRef, queue]);
 
   return (
     <>
-      {episode && (
+      {queue.length > 0 ? (
         <div className="podcastPlayer">
           <div className="podcastDetails">
-            <img src={podcast.imageUrl} alt={podcast.name} />
+            <img
+              src={queue[queueIndex].imageUrl}
+              alt={queue[queueIndex].podcastName}
+            />
             <div>
-              <p>{podcast.name}</p>
-              <p>{episode.name}</p>
+              <p>{queue[queueIndex].name}</p>
+              <p>{queue[queueIndex].podcastName}</p>
             </div>
           </div>
 
           <audio
-            src={episode.audioUrl}
+            src={queue[queueIndex].audioUrl}
             ref={audioRef}
             onPlay={() => {
               setInterval(() => {
@@ -89,11 +111,38 @@ const PodcastPlayer = () => {
               }, 1000);
             }}
             onDurationChange={(e) => {
-              let seconds = new Date(e.currentTarget.duration);
-              setpodDuration(format(seconds, "hh:mm:ss"));
+              let seconds = e.currentTarget.duration;
+              setpodDuration(seconds);
+            }}
+            onEnded={() => {
+              if (queueIndex < queue.length - 1) {
+                queueIndex++;
+              } else {
+                queueIndex = 0;
+              }
             }}
           />
           <div className="playbackControls">
+            <button
+              className="controlBtn"
+              onClick={() => {
+                if (queueIndex > 0) {
+                  setQueueIndex(queueIndex + 1);
+                } else {
+                  setQueueIndex(0);
+                }
+              }}
+            >
+              <FaBackwardStep />
+            </button>
+            <button
+              className="controlBtn"
+              onClick={() => {
+                skipBackward();
+              }}
+            >
+              <TbRewindBackward30 />
+            </button>
             <button
               className="controlBtn"
               onClick={() => {
@@ -105,18 +154,24 @@ const PodcastPlayer = () => {
             <button
               className="controlBtn"
               onClick={() => {
-                console.log(loop);
-                loopPodcast();
+                skipForward();
               }}
             >
-              {loop ? <TbRepeatOff /> : <TbRepeat />}
+              <TbRewindForward30 />
             </button>
             <button
+              className="controlBtn"
               onClick={() => {
-                changePlaybackSpeed();
+                console.log("clicked");
+                if (queueIndex < queue.length - 1) {
+                  setQueueIndex(queueIndex + 1);
+                } else {
+                  setQueueIndex(0);
+                }
+                console.log(queueIndex);
               }}
             >
-              {playback}x
+              <FaForwardStep />
             </button>
           </div>
           <div className="durationControls">
@@ -133,38 +188,61 @@ const PodcastPlayer = () => {
             />
             <span>{podDuration}</span>
           </div>
+          <div className="bottomControls">
+            <div className="bottomPlaybackControls">
+              <button
+                className="controlBtn"
+                onClick={() => {
+                  loopPodcast();
+                }}
+              >
+                {loop ? <TbRepeatOff /> : <TbRepeat />}
+              </button>
+              <button
+                className="controlBtn"
+                onClick={() => {
+                  changePlaybackSpeed();
+                }}
+              >
+                {playback}x
+              </button>
+            </div>
 
-          <div className="volumeControls">
-            <button
-              onClick={() => {
-                mutePodcast();
-              }}
-            >
-              {muted ? <IoVolumeMute /> : <IoVolumeHigh />}
-            </button>
-            <input
-              ref={volumeRef}
-              type="range"
-              min="1"
-              max="100"
-              onChange={() => {
-                changeVolume();
-              }}
-            />
+            <div className="volumeControls">
+              <button
+                className="controlBtn"
+                onClick={() => {
+                  mutePodcast();
+                }}
+              >
+                {muted ? <IoVolumeMute /> : <IoVolumeHigh />}
+              </button>
+              <input
+                ref={volumeRef}
+                type="range"
+                min="1"
+                max="100"
+                onChange={() => {
+                  changeVolume();
+                }}
+              />
 
-            <span>
-              {currentVolume < 0.1 ? (
-                <IoVolumeOff />
-              ) : currentVolume < 0.4 ? (
-                <IoVolumeLow />
-              ) : currentVolume <= 0.4 && currentVolume > 0.7 ? (
-                <IoVolumeMedium />
-              ) : (
-                <IoVolumeHigh />
-              )}
-            </span>
+              <span>
+                {currentVolume < 0.1 ? (
+                  <IoVolumeOff />
+                ) : currentVolume < 0.4 ? (
+                  <IoVolumeLow />
+                ) : currentVolume <= 0.4 && currentVolume > 0.7 ? (
+                  <IoVolumeMedium />
+                ) : (
+                  <IoVolumeHigh />
+                )}
+              </span>
+            </div>
           </div>
         </div>
+      ) : (
+        <p>No podcast episodes in queue</p>
       )}
     </>
   );

@@ -3,30 +3,24 @@ const initialState = {
   value: 0,
   status: "idle",
   player: {},
-  queue: []
+  queue: [],
 };
 export const playerSlice = createSlice({
   name: "playerSlice",
   initialState,
   reducers: {
     getEpisode: (state, { payload }) => {
-      console.log(state.episode)
-      console.log(payload);
-      state.episode = payload ;
+      state.queue.push(payload);
     },
 
-    getPodcast: (state, {payload}) =>{
-      state.podcast = payload
+    addtoQueue: (state, { payload }) => {
+      state.queue.push(payload);
     },
 
-    addtoQueue: (state, {payload}) =>{
-      state.queue.push(payload)
-    }
   },
 });
 
-export const { getEpisode, addtoQueue, getPodcast } = playerSlice.actions;
+export const { getEpisode, addtoQueue } = playerSlice.actions;
 
-export const selectEpisode = (state) => state.player.episode;
-export const selectPodcast = (state) => state.player.podcast;
+export const selectQueue = (state) => state.player.queue;
 export default playerSlice.reducer;
