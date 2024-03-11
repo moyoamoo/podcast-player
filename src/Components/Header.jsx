@@ -20,6 +20,9 @@ const Header = () => {
           <li>
             <NavLink to="library">Library</NavLink>
           </li>
+          <li>
+            <NavLink to="queue">Queue</NavLink>
+          </li>
         </ul>
         <button className="hamburger" onClick={ToggleMenu}>
           {openMenu ? <IoClose /> : <IoMenuOutline />}
