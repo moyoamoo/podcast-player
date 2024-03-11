@@ -29,6 +29,10 @@
     width: 15rem;
     border-radius: 0.7rem;
   }
+
+  a {
+    color: #449dd1;
+  }
 }
 
 .epHeader {
@@ -88,4 +92,24 @@
   border-radius: 2rem;
   font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
   margin-bottom: 12rem;
+}
+
+.queueBtn {
+  background-color: #392f5a;
+  border: 1px solid #fff;
+
+  padding: 0.5rem;
+  color: #fff;
+  border-radius: 2rem;
+  font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
+
+  svg {
+    color: #fff;
+  }
+}
+
+
+.btnContainer{
+  display: flex;
+  justify-content: space-between;
 }

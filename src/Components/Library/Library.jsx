@@ -82,7 +82,7 @@ const Library = () => {
           libraryPodcasts={searchTerm ? newFiltered : libraryPodcasts}
         />
       ) : (
-        <div class="validation">
+        <div className="validation">
           <p>No Podcasts Found</p>
         </div>
       )}

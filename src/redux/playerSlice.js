@@ -17,10 +17,18 @@ export const playerSlice = createSlice({
       state.queue.push(payload);
     },
 
+    removeFromQueue: (state, {payload}) =>{
+      const indexOf = state.queue.findIndex((podcast)=>{
+        return podcast.uuid === payload.uuid;
+      })
+
+      state.queue.splice(indexOf, 1)
+    }
+
   },
 });
 
-export const { getEpisode, addtoQueue } = playerSlice.actions;
+export const { getEpisode, addtoQueue, removeFromQueue} = playerSlice.actions;
 
 export const selectQueue = (state) => state.player.queue;
 export default playerSlice.reducer;

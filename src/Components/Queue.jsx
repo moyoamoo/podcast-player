@@ -8,9 +8,15 @@ const Queue = () => {
   return (
     <>
       <h1>My Queue</h1>
-      {queue.map((episode) => {
-        return <Episode episode={episode} key={episode.uuid} />;
-      })}
+      {queue.length > 0 ? (
+        queue.map((episode) => {
+          return <Episode episode={episode} key={episode.uuid} />;
+        })
+      ) : (
+        <div className="validation">
+          <p>No episodes in Queue</p>
+        </div>
+      )}
     </>
   );
 };
