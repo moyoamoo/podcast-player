@@ -7,7 +7,7 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
   console.log(searchTerm);
   return (
-    <div>
+    <div className="searchContainer">
       <input
         type="text"
         placeholder="Search Podcast Series"
@@ -15,7 +15,7 @@ const SearchBar = () => {
           setSearchTerm(e.target.value);
         }}
       />
-      <button
+      <button className="searchBtn"
         onClick={() => {
           getPodcastData(searchTerm, 1);
         }}

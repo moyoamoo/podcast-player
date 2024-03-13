@@ -10,25 +10,24 @@ export const playerSlice = createSlice({
   initialState,
   reducers: {
     getEpisode: (state, { payload }) => {
-      state.queue.push(payload);
+      state.queue.unshift(payload);
     },
 
     addtoQueue: (state, { payload }) => {
       state.queue.push(payload);
     },
 
-    removeFromQueue: (state, {payload}) =>{
-      const indexOf = state.queue.findIndex((podcast)=>{
+    removeFromQueue: (state, { payload }) => {
+      const indexOf = state.queue.findIndex((podcast) => {
         return podcast.uuid === payload.uuid;
-      })
+      });
 
-      state.queue.splice(indexOf, 1)
-    }
-
+      state.queue.splice(indexOf, 1);
+    },
   },
 });
 
-export const { getEpisode, addtoQueue, removeFromQueue} = playerSlice.actions;
+export const { getEpisode, addtoQueue, removeFromQueue } = playerSlice.actions;
 
 export const selectQueue = (state) => state.player.queue;
 export default playerSlice.reducer;

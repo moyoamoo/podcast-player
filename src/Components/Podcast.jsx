@@ -1,6 +1,5 @@
 import React from "react";
 import "./css/podcast.scss";
-import { store } from "../redux/store";
 import { addToLibrary } from "../redux/podcastSlice";
 import defaultImage from "./CSS/assets/podcast-icon.jpg";
 import { Link } from "react-router-dom";

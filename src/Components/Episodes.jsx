@@ -21,6 +21,7 @@ const Episodes = () => {
     genre = podcast.genres[i].split("PODCASTSERIES_");
     formattedGenres.push(genre[1].replaceAll("_", " ").toLowerCase());
   }
+
   return (
     <>
       <div className="episodesContainer">
@@ -28,10 +29,12 @@ const Episodes = () => {
         <div>
           <img src={podcast.imageUrl} />
         </div>
-        <p className="podcastDescription">{podcast.description}</p>
-        <div>
+        <div className="podDescription" dangerouslySetInnerHTML={{ __html: podcast.description }}></div>
+        <div className="genres">
           {formattedGenres.map((genre) => {
-            return <p className="genres">{genre}</p>;
+            return (
+              <p className={genre.replaceAll(" ", "_") + " genre"}>{genre}</p>
+            );
           })}
         </div>
         <div>
@@ -48,11 +51,13 @@ const Episodes = () => {
         </div>
       </div>
       {podcast.episodes.map((episode) => {
-        return <Episode episode={episode} podcast={podcast} key={episode.uuid} />;
+        return (
+          <Episode episode={episode} podcast={podcast} key={episode.uuid} />
+        );
       })}
-     
+      <div className="showMoreContainer">
         <ShowMoreEpisodesBtn podcastUuid={podcast.uuid} />
-     
+      </div>{" "}
     </>
   );
 };

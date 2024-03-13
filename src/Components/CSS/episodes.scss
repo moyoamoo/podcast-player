@@ -1,3 +1,9 @@
+.podDescription {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .episodesContainer {
   display: flex;
   flex-direction: column;
@@ -5,12 +11,21 @@
   align-items: center;
   color: #fff;
 
+  div {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 60%;
+      border-radius: 2rem;
+    }
+  }
+
   p {
-    margin: 2rem;
+    margin: 10px;
   }
 
   h2 {
-    font-size: 3rem;
+    font-size: 4rem;
     color: #fff;
     margin: 2rem;
   }
@@ -23,11 +38,6 @@
   .podcastDescription {
     color: #fff;
     line-height: 25px;
-  }
-
-  img {
-    width: 15rem;
-    border-radius: 0.7rem;
   }
 
   a {
@@ -55,20 +65,23 @@
   margin: 2rem;
   padding: 1rem;
   color: #fff;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 10px;
-  border: 1px solid #ffffff2e;
+  border-radius: 2rem;
+  border: 1px solid #2b4b8b;
+ 
+  img {
+    width: 15rem;
+    border-radius: 0.7rem;
+    height: 50px;
+  }
 }
 
 .showBtn {
-  border: 1px solid #fff;
+  border: none;
   background-color: #666a86;
-  padding: 0.5rem;
+  padding: 0.7rem;
   color: #fff;
   border-radius: 2rem;
+  font-size: 1.5rem;
   font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
 }
 
@@ -81,35 +94,297 @@
 }
 
 .genres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.genre {
   text-transform: capitalize;
+  width: 100px;
+  text-align: center;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 2rem;
 }
 
 .showMoreEps {
-  border: 1px solid #fff;
+  border: none;
   background-color: #666a86;
-  padding: 0.5rem;
+  padding: 1rem;
   color: #fff;
   border-radius: 2rem;
   font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
-  margin-bottom: 12rem;
+  margin-bottom: 8rem;
 }
 
 .queueBtn {
+  border: none;
   background-color: #392f5a;
-  border: 1px solid #fff;
-
-  padding: 0.5rem;
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem;
+  align-items: center;
+  padding: 0.7rem;
   color: #fff;
   border-radius: 2rem;
+  font-size: 1.5rem;
   font-family: "Red Hat Display", Arial, Helvetica, sans-serif;
 
   svg {
     color: #fff;
+    width: 20px;
   }
 }
 
-
-.btnContainer{
+.btnContainer {
   display: flex;
   justify-content: space-between;
 }
+
+.showMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 150px;
+}
+
+.arts {
+  background-color: #8b0c0d;
+}
+.arts_books {
+  background-color: #a20e0f;
+}
+.arts_design {
+  background-color: #ba1012;
+}
+.arts_fashion_and_beauty {
+  background-color: #d11214;
+}
+.arts_food {
+  background-color: #e81416;
+}
+.arts_performing_arts {
+  background-color: #ea2c2d;
+}
+.arts_visual_arts {
+  background-color: #ed4345;
+}
+
+.business {
+  background-color: #b37300;
+}
+.business_careers {
+  background-color: #cc8400;
+}
+.business_entrepreneurship {
+  background-color: #e69500;
+}
+.business_investing {
+  background-color: #ffa500;
+}
+.business_management {
+  background-color: #ffae1a;
+}
+.business_marketing {
+  background-color: #ffb733;
+}
+.business_non_profit {
+  background-color: #ffc04d;
+}
+
+.comedy {
+  background-color: #55890e;
+}
+.comedy_interviews {
+  background-color: #619c10;
+}
+.comedy_improv {
+  background-color: #6db012;
+}
+.comedy_standup {
+  background-color: #79c314;
+}
+
+.education {
+  background-color: #2b4b8b;
+}
+.education_courses {
+  background-color: #3258a2;
+}
+.education_how_to {
+  background-color: #3a64b9;
+}
+.education_language_learning {
+  background-color: #4171d0;
+}
+
+.education_self_improvement {
+  background-color: #487de7;
+}
+
+.fiction {
+  background-color: #ff69b4;
+}
+.fiction_comedy_fiction {
+  background-color: #ff78bc;
+}
+.podcastseries_fiction_drama {
+  background-color: #ff87c3;
+}
+.fiction_science_fiction {
+  background-color: #ff96cb;
+}
+
+.government {
+  background-color: #331524;
+}
+
+.history {
+  background-color: #70369d;
+}
+
+.health_and_fitness {
+  background-color: #04454e;
+}
+.health_and_fitness_alternative_health {
+  background-color: #04454e;
+}
+
+.health_and_fitness_fitness {
+  background-color: #066774;
+}
+.health_and_fitness_medicine {
+  background-color: #077988;
+}
+.health_and_fitness_mental_health {
+  background-color: #088a9b;
+}
+.health_and_fitness_nutrition {
+  background-color: #099bae;
+}
+.health_and_fitness_sexuality {
+  background-color: #0aacc2;
+}
+
+.kids_and_family {
+  background-color: #16ca58;
+}
+.kids_and_family_education_for_kids {
+  background-color: #16ca58;
+}
+.kids_and_family_parenting {
+  background-color: #18dc60;
+}
+.kids_and_family_pets_and_animals {
+  background-color: #23e76a;
+}
+.kids_and_family_stories_for_kids {
+  background-color: #35e977;
+}
+
+.leisure {
+  background-color: #420039;
+}
+.leisure_animation_and_manga {
+  background-color: #660058;
+}
+.leisure_automotive {
+  background-color: #7a006a;
+}
+.leisure_aviation {
+  background-color: #8f007c;
+}
+.leisure_crafts {
+  background-color: #cc00b1;
+}
+.leisure_games {
+  background-color: #cc00b1;
+}
+
+.leisure_hobbies {
+  background-color: #b8009f;
+}
+.leisure_home_and_garden {
+  background-color: #ff0ade;
+}
+.leisure_video_games {
+  background-color: #ff1fe1;
+}
+
+.music {
+  background-color: #260041;
+}
+.music_commentary {
+  background-color: #2d004e;
+}
+.music_history {
+  background-color: #35005b;
+}
+.music_interviews {
+  background-color: #3c0068;
+}
+
+// podcastseries_news
+// podcastseries_news_business
+// podcastseries_news_daily_news
+// podcastseries_news_entertainment
+// podcastseries_news_commentary
+// podcastseries_news_politics
+// podcastseries_news_sports
+// podcastseries_news_tech
+
+// podcastseries_religion_and_spirituality
+// podcastseries_religion_and_spirituality_buddhism
+// podcastseries_religion_and_spirituality_christianity
+// podcastseries_religion_and_spirituality_hinduism
+// podcastseries_religion_and_spirituality_islam
+// podcastseries_religion_and_spirituality_judaism
+// podcastseries_religion_and_spirituality_religion
+// podcastseries_religion_and_spirituality_spirituality
+
+// podcastseries_science
+// podcastseries_science_astronomy
+// podcastseries_science_chemistry
+// podcastseries_science_earth_sciences
+// podcastseries_science_life_sciences
+// podcastseries_science_mathematics
+// podcastseries_science_natural_sciences
+// podcastseries_science_nature
+// podcastseries_science_physics
+// podcastseries_science_social_sciences
+
+// podcastseries_society_and_culture
+// podcastseries_society_and_culture_documentary
+// podcastseries_society_and_culture_personal_journals
+// podcastseries_society_and_culture_philosophy
+// podcastseries_society_and_culture_places_and_travel
+// podcastseries_society_and_culture_relationships
+
+// podcastseries_sports
+// podcastseries_sports_baseball
+// podcastseries_sports_basketball
+// podcastseries_sports_cricket
+// podcastseries_sports_fantasy_sports
+// podcastseries_sports_football
+// podcastseries_sports_golf
+// podcastseries_sports_hockey
+// podcastseries_sports_rugby
+// podcastseries_sports_running
+// podcastseries_sports_soccer
+// podcastseries_sports_swimming
+// podcastseries_sports_tennis
+// podcastseries_sports_volleyball
+// podcastseries_sports_wilderness
+// podcastseries_sports_wrestling
+
+// podcastseries_technology
+
+// podcastseries_true_crime
+
+// podcastseries_tv_and_film
+// podcastseries_tv_and_film_after_shows
+// podcastseries_tv_and_film_history
+// podcastseries_tv_and_film_interviews
+// podcastseries_tv_and_film_film_reviews
+// podcastseries_tv_and_film_tv_reviews

@@ -1,3 +1,14 @@
+.headerContainer{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  img{
+    width: 100px;
+  }
+}
+
+
 .hamburger {
   width: 45px;
   height: 45px;
@@ -7,7 +18,8 @@
   top: 1rem;
   right: 1rem;
   padding: 4px;
-  border: 1px solid #fff;
+  border: none;
+
   background-color: #666a86;
   cursor: pointer;
 

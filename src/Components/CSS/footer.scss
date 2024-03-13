@@ -5,28 +5,32 @@ footer {
 }
 
 .podcastPlayer {
+  padding: 1.2rem;
   margin-top: 10rem;
   width: 100%;
-  height: 180px;
+  height: 220px;
   background-color: #000;
   color: #fff;
 
   p {
     color: #fff;
-    font-size: 1rem;
+    font-size: 1.8rem;
     text-wrap: wrap;
   }
 
   p:nth-child(2n) {
     color: #5cd5eb;
-    font-size: 0.8rem;
+    font-size: 1.5rem;
   }
 
   img {
-    width: 60px;
+    width: 90px;
     margin-right: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
+
   }
+
+
 }
 
 .podcastDetails {
@@ -42,6 +46,7 @@ footer {
   background: none;
   border: none;
   color: #5cd5eb;
+  width: 32px;
 
   svg {
     color: #5cd5eb;
@@ -51,7 +56,7 @@ footer {
 
 .durationControls {
   span {
-    font-size: 0.7rem;
+    font-size: 1.2rem;
   }
   input[type="range"] {
     -webkit-appearance: none;
@@ -81,14 +86,16 @@ footer {
 }
 
 .volumeControls {
-  margin-right: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 300px;
 
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
     cursor: pointer;
-    width: 150px;
+    width: 120px;
   }
 
   input[type="range"]::-webkit-slider-runnable-track {
@@ -114,7 +121,7 @@ footer {
 }
 
 .bottomPlaybackControls {
-  width: 20%;
+  width: 15%;
   display: flex;
   justify-content: space-between;
 }

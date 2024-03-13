@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../CSS/login.scss";
 import { selectUser, setLoggedIn, setMessage, setWindow} from "../../redux/librarySlice";
-import { store } from "../../redux/store";
 import sha256 from "sha256";
 import { useDispatch, useSelector } from "react-redux";
 

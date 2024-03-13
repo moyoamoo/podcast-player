@@ -19,23 +19,45 @@ import {
   TbRewindForward30,
   TbRewindBackward30,
 } from "react-icons/tb";
+import { current } from "@reduxjs/toolkit";
 
 const PodcastPlayer = () => {
   let queue = useSelector(selectQueue);
   const [queueIndex, setQueueIndex] = useState(0);
-  const [podDuration, setpodDuration] = useState(1);
-  const [remainingDuration, setRemainingDuration] = useState(0);
+  const [podDuration, setpodDuration] = useState("00:00");
+  const [remainingDuration, setRemainingDuration] = useState("00:00");
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentVolume, setCurrentVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
   const [loop, setLoop] = useState(false);
   const [playback, setPlayback] = useState(1);
+  const [progress, setProgress] = useState(0);
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
   const audioRef = useRef();
   const podDurationRef = useRef();
   const volumeRef = useRef();
+
+  const formatSeconds = (seconds) => {
+
+    if(typeof seconds !== "number"  || seconds < 1){
+      return 0
+    }
+
+    let secs = seconds;
+    const hours = Math.floor(secs / 3600);
+    secs %= 3600;
+    const minutes = Math.floor(secs / 60);
+    const _seconds = Math.floor(secs % 60);
+
+
+
+    return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
+      2,
+      "0"
+    )} : ${String(_seconds).padStart(2, "0")} `;
+  };
 
   const skipForward = () => {
     if (audioRef.current.duration - audioRef.current.currentTime != 30) {
@@ -74,6 +96,16 @@ const PodcastPlayer = () => {
       audioRef.current.duration * (podDurationRef.current.value / 100);
   };
 
+  const setProgressDuration = () => {
+    const progress = Math.round(
+      (audioRef.current.currentTime / audioRef.current.duration) * 100
+    );
+    console.log(progress);
+    // podDurationRef.current.value = progress ? progress : 0;
+    console.log(podDurationRef.current.value);
+    setProgress(progress);
+  };
+
   const mutePodcast = () => {
     audioRef.current.volume = !audioRef.current.volume;
     setMuted(audioRef.current.volume);
@@ -84,6 +116,13 @@ const PodcastPlayer = () => {
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
     }
   }, [isPlaying, audioRef, queue]);
+
+  // useEffect(()=>{
+  //   setInterval(()=>{
+  //     changeCurrentTime()
+  //     console.log(audioRef.current.currentTime, audioRef.current.duration)
+  //   }, 1000)
+  // }, [])
 
   return (
     <>
@@ -106,8 +145,8 @@ const PodcastPlayer = () => {
             onPlay={() => {
               setInterval(() => {
                 let seconds = audioRef.current.currentTime;
-
                 setRemainingDuration(seconds);
+                setProgressDuration();
               }, 1000);
             }}
             onDurationChange={(e) => {
@@ -175,18 +214,18 @@ const PodcastPlayer = () => {
             </button>
           </div>
           <div className="durationControls">
-            <span>{remainingDuration}</span>
+            <span>{formatSeconds(remainingDuration)}</span>
             <input
               type="range"
               ref={podDurationRef}
-              defaultValue="0"
-              min="1"
+              min="0"
               max="100"
+              value={progress}
               onChange={() => {
                 changeCurrentTime();
               }}
             />
-            <span>{podDuration}</span>
+            <span>{formatSeconds(podDuration)}</span>
           </div>
           <div className="bottomControls">
             <div className="bottomPlaybackControls">
@@ -242,7 +281,7 @@ const PodcastPlayer = () => {
           </div>
         </div>
       ) : (
-        <p>No podcast episodes in queue</p>
+        <div></div>
       )}
     </>
   );
