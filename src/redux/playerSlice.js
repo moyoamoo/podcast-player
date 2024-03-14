@@ -15,12 +15,12 @@ export const playerSlice = createSlice({
   reducers: {
     getEpisode: (state, { payload }) => {
       state.queue.unshift(payload);
-      saveStore("player", store);
+      saveStore("player", state);
     },
 
     addtoQueue: (state, { payload }) => {
       state.queue.push(payload);
-      saveStore("player", store);
+      saveStore("player", state);
     },
 
     removeFromQueue: (state, { payload }) => {
@@ -29,7 +29,7 @@ export const playerSlice = createSlice({
       });
 
       state.queue.splice(indexOf, 1);
-      saveStore("player", store);
+      saveStore("player", state);
     },
   },
 });

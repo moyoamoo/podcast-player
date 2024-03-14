@@ -52,8 +52,9 @@
   button {
     background: none;
     border: none;
-    width: 30px;
-    svg {
+    max-width: 50px;
+    min-width: 50px;
+     svg {
       width: 30px;
       height: 30px;
       color: #666a86;
@@ -67,7 +68,7 @@
   color: #fff;
   border-radius: 2rem;
   border: 1px solid #2b4b8b;
- 
+
   img {
     width: 15rem;
     border-radius: 0.7rem;

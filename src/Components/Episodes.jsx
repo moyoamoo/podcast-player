@@ -33,7 +33,7 @@ const Episodes = () => {
         <div className="genres">
           {formattedGenres.map((genre) => {
             return (
-              <p className={genre.replaceAll(" ", "_") + " genre"}>{genre}</p>
+              <p key={genre} className={genre.replaceAll(" ", "_") + " genre"}>{genre}</p>
             );
           })}
         </div>
