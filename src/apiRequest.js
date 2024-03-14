@@ -7,12 +7,13 @@ import {
   appendApiData,
   sortEpisodeOrder,
   setEmptySearch,
+  appendApiDataSearch,
 } from "./redux/podcastSlice";
 
 const endPoint = "https://api.taddy.org";
 const userID = "1098";
 const apiKey =
-  "xxx1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
+  "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
 
 export const getPodcastData = async (searchTerm, page) => {
   // if (!searchTerm) {
@@ -182,6 +183,44 @@ export const getSortedData = async (uuid, order, page) => {
     );
     console.log(data.data.getPodcastSeries);
     store.dispatch(sortEpisodeOrder(data.data.getPodcastSeries));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMostSearchedData = async (uuid, page) => {
+  console.log(uuid, page)
+  try {
+    const { data } = await axios.post(
+      endPoint,
+      {
+        query: `{
+          getPodcastSeries(uuid: "${uuid}"){
+            uuid
+            name
+            hash
+            childrenHash
+            description
+            imageUrl
+            episodes(sortOrder:LATEST, page:${page}, limitPerPage:10){
+            name 
+            uuid
+            description
+            audioUrl
+            datePublished
+           }
+          }
+        }`,
+      },
+      {
+        headers: {
+          "X-USER-ID": userID,
+          "X-API-Key": apiKey,
+        },
+      }
+    );
+    console.log(data.data);
+    store.dispatch(appendApiDataSearch(data.data.getPodcastSeries));
   } catch (error) {
     console.log(error);
   }

@@ -1,0 +1,13 @@
+
+.mostListened{
+    display: flex;
+    gap: 2rem;
+    justify-content: left;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+.discoverPodcast{
+    width: 250px;
+    border-radius: .7rem;
+}

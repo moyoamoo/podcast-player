@@ -6,7 +6,6 @@ const diskData = getStore("player");
 const initialState = {
   value: 0,
   status: "idle",
-  player: {},
   queue: [],
 };
 export const playerSlice = createSlice({

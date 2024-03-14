@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CSS/footer.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectQueue } from "../redux/playerSlice";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
@@ -20,10 +20,11 @@ import {
   TbRewindBackward30,
 } from "react-icons/tb";
 import { current } from "@reduxjs/toolkit";
+import { setListened } from "../redux/statsSlice";
 
 const PodcastPlayer = () => {
   let queue = useSelector(selectQueue);
-  const [queueIndex, setQueueIndex] = useState(0);
+  let [queueIndex, setQueueIndex] = useState(0);
   const [podDuration, setpodDuration] = useState("00:00");
   const [remainingDuration, setRemainingDuration] = useState("00:00");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,14 +33,15 @@ const PodcastPlayer = () => {
   const [loop, setLoop] = useState(false);
   const [playback, setPlayback] = useState(1);
   const [progress, setProgress] = useState(0);
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
   const audioRef = useRef();
   const podDurationRef = useRef();
   const volumeRef = useRef();
+  const dispatch = useDispatch();
 
- 
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   const formatSeconds = (seconds) => {
     if (typeof seconds !== "number" || seconds < 1) {
       return "00:00:00";
@@ -90,6 +92,9 @@ const PodcastPlayer = () => {
   };
 
   const changeCurrentTime = () => {
+    //     const value = Math.floor(myPrcent * 10) / 1000;
+    // if (isNaN(value) || !isFinite(value)) return defaultValue;
+    // return value;
     audioRef.current.currentTime =
       audioRef.current.duration * (podDurationRef.current.value / 100);
   };
@@ -134,20 +139,20 @@ const PodcastPlayer = () => {
             onPlay={() => {
               const displayTime = setInterval(() => {
                 let seconds = audioRef.current.currentTime;
-            
+
                 if (typeof seconds !== "number") {
                   return setRemainingDuration(0);
                 }
                 setRemainingDuration(seconds);
                 setProgressDuration();
               }, 1000);
-            
             }}
             onDurationChange={(e) => {
               let seconds = e.currentTarget.duration;
               setpodDuration(seconds);
             }}
             onEnded={() => {
+              dispatch(setListened(queue[queueIndex].podcastUuid));
               if (queueIndex < queue.length - 1) {
                 queueIndex++;
               } else {
