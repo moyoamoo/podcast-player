@@ -28,10 +28,11 @@ const Library = () => {
     if (!loggedIn) {
       navigate("/");
     } else {
-      dispatch(clearApiData())
+      dispatch(clearApiData());
       if (libraryPodcastsUuid.length > 0) {
         libraryPodcastsUuid.forEach((uuid) => {
-           getLibraryData(uuid, 1);
+          getLibraryData(uuid, 1);
+
         });
       }
     }

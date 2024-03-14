@@ -13,7 +13,7 @@ import {
 const endPoint = "https://api.taddy.org";
 const userID = "1098";
 const apiKey =
-  "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
+  "xxx1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
 
 export const getPodcastData = async (searchTerm, page) => {
   // if (!searchTerm) {
@@ -197,6 +197,7 @@ export const getMostSearchedData = async (uuid, page) => {
         query: `{
           getPodcastSeries(uuid: "${uuid}"){
             uuid
+            genres
             name
             hash
             childrenHash

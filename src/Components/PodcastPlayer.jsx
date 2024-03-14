@@ -19,14 +19,13 @@ import {
   TbRewindForward30,
   TbRewindBackward30,
 } from "react-icons/tb";
-import { current } from "@reduxjs/toolkit";
 import { setListened } from "../redux/statsSlice";
 
 const PodcastPlayer = () => {
-  let queue = useSelector(selectQueue);
+  const queue = useSelector(selectQueue);
   let [queueIndex, setQueueIndex] = useState(0);
-  const [podDuration, setpodDuration] = useState("00:00");
-  const [remainingDuration, setRemainingDuration] = useState("00:00");
+  const [podDuration, setpodDuration] = useState("00:00:00");
+  const [remainingDuration, setRemainingDuration] = useState("00:00:00");
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentVolume, setCurrentVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
@@ -38,13 +37,15 @@ const PodcastPlayer = () => {
   const volumeRef = useRef();
   const dispatch = useDispatch();
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+  const togglePlayPause = async () => {
+    if (audioRef) {
+      setIsPlaying(!isPlaying);
+    }
   };
 
   const formatSeconds = (seconds) => {
     if (typeof seconds !== "number" || seconds < 1) {
-      return "00:00:00";
+      return String("00:00:00");
     }
 
     let secs = seconds;
@@ -87,14 +88,11 @@ const PodcastPlayer = () => {
   };
 
   const changeVolume = () => {
-    audioRef.current.volume = volumeRef.current.value / 100;
+    audioRef.current.volume = Math.round(volumeRef.current.value / 100);
     setCurrentVolume(audioRef.current.volume);
   };
 
   const changeCurrentTime = () => {
-    //     const value = Math.floor(myPrcent * 10) / 1000;
-    // if (isNaN(value) || !isFinite(value)) return defaultValue;
-    // return value;
     audioRef.current.currentTime =
       audioRef.current.duration * (podDurationRef.current.value / 100);
   };
@@ -113,7 +111,7 @@ const PodcastPlayer = () => {
   };
 
   useEffect(() => {
-    if (queue.length > 0) {
+    if (audioRef) {
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
     }
   }, [isPlaying, audioRef, queue]);
@@ -182,14 +180,18 @@ const PodcastPlayer = () => {
             >
               <TbRewindBackward30 />
             </button>
-            <button
-              className="controlBtn"
-              onClick={() => {
-                togglePlayPause();
-              }}
-            >
-              {isPlaying ? <FaPause /> : <FaPlay />}
-            </button>
+
+
+              <button
+                className="controlBtn"
+                onClick={() => {
+                  togglePlayPause();
+                }}
+              >
+                {isPlaying ? <FaPause /> : <FaPlay />}
+              </button>
+            
+
             <button
               className="controlBtn"
               onClick={() => {

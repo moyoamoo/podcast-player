@@ -8,6 +8,7 @@ import "./CSS/libraryPodcasts.scss"
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
   const emptySearch = useSelector(selectEmptySearch);
+
   let filteredPodcastSeries;
 
   filteredPodcastSeries = podcastSeries.filter((podcast) => {

@@ -13,13 +13,15 @@ const Episodes = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const podcast = useSelector(selectPodcast(id));
-  const epLength = useSelector(selectEpisodeLength);
-
   let genre;
   let formattedGenres = [];
-  for (let i = 0; i < podcast.genres.length; i++) {
-    genre = podcast.genres[i].split("PODCASTSERIES_");
-    formattedGenres.push(genre[1].replaceAll("_", " ").toLowerCase());
+  // const epLength = useSelector(selectEpisodeLength);
+
+  if (podcast.genres) {
+    for (let i = 0; i < podcast.genres.length; i++) {
+      genre = podcast.genres[i].split("PODCASTSERIES_");
+      formattedGenres.push(genre[1].replaceAll("_", " ").toLowerCase());
+    }
   }
 
   return (
@@ -29,14 +31,24 @@ const Episodes = () => {
         <div>
           <img src={podcast.imageUrl} />
         </div>
-        <div className="podDescription" dangerouslySetInnerHTML={{ __html: podcast.description }}></div>
-        <div className="genres">
-          {formattedGenres.map((genre) => {
-            return (
-              <p key={genre} className={genre.replaceAll(" ", "_") + " genre"}>{genre}</p>
-            );
-          })}
-        </div>
+        <div
+          className="podDescription"
+          dangerouslySetInnerHTML={{ __html: podcast.description }}
+        ></div>
+        {podcast.genres && (
+          <div className="genres">
+            {formattedGenres.map((genre) => {
+              return (
+                <p
+                  key={genre}
+                  className={genre.replaceAll(" ", "_") + " genre"}
+                >
+                  {genre}
+                </p>
+              );
+            })}
+          </div>
+        )}
         <div>
           <select
             onChange={(e) => {

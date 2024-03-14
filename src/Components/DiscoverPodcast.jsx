@@ -1,10 +1,13 @@
 import React from "react";
 import "./CSS/stats.scss";
+import { Link } from "react-router-dom";
 
 const DiscoverPodcast = ({ podcast }) => {
   return (
     <>
-      <img className="discoverPodcast" src={podcast.imageUrl} />
+      <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
+        <img className="discoverPodcast" src={podcast.imageUrl} />
+      </Link>
     </>
   );
 };
