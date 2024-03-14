@@ -1,39 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import sha256 from "sha256";
+import { getStore, saveStore } from "./diskUtils";
+
+const diskData = getStore("library");
 
 const initialState = {
   value: 0,
   status: "idle",
   window: 1,
-  loggedIn: true
+  loggedIn: true,
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
-  initialState,
+  initialState: diskData ? diskData : initialState,
   reducers: {
-  
-
     searchLibraryPodcast: (state, { payload }) => {
       state.searchTerm = payload;
+      saveStore("library", state);
     },
 
     setNewUser: (state, { payload }) => {
       payload.password = sha256(payload.password + "ZhmyyeQaVRwu7wf");
       state.user = payload;
+      saveStore("library", state);
     },
 
     setWindow: (state, { payload }) => {
       state.window = payload;
+      saveStore("library", state);
     },
 
     setMessage: (state, { payload }) => {
       state.message = payload;
-      // localStorage.setItem("message", JSON.stringify(state.message));
+      saveStore("library", state);
     },
 
     setLoggedIn: (state) => {
       state.loggedIn = !state.loggedIn;
+      saveStore("library", state);
     },
   },
 });
@@ -45,7 +49,6 @@ export const {
   setMessage,
   setLoggedIn,
 } = librarySlice.actions;
-
 
 export const selectSearchTerm = (state) => state.library.searchTerm;
 export const selectWindow = (state) => state.library.window;

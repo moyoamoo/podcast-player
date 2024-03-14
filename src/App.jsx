@@ -13,10 +13,11 @@ import { selectMessage, setMessage } from "./redux/librarySlice";
 import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 import Queue from "./Components/Queue";
+import Discover from "./Components/Discover";
 
 const App = () => {
   const message = useSelector(selectMessage);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!message) return;
@@ -37,6 +38,8 @@ const App = () => {
         <Route path="search" element={<Search />} />
         <Route path="library" element={<Library />} />
         <Route path="queue" element={<Queue />} />
+        <Route path="queue" element={<Queue />} />
+        <Route path="discover" element={<Discover />} />
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
       </Routes>

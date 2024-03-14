@@ -39,10 +39,10 @@ const PodcastPlayer = () => {
   const podDurationRef = useRef();
   const volumeRef = useRef();
 
+ 
   const formatSeconds = (seconds) => {
-
-    if(typeof seconds !== "number"  || seconds < 1){
-      return 0
+    if (typeof seconds !== "number" || seconds < 1) {
+      return "00:00:00";
     }
 
     let secs = seconds;
@@ -50,8 +50,6 @@ const PodcastPlayer = () => {
     secs %= 3600;
     const minutes = Math.floor(secs / 60);
     const _seconds = Math.floor(secs % 60);
-
-
 
     return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
       2,
@@ -100,15 +98,13 @@ const PodcastPlayer = () => {
     const progress = Math.round(
       (audioRef.current.currentTime / audioRef.current.duration) * 100
     );
-    console.log(progress);
-    // podDurationRef.current.value = progress ? progress : 0;
-    console.log(podDurationRef.current.value);
     setProgress(progress);
   };
 
   const mutePodcast = () => {
     audioRef.current.volume = !audioRef.current.volume;
     setMuted(audioRef.current.volume);
+    console.log(muted);
   };
 
   useEffect(() => {
@@ -116,13 +112,6 @@ const PodcastPlayer = () => {
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
     }
   }, [isPlaying, audioRef, queue]);
-
-  // useEffect(()=>{
-  //   setInterval(()=>{
-  //     changeCurrentTime()
-  //     console.log(audioRef.current.currentTime, audioRef.current.duration)
-  //   }, 1000)
-  // }, [])
 
   return (
     <>
@@ -143,11 +132,16 @@ const PodcastPlayer = () => {
             src={queue[queueIndex].audioUrl}
             ref={audioRef}
             onPlay={() => {
-              setInterval(() => {
+              const displayTime = setInterval(() => {
                 let seconds = audioRef.current.currentTime;
+            
+                if (typeof seconds !== "number") {
+                  return setRemainingDuration(0);
+                }
                 setRemainingDuration(seconds);
                 setProgressDuration();
               }, 1000);
+            
             }}
             onDurationChange={(e) => {
               let seconds = e.currentTarget.duration;
@@ -159,6 +153,7 @@ const PodcastPlayer = () => {
               } else {
                 queueIndex = 0;
               }
+              clearInterval(displayTime);
             }}
           />
           <div className="playbackControls">
@@ -201,13 +196,11 @@ const PodcastPlayer = () => {
             <button
               className="controlBtn"
               onClick={() => {
-                console.log("clicked");
                 if (queueIndex < queue.length - 1) {
                   setQueueIndex(queueIndex + 1);
                 } else {
                   setQueueIndex(0);
                 }
-                console.log(queueIndex);
               }}
             >
               <FaForwardStep />

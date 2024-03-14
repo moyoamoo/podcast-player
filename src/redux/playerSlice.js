@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { saveStore, getStore } from "./diskUtils";
+
+const diskData = getStore("player");
+
 const initialState = {
   value: 0,
   status: "idle",
@@ -7,14 +11,16 @@ const initialState = {
 };
 export const playerSlice = createSlice({
   name: "playerSlice",
-  initialState,
+  initialState: diskData ? diskData : initialState,
   reducers: {
     getEpisode: (state, { payload }) => {
       state.queue.unshift(payload);
+      saveStore("player", store);
     },
 
     addtoQueue: (state, { payload }) => {
       state.queue.push(payload);
+      saveStore("player", store);
     },
 
     removeFromQueue: (state, { payload }) => {
@@ -23,6 +29,7 @@ export const playerSlice = createSlice({
       });
 
       state.queue.splice(indexOf, 1);
+      saveStore("player", store);
     },
   },
 });
