@@ -20,10 +20,13 @@ import {
   TbRewindBackward30,
 } from "react-icons/tb";
 import { setListened } from "../redux/statsSlice";
+import PodcastPlayerDescription from "./PodcastPlayerDescription";
+import PodcastPlayerPlaybackControl from "./PodcastPlayerPlaybackControl";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
   let [queueIndex, setQueueIndex] = useState(0);
+  const [readyState, setReadyState] = useState(false);
   const [podDuration, setpodDuration] = useState("00:00:00");
   const [remainingDuration, setRemainingDuration] = useState("00:00:00");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -37,11 +40,19 @@ const PodcastPlayer = () => {
   const volumeRef = useRef();
   const dispatch = useDispatch();
 
-  const togglePlayPause = useCallback(async () => {
-    if (audioRef.current.readyState >= 3) {
-      setIsPlaying(!isPlaying);
+  useEffect(() => {
+    setReadyState(false);
+    setpodDuration("00:00:00");
+    setIsPlaying(false);
+  }, [queueIndex, queue]);
+
+  const setQueue = () => {
+    if (queueIndex > 0) {
+      setQueueIndex(queueIndex + 1);
+    } else {
+      setQueueIndex(0);
     }
-  });
+  };
 
   const formatSeconds = (seconds) => {
     if (typeof seconds !== "number" || seconds < 1) {
@@ -112,30 +123,34 @@ const PodcastPlayer = () => {
     console.log(muted);
   };
 
-  useEffect(() => {
-    if (queue.length > 0) {
-      isPlaying ? audioRef.current.play() : audioRef.current.pause();
+  const togglePlay = () => {
+    console.log(readyState);
+    if (isPlaying && readyState) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
     }
-  }, [isPlaying, audioRef, queue]);
+    setIsPlaying(!isPlaying);
+  };
+  // useEffect(() => {
+  //   if (queue.length > 0) {
+  //     isPlaying ? audioRef.current.play() : audioRef.current.pause();
+  //     console.log();
+  //   }
+  // }, [isPlaying, audioRef, queue]);
 
   return (
     <>
-      {queue.length > 0 ? (
+      {audioRef ? (
         <div className="podcastPlayer">
-          <div className="podcastDetails">
-            <img
-              src={queue[queueIndex].imageUrl}
-              alt={queue[queueIndex].podcastName}
-            />
-            <div>
-              <p>{queue[queueIndex].name}</p>
-              <p>{queue[queueIndex].podcastName}</p>
-            </div>
-          </div>
-
+          <PodcastPlayerDescription queue={queue} queueIndex={queueIndex} />
           <audio
             src={queue[queueIndex].audioUrl}
+            preload="metadata"
             ref={audioRef}
+            onCanPlay={() => {
+              setReadyState(true);
+            }}
             onPlay={() => {
               const displayTime = setInterval(() => {
                 let seconds = audioRef.current.currentTime;
@@ -161,9 +176,15 @@ const PodcastPlayer = () => {
               }
               clearInterval(displayTime);
             }}
-          />
+          ></audio>
+     
           <div className="playbackControls">
-            <button
+          <PodcastPlayerPlaybackControl
+            className="controlBtn"
+            func={setQueue}
+            icon={<FaBackwardStep />}
+          />
+            {/* <button
               className="controlBtn"
               onClick={() => {
                 if (queueIndex > 0) {
@@ -174,7 +195,7 @@ const PodcastPlayer = () => {
               }}
             >
               <FaBackwardStep />
-            </button>
+            </button> */}
             <button
               className="controlBtn"
               onClick={() => {
@@ -183,14 +204,13 @@ const PodcastPlayer = () => {
             >
               <TbRewindBackward30 />
             </button>
-
             <button
               className="controlBtn"
               onClick={() => {
-                togglePlayPause();
+                togglePlay();
               }}
             >
-              {isPlaying ? <FaPause /> : <FaPlay />}
+              {readyState ? isPlaying ? <FaPause /> : <FaPlay /> : null}
             </button>
 
             <button
