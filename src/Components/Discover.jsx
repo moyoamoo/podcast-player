@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectListened } from "../redux/statsSlice";
-import { selectPodcastsSeries } from "../redux/podcastSlice";
-import { appendApiDataSearch, clearApiData } from "../redux/podcastSlice";
+import { selectListened, setMostListened } from "../redux/statsSlice";
+import {
+  appendApiDataSearch,
+  clearApiData,
+  selectPodcastsSeries,
+} from "../redux/podcastSlice";
 import { getMostSearchedData } from "../apiRequest";
 import DiscoverPodcast from "./DiscoverPodcast";
+import { rankList } from "./utils";
 import "./CSS/stats.scss";
 
 const Discover = () => {
@@ -16,27 +20,14 @@ const Discover = () => {
 
   useEffect(() => {
     if (listened.length > 0) {
-      let listenedTotal = {};
-      listened.forEach((podcast) => {
-        if (listenedTotal[podcast]) {
-          listenedTotal[podcast] += 1;
-        } else {
-          listenedTotal[podcast] = 1;
-        }
-      });
-      console.log(listenedTotal);
-
-      const sortedListenedTotal = Object.fromEntries(
-        Object.entries(listenedTotal).sort(([, a], [, b]) => b - a)
-      );
+      const sortedListenedTotal = rankList(listened);
+      dispatch(setMostListened(sortedListenedTotal));
 
       if (Object.keys(sortedListenedTotal).length >= 5) {
         topListenedUuid = Object.keys(sortedListenedTotal).slice(0, 5);
       } else {
         topListenedUuid = Object.keys(sortedListenedTotal);
       }
-      console.log(topListenedUuid)
-      dispatch(clearApiData());
       topListenedUuid.forEach((uuid) => {
         getMostSearchedData(uuid, 1);
       });
@@ -58,7 +49,7 @@ const Discover = () => {
             return <DiscoverPodcast key={podcast.uuid} podcast={podcast} />;
           })
         ) : (
-          <></>
+          <div className="validation">No previous Listens</div>
         )}
       </div>
     </div>

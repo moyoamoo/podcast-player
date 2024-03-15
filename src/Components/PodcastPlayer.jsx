@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./CSS/footer.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectQueue } from "../redux/playerSlice";
@@ -28,7 +28,7 @@ const PodcastPlayer = () => {
   const [remainingDuration, setRemainingDuration] = useState("00:00:00");
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentVolume, setCurrentVolume] = useState(0.5);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(1);
   const [loop, setLoop] = useState(false);
   const [playback, setPlayback] = useState(1);
   const [progress, setProgress] = useState(0);
@@ -37,11 +37,11 @@ const PodcastPlayer = () => {
   const volumeRef = useRef();
   const dispatch = useDispatch();
 
-  const togglePlayPause = async () => {
-    if (audioRef) {
+  const togglePlayPause = useCallback(async () => {
+    if (audioRef.current.readyState >= 3) {
       setIsPlaying(!isPlaying);
     }
-  };
+  });
 
   const formatSeconds = (seconds) => {
     if (typeof seconds !== "number" || seconds < 1) {
@@ -93,8 +93,10 @@ const PodcastPlayer = () => {
   };
 
   const changeCurrentTime = () => {
-    audioRef.current.currentTime =
-      audioRef.current.duration * (podDurationRef.current.value / 100);
+    if (audioRef.current.readyState >= 3) {
+      audioRef.current.currentTime =
+        (audioRef.current.duration * podDurationRef.current.value) / 100;
+    }
   };
 
   const setProgressDuration = () => {
@@ -111,7 +113,7 @@ const PodcastPlayer = () => {
   };
 
   useEffect(() => {
-    if (audioRef) {
+    if (queue.length > 0) {
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
     }
   }, [isPlaying, audioRef, queue]);
@@ -151,6 +153,7 @@ const PodcastPlayer = () => {
             }}
             onEnded={() => {
               dispatch(setListened(queue[queueIndex].podcastUuid));
+              dispatch(setGenres(queue[queueIndex].genres));
               if (queueIndex < queue.length - 1) {
                 queueIndex++;
               } else {
@@ -181,16 +184,14 @@ const PodcastPlayer = () => {
               <TbRewindBackward30 />
             </button>
 
-
-              <button
-                className="controlBtn"
-                onClick={() => {
-                  togglePlayPause();
-                }}
-              >
-                {isPlaying ? <FaPause /> : <FaPlay />}
-              </button>
-            
+            <button
+              className="controlBtn"
+              onClick={() => {
+                togglePlayPause();
+              }}
+            >
+              {isPlaying ? <FaPause /> : <FaPlay />}
+            </button>
 
             <button
               className="controlBtn"
