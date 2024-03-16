@@ -14,3 +14,20 @@ export const rankList = (arr) => {
 
   return sortedObjTotal;
 };
+
+export const formatSeconds = (seconds) => {
+  if (typeof seconds !== "number" || seconds < 1) {
+    return String("00:00:00");
+  }
+
+  let secs = seconds;
+  const hours = Math.floor(secs / 3600);
+  secs %= 3600;
+  const minutes = Math.floor(secs / 60);
+  const _seconds = Math.floor(secs % 60);
+
+  return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
+    2,
+    "0"
+  )} : ${String(_seconds).padStart(2, "0")} `;
+};
