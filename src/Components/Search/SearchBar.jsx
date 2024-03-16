@@ -1,7 +1,7 @@
 import React from "react";
-import { getPodcastData } from "../apiRequest";
+import { getPodcastData } from "../../apiRequest";
 import { useState } from "react";
-import "./CSS/SearchBar.scss";
+import "../CSS/SearchBar.scss";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
@@ -15,7 +15,8 @@ const SearchBar = () => {
           setSearchTerm(e.target.value);
         }}
       />
-      <button className="searchBtn"
+      <button
+        className="searchBtn"
         onClick={() => {
           getPodcastData(searchTerm, 1);
         }}

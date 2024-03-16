@@ -1,5 +1,4 @@
 import React from "react";
-import "./CSS/stats.scss";
 import { Link } from "react-router-dom";
 
 const DiscoverPodcast = ({ podcast }) => {

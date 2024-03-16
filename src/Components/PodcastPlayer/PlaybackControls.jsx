@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import PodcastPlayerPlaybackControl from "./PodcastPlayerPlaybackControl";
+import PlaybackControl from "./PlaybackControl";
 import { FaForwardStep, FaBackwardStep } from "react-icons/fa6";
 import { TbRewindForward30, TbRewindBackward30 } from "react-icons/tb";
 import PlayButton from "./PlayButton";
@@ -38,12 +38,12 @@ const PlaybackControls = forwardRef(function PlaybackControls(
 
   return (
     <>
-      <PodcastPlayerPlaybackControl
+      <PlaybackControl
         className="controlBtn"
         func={previousPod}
         icon={<FaBackwardStep />}
       />
-      <PodcastPlayerPlaybackControl
+      <PlaybackControl
         className="controlBtn"
         func={skipBackward}
         icon={<TbRewindBackward30 />}
@@ -56,12 +56,12 @@ const PlaybackControls = forwardRef(function PlaybackControls(
         setIsPlaying={setIsPlaying}
       />
 
-      <PodcastPlayerPlaybackControl
+      <PlaybackControl
         className="controlBtn"
         func={skipForward}
         icon={<TbRewindForward30 />}
       />
-      <PodcastPlayerPlaybackControl
+      <PlaybackControl
         className="controlBtn"
         func={nextPod}
         icon={<FaForwardStep />}

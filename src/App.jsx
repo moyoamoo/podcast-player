@@ -1,6 +1,6 @@
 import React from "react";
 import "./Components/CSS/generic.css";
-import Search from "./Components/Search";
+import Search from "./Components/Search/Search";
 import Header from "./Components/Header";
 import { Route, Routes } from "react-router-dom";
 import Episodes from "./Components/Episodes";
@@ -13,7 +13,7 @@ import { selectMessage, setMessage } from "./redux/librarySlice";
 import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 import Queue from "./Components/Queue";
-import Discover from "./Components/Discover";
+import Discover from "./Components/Discover/Discover";
 
 const App = () => {
   const message = useSelector(selectMessage);

@@ -1,11 +1,11 @@
 import React, { useEffect, useState} from "react";
-import "./css/podcast.scss";
-import { addToLibrary, selectLibrary } from "../redux/podcastSlice";
-import defaultImage from "./CSS/assets/podcast-icon.jpg";
+import "../css/podcast.scss";
+import { addToLibrary, selectLibrary } from "../../redux/podcastSlice";
+import defaultImage from "../CSS/assets/podcast-icon.jpg";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { selectLoggedIn, setMessage } from "../redux/librarySlice";
+import { selectLoggedIn, setMessage } from "../../redux/librarySlice";
 
 const Podcast = ({ podcast }) => {
   const loggedIn = useSelector(selectLoggedIn);
@@ -17,8 +17,7 @@ const Podcast = ({ podcast }) => {
     console.log(podcast.uuid);
     dispatch(addToLibrary(podcast.uuid));
 
-   
-
+  
     // if (loggedIn) {
     //   dispatch(addToLibrary(podcast.uuid));
     //   dispatch(setMessage("Added to Library"));

@@ -1,13 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./CSS/footer.scss";
+import "../CSS/footer.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { selectQueue } from "../redux/playerSlice";
-import { setListened } from "../redux/statsSlice";
+import { selectQueue } from "../../redux/playerSlice";
+import { setListened } from "../../redux/statsSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
-import PlaybackControls from "./PlaybackControls";
-import VolumeControls from "./VolumeControls";
-import BottomPlaybackControls from "./BottomPlaybackControls";
-import DurationControls from "./DurationControls";
 import Controls from "./Controls";
 
 const PodcastPlayer = () => {
@@ -50,7 +46,6 @@ const PodcastPlayer = () => {
               const displayTime = setInterval(() => {
                 if (audioRef.current.currentTime) {
                   let seconds = audioRef.current.currentTime;
-
                   if (typeof seconds !== "number") {
                     return setRemainingDuration(0);
                   }

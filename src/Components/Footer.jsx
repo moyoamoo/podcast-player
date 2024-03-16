@@ -1,5 +1,5 @@
 import React from 'react';
-import PodcastPlayer from './PodcastPlayer';
+import PodcastPlayer from './PodcastPlayer/PodcastPlayer';
 import "./CSS/footer.scss"
 
 

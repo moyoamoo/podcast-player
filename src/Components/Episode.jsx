@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 import { store } from "../redux/store";
@@ -14,24 +14,15 @@ import { useSelector } from "react-redux";
 
 const Episode = ({ episode, podcast }) => {
   const [showDescription, setDescription] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [inQueue, setQueue] = useState(false);
   const queue = useSelector(selectQueue);
   const toggleDescription = () => {
     setDescription(!showDescription);
   };
+  console.log(queue[0].uuid)
 
-  // const checkQueue = () =>{
-  //   const indexOf = queue.findIndex((queuePod) => {
-  //     return queuePod.podcastUuid === podcast.uuid;
-  //   });
-
-  //   if(indexOf === -1){
-  //     setQueue(false)
-  //   } else {
-  //     setQueue(true)
-  //   }
-  // }
-
+ 
   return (
     <div className="episodeContainer">
       <div className="epHeader">

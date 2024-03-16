@@ -13,7 +13,7 @@ const DurationBar = forwardRef(function DurationBar(
   };
   return (
     <>
-      <input
+      <input className="durationBar"
         type="range"
         ref={podDurationRef}
         min="0"

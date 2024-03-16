@@ -41,7 +41,7 @@ const Controls = forwardRef(function Controls(
         />
       </div>
       <div className="bottomControls">
-        <div className="bottomPlaybackControls">
+        <div className="bottomPlaybackControls ">
           <BottomPlaybackControls ref={audioRef} />
         </div>
 

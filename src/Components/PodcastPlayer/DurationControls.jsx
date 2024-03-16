@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { formatSeconds } from "./utils";
+import { formatSeconds } from "../utils";
 import DurationBar from "./DurationBar";
 import PodcastPlayerTime from "./PodcastPlayerTime";
 

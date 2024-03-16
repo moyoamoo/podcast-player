@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectListened, setMostListened } from "../redux/statsSlice";
-import {
-  appendApiDataSearch,
-  clearApiData,
-  selectPodcastsSeries,
-} from "../redux/podcastSlice";
-import { getMostSearchedData } from "../apiRequest";
+import { selectListened, setMostListened } from "../../redux/statsSlice";
+import { selectPodcastsSeries } from "../../redux/podcastSlice";
+import { getMostSearchedData } from "../../apiRequest";
 import DiscoverPodcast from "./DiscoverPodcast";
-import { rankList } from "./utils";
-import "./CSS/stats.scss";
+import { rankList } from "../utils";
+import "../CSS/stats.scss";
 
 const Discover = () => {
   const dispatch = useDispatch();

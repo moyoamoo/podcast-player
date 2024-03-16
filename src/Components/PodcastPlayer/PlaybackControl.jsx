@@ -1,6 +1,10 @@
 import React from "react";
 
-const PodcastPlayerPlaybackControl = ({ className, func, icon }) => {
+const PlaybackControl = ({
+  className,
+  func,
+  icon,
+}) => {
   return (
     <>
       <button className={className} onClick={func}>
@@ -10,4 +14,4 @@ const PodcastPlayerPlaybackControl = ({ className, func, icon }) => {
   );
 };
 
-export default PodcastPlayerPlaybackControl;
+export default PlaybackControl;

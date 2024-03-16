@@ -37,7 +37,6 @@ export const podcastSlice = createSlice({
         ...payload.getPodcastSeries.episodes
       );
       saveStore("podcast", state);
-
     },
 
     //adds to library
@@ -46,11 +45,10 @@ export const podcastSlice = createSlice({
       state.apiData.searchForTerm.podcastSeries.push(payload);
       console.log(state.apiData.searchForTerm.podcastSeries);
       saveStore("podcast", state);
-
     },
 
-    //save search for most listened 
-    appendApiDataSearch: (state, {payload})=>{
+    //save search for most listened
+    appendApiDataSearch: (state, { payload }) => {
       payload["search"] = true;
       state.apiData.searchForTerm.podcastSeries.push(payload);
       console.log(state.apiData.searchForTerm.podcastSeries);
@@ -63,13 +61,11 @@ export const podcastSlice = createSlice({
       });
       state.userLibrary.splice(indexOf, 1);
       saveStore("podcast", state);
-
     },
 
     storeEpisodeLength: (state, { payload }) => {
       state.episodeLength = payload;
       saveStore("podcast", state);
-
     },
 
     sortEpisodeOrder: (state, { payload }) => {
@@ -85,13 +81,11 @@ export const podcastSlice = createSlice({
         ...payload.episodes
       );
       saveStore("podcast", state);
-
     },
 
     setPodcastSearchTerm: (state, { payload }) => {
       state.searchTerm = payload;
       saveStore("podcast", state);
-
     },
 
     sortPodcasts: (state, { payload }) => {
@@ -119,39 +113,36 @@ export const podcastSlice = createSlice({
           break;
       }
       saveStore("podcast", state);
-      
     },
 
     clearApiData: (state) => {
       state.apiData = initialState.apiData;
-  ;      saveStore("podcast", state);
-
+      saveStore("podcast", state);
     },
 
+
     addToLibrary: (state, { payload }) => {
+      //check if in library 
       for (let i = 0; i < state.userLibrary.length; i++) {
         if (state.userLibrary[i] === payload) {
+          saveStore("podcast", state);
           return;
         }
       }
       state.userLibrary.push(payload);
       saveStore("podcast", state);
-
     },
 
     //order of podcast sort - oldest/newest
     setOrder: (state, { payload }) => {
       state.sortOrder = payload;
       saveStore("podcast", state);
-
     },
 
     setEmptySearch: (state, { payload }) => {
       state.emptySearch = payload;
       saveStore("podcast", state);
-
     },
-
   },
 });
 
@@ -170,7 +161,7 @@ export const {
   sortPodcasts,
   setEmptySearch,
   clearApiData,
-  appendApiDataSearch
+  appendApiDataSearch,
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>

@@ -1,9 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectEmptySearch, selectPodcastsSeries } from "../redux/podcastSlice";
-import Spinner from "./Spinner";
+import {
+  selectEmptySearch,
+  selectPodcastsSeries,
+} from "../../redux/podcastSlice";
+import Spinner from "../Spinner";
 import Podcast from "./Podcast";
-import "./CSS/libraryPodcasts.scss"
+import "../CSS/libraryPodcasts.scss";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
@@ -18,17 +21,20 @@ const PodcastResults = () => {
   });
 
   return emptySearch ? (
-  <div className="validation">  <p>Enter a podcast name to search </p></div>
+    <div className="validation">
+      <p>Enter a podcast name to search </p>
+    </div>
   ) : !podcastSeries ? (
     <Spinner />
+  ) : filteredPodcastSeries.length === 0 ? (
+    <div className="validation">
+      {" "}
+      <p>No results found</p>
+    </div>
   ) : (
-    (filteredPodcastSeries.length === 0 ? (
-   <div className="validation">   <p>No results found</p></div>
-    ) : (
-      filteredPodcastSeries.map((podcast) => {
-        return <Podcast podcast={podcast} key={podcast.uuid} />;
-      })
-    ))
+    filteredPodcastSeries.map((podcast) => {
+      return <Podcast podcast={podcast} key={podcast.uuid} />;
+    })
   );
 };
 
