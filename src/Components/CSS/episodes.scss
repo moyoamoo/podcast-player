@@ -54,11 +54,24 @@
     border: none;
     max-width: 50px;
     min-width: 50px;
-     svg {
+    svg {
       width: 30px;
       height: 30px;
       color: #666a86;
     }
+  }
+}
+
+.queueDeleteBtn {
+  background:none;
+  color: #fff;
+  border: none;
+  max-width: 100px;
+  min-width: 50px;
+  svg {
+    width: 30px;
+    height: 30px;
+    color: #fff;
   }
 }
 
