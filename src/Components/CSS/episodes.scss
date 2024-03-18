@@ -4,6 +4,11 @@
   flex-direction: column;
 }
 
+.queueContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
 .episodesContainer {
   display: flex;
   flex-direction: column;
@@ -25,7 +30,7 @@
   }
 
   h2 {
-    font-size: 4rem;
+    font-size: 3rem;
     color: #fff;
     margin: 2rem;
   }
