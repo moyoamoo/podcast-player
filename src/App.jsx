@@ -1,18 +1,17 @@
 import React from "react";
 import "./Components/CSS/generic.css";
 import Search from "./Components/Search/Search";
-import Header from "./Components/Header";
+import Header from "./Components/Header/Header";
 import { Route, Routes } from "react-router-dom";
-import Episodes from "./Components/Episodes";
+import Episodes from "./Components/Episodes/Episodes";
 import Footer from "./Components/Footer";
 import Index from "./Components/Library/Index";
 import { useEffect } from "react";
-import { store } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMessage, setMessage } from "./redux/librarySlice";
 import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
-import Queue from "./Components/Queue";
+import Queue from "./Components/Queue/Queue";
 import Discover from "./Components/Discover/Discover";
 
 const App = () => {

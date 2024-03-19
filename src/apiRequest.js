@@ -13,18 +13,19 @@ import {
 const endPoint = "https://api.taddy.org";
 const userID = "1098";
 const apiKey =
-  "xxx1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
+  "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
 
+///search request
 export const getPodcastData = async (searchTerm, page) => {
   // if (!searchTerm) {
   //   store.dispatch(setEmptySearch(true));
   //   return;
+  // // }
+  // const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
+  // if (dataFromDisk) {
+  //   store.dispatch(storeApiData(dataFromDisk));
+  //   return;
   // }
-  const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
-  if (dataFromDisk) {
-    store.dispatch(storeApiData(dataFromDisk));
-    return;
-  }
 
   try {
     const { data } = await axios.post(
@@ -59,7 +60,7 @@ export const getPodcastData = async (searchTerm, page) => {
         },
       }
     );
-    // store.dispatch(setEmptySearch(false));
+    store.dispatch(setEmptySearch(false));
     store.dispatch(storeApiData(data.data));
     localStorage.setItem("getPodcastData", JSON.stringify(data.data));
   } catch (error) {
@@ -67,129 +68,13 @@ export const getPodcastData = async (searchTerm, page) => {
   }
 };
 
-export const getEpisodeData = async (uuid, order, page) => {
+//search podcast by unique id
+export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
   if (order === "1") {
     order = "OLDEST";
   } else {
     order = "LATEST";
   }
-  try {
-    const { data } = await axios.post(
-      endPoint,
-      {
-        query: `{
-                getPodcastSeries(uuid: "${uuid}"){
-                  uuid
-                  name
-                  hash
-                  childrenHash
-                  description
-                  imageUrl
-                  episodes(sortOrder:${order}, page:${page}, limitPerPage:10){
-                  name 
-                  uuid
-                  description
-                  audioUrl
-                  datePublished
-                 }
-                }
-              }`,
-      },
-      {
-        headers: {
-          "X-USER-ID": userID,
-          "X-API-Key": apiKey,
-        },
-      }
-    );
-    console.log(data.data);
-    store.dispatch(storeAdditionalApiData(data.data));
-    store.dispatch(
-      storeEpisodeLength(data.data.getPodcastSeries.episodes.length)
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getLibraryData = async (uuid, page) => {
-  console.log("uuid:", uuid);
-  try {
-    const { data } = await axios.post(
-      endPoint,
-      {
-        query: `{
-                getPodcastSeries(uuid: "${uuid}"){
-                  uuid
-                  name
-                  hash
-                  childrenHash
-                  description
-                  imageUrl
-                  episodes(sortOrder:LATEST, page:${page}, limitPerPage:10){
-                  name 
-                  uuid
-                  description
-                  audioUrl
-                  datePublished
-                 }
-                }
-              }`,
-      },
-      {
-        headers: {
-          "X-USER-ID": userID,
-          "X-API-Key": apiKey,
-        },
-      }
-    );
-    console.log(data.data.getPodcastSeries);
-    store.dispatch(appendApiData(data.data.getPodcastSeries));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getSortedData = async (uuid, order, page) => {
-  if (order === "1") {
-    order = "OLDEST";
-  } else {
-    order = "LATEST";
-  }
-  try {
-    const { data } = await axios.post(
-      endPoint,
-      {
-        query: `{
-                getPodcastSeries(uuid: "${uuid}"){
-                  uuid
-                  name
-                  episodes(sortOrder: ${order}, page:${page}, limitPerPage:10){
-                  name 
-                  uuid
-                  description
-                  audioUrl
-                  datePublished
-                 }
-                }
-              }`,
-      },
-      {
-        headers: {
-          "X-USER-ID": userID,
-          "X-API-Key": apiKey,
-        },
-      }
-    );
-    console.log(data.data.getPodcastSeries);
-    store.dispatch(sortEpisodeOrder(data.data.getPodcastSeries));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getMostSearchedData = async (uuid, page) => {
-  console.log(uuid, page)
   try {
     const { data } = await axios.post(
       endPoint,
@@ -203,7 +88,7 @@ export const getMostSearchedData = async (uuid, page) => {
             childrenHash
             description
             imageUrl
-            episodes(sortOrder:LATEST, page:${page}, limitPerPage:10){
+            episodes(sortOrder: ${order}, page:${page}, limitPerPage:10){
             name 
             uuid
             description
@@ -220,8 +105,23 @@ export const getMostSearchedData = async (uuid, page) => {
         },
       }
     );
-    console.log(data.data);
-    store.dispatch(appendApiDataSearch(data.data.getPodcastSeries));
+
+    if (storeDestination === "append") {
+      //add to library
+      store.dispatch(appendApiData(data.data.getPodcastSeries));
+    } else if (storeDestination === "appendSearch") {
+      //add to most listened
+      store.dispatch(appendApiDataSearch(data.data.getPodcastSeries));
+    } else if (storeDestination === "sorted") {
+      //sort select
+      store.dispatch(sortEpisodeOrder(data.data.getPodcastSeries));
+      //show more button
+    } else if (storeDestination === "showMore") {
+      store.dispatch(storeAdditionalApiData(data.data));
+      store.dispatch(
+        storeEpisodeLength(data.data.getPodcastSeries.episodes.length)
+      );
+    }
   } catch (error) {
     console.log(error);
   }

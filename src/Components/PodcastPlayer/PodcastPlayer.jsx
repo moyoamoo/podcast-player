@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "../CSS/footer.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectQueue } from "../../redux/playerSlice";
-import { setListened } from "../../redux/statsSlice";
+import { setListened, setGenres } from "../../redux/statsSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
 
@@ -16,6 +16,7 @@ const PodcastPlayer = () => {
   const [progress, setProgress] = useState(0);
   const audioRef = useRef();
   const dispatch = useDispatch();
+  console.log(queue[queueIndex].genres)
 
   useEffect(() => {
     setReadyState(false);
@@ -32,7 +33,7 @@ const PodcastPlayer = () => {
 
   return (
     <>
-      {audioRef ? (
+      {queue.length > 0 ? (
         <div className="podcastPlayer">
           <PodcastPlayerDescription queue={queue} queueIndex={queueIndex} />
           <audio

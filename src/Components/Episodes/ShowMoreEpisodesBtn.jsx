@@ -1,12 +1,12 @@
 import React from "react";
-import { getEpisodeData } from "../apiRequest";
+import { getPodcastByUuid } from "../../apiRequest";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectEpisodeLength, selectSortOrder} from "../redux/podcastSlice";
+import { selectEpisodeLength, selectSortOrder } from "../../redux/podcastSlice";
 
 const ShowMoreEpisodesBtn = ({ podcastUuid }) => {
   const sortBy = useSelector(selectSortOrder);
-  console.log(sortBy)
+  console.log(sortBy);
   const [page, setPage] = useState(1);
   // let episodeLength = useSelector(selectEpisodeLength);
 
@@ -16,10 +16,11 @@ const ShowMoreEpisodesBtn = ({ podcastUuid }) => {
 
   return (
     <>
-      <button className="showMoreEps"
+      <button
+        className="showMoreEps"
         onClick={() => {
           console.log(podcastUuid);
-          getEpisodeData(podcastUuid, sortBy, page + 1);
+          getPodcastByUuid(podcastUuid, sortBy, page + 1, "showMore");
           addPage();
         }}
       >

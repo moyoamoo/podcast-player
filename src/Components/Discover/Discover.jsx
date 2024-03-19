@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectListened, setMostListened } from "../../redux/statsSlice";
 import { selectPodcastsSeries } from "../../redux/podcastSlice";
-import { getMostSearchedData } from "../../apiRequest";
+import { getPodcastByUuid} from "../../apiRequest";
 import DiscoverPodcast from "./DiscoverPodcast";
 import { rankList } from "../utils";
 import "../CSS/stats.scss";
@@ -25,7 +25,7 @@ const Discover = () => {
         topListenedUuid = Object.keys(sortedListenedTotal);
       }
       topListenedUuid.forEach((uuid) => {
-        getMostSearchedData(uuid, 1);
+        getPodcastByUuid (uuid, 2, 1, "appendSearch");
       });
     }
   }, [listened]);
@@ -40,7 +40,7 @@ const Discover = () => {
     <div>
       <h2>Most Listened</h2>
       <div className="mostListened">
-        {mostListenedPodcasts ? (
+        {mostListenedPodcasts.length > 0 ? (
           mostListenedPodcasts.map((podcast) => {
             return <DiscoverPodcast key={podcast.uuid} podcast={podcast} />;
           })

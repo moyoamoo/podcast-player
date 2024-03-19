@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { getEpisode, removeFromQueue } from "../redux/playerSlice";
+import { getEpisode, removeFromQueue } from "../../redux/playerSlice";
 import { FaPlay } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
 
-import EpisodeDate from "./EpisodeDate";
-import EpisodeName from "./EpisodeName";
+import EpisodeDate from "../Episode/EpisodeDate";
+import EpisodeName from "../Episode/EpisodeName";
 import QueueBtn from "./QueueBtn";
-import EpisodeDescription from "./EpisodeDescription";
-import ShowDescriptionBtn from "./ShowDescriptionBtn";
+import EpisodeDescription from "../Episode/EpisodeDescription";
+import ShowDescriptionBtn from "../Episode/ShowDescriptionBtn";
 
 const QueueEpisode = ({ episode }) => {
   const [showDescription, setDescription] = useState(false);

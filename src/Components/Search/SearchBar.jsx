@@ -2,27 +2,15 @@ import React from "react";
 import { getPodcastData } from "../../apiRequest";
 import { useState } from "react";
 import "../CSS/SearchBar.scss";
+import SearchBtn from "./SearchBtn";
+import SearchInput from "./SearchInput";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState();
-  console.log(searchTerm);
   return (
     <div className="searchContainer">
-      <input
-        type="text"
-        placeholder="Search Podcast Series"
-        onInput={(e) => {
-          setSearchTerm(e.target.value);
-        }}
-      />
-      <button
-        className="searchBtn"
-        onClick={() => {
-          getPodcastData(searchTerm, 1);
-        }}
-      >
-        Search Podcast
-      </button>
+      <SearchInput placeholder="Search Podcast Series" func={setSearchTerm}/>
+      <SearchBtn searchTerm={searchTerm} />
     </div>
   );
 };

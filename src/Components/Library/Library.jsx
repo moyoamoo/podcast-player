@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectLoggedIn } from "../../redux/librarySlice";
 import { useNavigate } from "react-router-dom";
-import { getLibraryData } from "../../apiRequest";
+import { getPodcastByUuid } from "../../apiRequest";
 import "../CSS/libraryPodcasts.scss";
+import LibrarySortBySelect from "./LibrarySortBySelect";
 
 const Library = () => {
   const navigate = useNavigate();
@@ -31,22 +32,15 @@ const Library = () => {
       dispatch(clearApiData());
       if (libraryPodcastsUuid.length > 0) {
         libraryPodcastsUuid.forEach((uuid) => {
-          getLibraryData(uuid, 1);
-
+          getPodcastByUuid(uuid, 2, 1, "append");
         });
       }
     }
   }, [loggedIn, libraryPodcastsUuid]);
 
-  libraryPodcasts = podcasts.filter((podcast) => {
-    if (podcast.library) {
-      return true;
-    }
-  });
-
   let newFiltered;
   if (searchTerm) {
-    newFiltered = libraryPodcasts.filter((podcast) => {
+    newFiltered = podcasts.filter((podcast) => {
       if (podcast.name.toLowerCase().includes(searchTerm)) {
         return true;
       }
@@ -65,26 +59,12 @@ const Library = () => {
           dispatch(setPodcastSearchTerm(e.target.value));
         }}
       />
-      <div>
-        <label htmlFor="sortLibrary">Sort Library</label>
-        <select
-          name="sortLibrary"
-          onChange={(e) => {
-            dispatch(sortPodcasts(e.target.value));
-          }}
-        >
-          <option>---Sort By---</option>
-          <option value="sortAsc">A-Z</option>
-          <option value="sortDesc">Z-A</option>
-        </select>
-      </div>
-      {libraryPodcasts.length > 0 ? (
-        <LibraryResults
-          libraryPodcasts={searchTerm ? newFiltered : libraryPodcasts}
-        />
+      <LibrarySortBySelect />
+      {podcasts.length > 0 ? (
+        <LibraryResults libraryPodcasts={searchTerm ? newFiltered : podcasts} />
       ) : (
         <div className="validation">
-          <p>No Podcasts Found</p>
+          <p>No Podcast Found</p>
         </div>
       )}
     </>

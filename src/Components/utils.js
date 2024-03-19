@@ -31,3 +31,13 @@ export const formatSeconds = (seconds) => {
     "0"
   )} : ${String(_seconds).padStart(2, "0")} `;
 };
+
+export const formatGenres = (arr) => {
+  let genre;
+  let formattedGenres = [];
+  for (let i = 0; i < arr.length; i++) {
+    genre = arr[i].split("PODCASTSERIES_");
+    formattedGenres.push(genre[1].replaceAll("_", " ").toLowerCase());
+  }
+  return formattedGenres;
+};
