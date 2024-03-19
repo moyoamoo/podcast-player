@@ -16,7 +16,7 @@ const PodcastPlayer = () => {
   const [progress, setProgress] = useState(0);
   const audioRef = useRef();
   const dispatch = useDispatch();
-  console.log(queue[queueIndex].genres)
+  console.log(queue[queueIndex])
 
   useEffect(() => {
     setReadyState(false);

@@ -12,11 +12,12 @@ const Episode = ({ episode, podcast }) => {
     setDescription(!showDescription);
   };
 
-  const { name: podcastName, uuid: podcastUuid, imageUrl } = podcast;
+  const { name: podcastName, uuid: podcastUuid, imageUrl, genres } = podcast;
   const episodePod = {
     podcastName,
     podcastUuid,
     imageUrl,
+    genres,
     ...episode,
   };
 
