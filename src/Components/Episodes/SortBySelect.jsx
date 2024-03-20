@@ -1,12 +1,14 @@
 import { getPodcastByUuid } from "../../apiRequest";
 import { setOrder } from "../../redux/podcastSlice";
+import { useDispatch } from "react-redux";
 
 const SortBySelect = (uuid) => {
+  const dispatch = useDispatch()
   return (
     <>
       <select
         onChange={(e) => {
-          getPodcastByUuid(uuid, e.target.value, 1, "sorted");
+          getPodcastByUuid(Object.values(uuid)[0], e.target.value, 1, "sorted");
           dispatch(setOrder(e.target.value));
         }}
       >

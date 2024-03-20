@@ -48,7 +48,7 @@ export const statsSlice = createSlice({
   },
 });
 
-export const { setListened, setGenres, setMostListened, setFavouriteGenres,  setFavGenresStats } =
+export const { setListened, setGenres, setMostListened, setFavouriteGenres,  setFavGenresStats, setSearch} =
   statsSlice.actions;
 
 export const selectListened = (state) => state.stats.listened;

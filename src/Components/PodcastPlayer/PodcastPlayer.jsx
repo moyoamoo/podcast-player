@@ -10,19 +10,48 @@ const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
   let [queueIndex, setQueueIndex] = useState(0);
   const [readyState, setReadyState] = useState(false);
-  const [podDuration, setpodDuration] = useState("00:00:00");
+  const [podDuration, setPodDuration] = useState("00:00:00");
   const [remainingDuration, setRemainingDuration] = useState("00:00:00");
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [timer, setTimer] = useState();
+  const [lastClick, setLastClick] = useState();
   const audioRef = useRef();
   const dispatch = useDispatch();
-  console.log(queue[queueIndex])
+  let t;
 
+  //clean up podcast player
   useEffect(() => {
     setReadyState(false);
-    setpodDuration("00:00:00");
-    setIsPlaying(false);
-  }, [queueIndex]);
+    setPodDuration("00:00:00");
+    setRemainingDuration("00:00:00");
+    clearInterval(t);
+  }, [queue]);
+
+  // & lastClick < Date.now() - 4000
+  //when they press play - not allow to play for user
+  useEffect(() => {
+    // setLastClick(Date.now());
+    if (readyState) {
+      audioRef.current.play();
+      setIsPlaying(true);
+      audioRef.current.duration
+        ? setPodDuration(audioRef.current.duration)
+        : setPodDuration("00:00:00");
+    }
+  }, [readyState, queue]);
+
+  const displayTime = () => {
+    t = setInterval(() => {
+      let seconds = audioRef.current.currentTime;
+      if (typeof seconds !== "number") {
+        return setRemainingDuration(0);
+      }
+      setRemainingDuration(seconds);
+      setProgressDuration();
+    }, 1000);
+    setTimer(t);
+  };
 
   const setProgressDuration = () => {
     const progress = Math.round(
@@ -44,20 +73,10 @@ const PodcastPlayer = () => {
               setReadyState(true);
             }}
             onPlay={() => {
-              const displayTime = setInterval(() => {
-                if (audioRef.current.currentTime) {
-                  let seconds = audioRef.current.currentTime;
-                  if (typeof seconds !== "number") {
-                    return setRemainingDuration(0);
-                  }
-                  setRemainingDuration(seconds);
-                  setProgressDuration();
-                } 
-              }, 1000);
+              displayTime();
             }}
             onDurationChange={(e) => {
-              let seconds = e.currentTarget.duration;
-              setpodDuration(seconds);
+              setPodDuration(e.currentTarget.duration);
             }}
             onEnded={() => {
               dispatch(setListened(queue[queueIndex].podcastUuid));
@@ -67,7 +86,7 @@ const PodcastPlayer = () => {
               } else {
                 queueIndex = 0;
               }
-              clearInterval(displayTime);
+              clearInterval(t);
             }}
           ></audio>
           <Controls

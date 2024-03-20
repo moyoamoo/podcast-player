@@ -41,3 +41,4 @@ export const formatGenres = (arr) => {
   }
   return formattedGenres;
 };
+

@@ -13,19 +13,19 @@ import {
 const endPoint = "https://api.taddy.org";
 const userID = "1098";
 const apiKey =
-  "xxx1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
+  "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
 
 ///search request
 export const getPodcastData = async (searchTerm, page) => {
-  // if (!searchTerm) {
+  // if (!searchTerm || searchTerm === "undefined") {
   //   store.dispatch(setEmptySearch(true));
   //   return;
-  // // }
-  // const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
-  // if (dataFromDisk) {
-  //   store.dispatch(storeApiData(dataFromDisk));
-  //   return;
   // }
+  const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
+  if (dataFromDisk) {
+    store.dispatch(storeApiData(dataFromDisk));
+    return;
+  }
 
   try {
     const { data } = await axios.post(
@@ -42,7 +42,9 @@ export const getPodcastData = async (searchTerm, page) => {
                 childrenHash
                 description
                 imageUrl
+                totalEpisodesCount
                 episodes(sortOrder:LATEST, page: ${page}, limitPerPage: 10){
+                 
                     uuid
                     name
                     description
@@ -60,7 +62,7 @@ export const getPodcastData = async (searchTerm, page) => {
         },
       }
     );
-    store.dispatch(setEmptySearch(false));
+    // store.dispatch(setEmptySearch(false));
     store.dispatch(storeApiData(data.data));
     localStorage.setItem("getPodcastData", JSON.stringify(data.data));
   } catch (error) {
@@ -88,6 +90,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
             childrenHash
             description
             imageUrl
+            totalEpisodesCount
             episodes(sortOrder: ${order}, page:${page}, limitPerPage:10){
             name 
             uuid

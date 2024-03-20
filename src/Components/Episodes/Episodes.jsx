@@ -2,25 +2,31 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Episode from "../Episode/Episode";
 import "../CSS/episodes.scss";
-import ShowMoreEpisodesBtn from "./ShowMoreEpisodesBtn";
-
+import ShowMoreBtn from "./ShowMoreBtn";
+import { getPodcastByUuid } from "../../apiRequest";
 import { useSelector } from "react-redux";
 import { selectPodcast } from "../../redux/podcastSlice";
-
 import { formatGenres } from "../utils";
-
 import PodcastDetails from "./PodcastDetails";
+import  Spinner from "../Spinner"
 
 const Episodes = () => {
   const { id } = useParams();
   const podcast = useSelector(selectPodcast(id));
-  let formattedGenres;
+  if (!podcast) {
+    getPodcastByUuid(id, 2, 1, "append");
+    return <Spinner />;
+  }
 
-  // const epLength = useSelector(selectEpisodeLength);
+  let formattedGenres;
 
   if (podcast.genres) {
     formattedGenres = formatGenres(podcast.genres);
   }
+
+  const callback = (sortBy, page, type) => {
+    getPodcastByUuid(podcast.uuid, sortBy, page, type);
+  };
 
   return (
     <>
@@ -31,7 +37,10 @@ const Episodes = () => {
         );
       })}
       <div className="showMoreContainer">
-        <ShowMoreEpisodesBtn podcastUuid={podcast.uuid} />
+        <ShowMoreBtn
+          callback={callback}
+          totalEpisodesCount={podcast.totalEpisodesCount}
+        />
       </div>
     </>
   );

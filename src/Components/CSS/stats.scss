@@ -5,9 +5,19 @@
     justify-content: left;
     align-items: center;
     overflow-x: scroll;
+    overflow: hidden;
 }
 
 .discoverPodcast{
     max-width: 250px;
     border-radius: .7rem;
+}
+
+.discover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h2{
+        color: #fff;
+    }
 }

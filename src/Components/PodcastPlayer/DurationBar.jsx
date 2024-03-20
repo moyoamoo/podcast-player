@@ -10,6 +10,7 @@ const DurationBar = forwardRef(function DurationBar(
       audioRef.current.currentTime =
         (audioRef.current.duration * podDurationRef.current.value) / 100;
     }
+ 
   };
   return (
     <>

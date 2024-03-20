@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef} from "react";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
 
@@ -6,7 +6,10 @@ const PlayButton = forwardRef(function PlayButton(
   { isPlaying, readyState, setIsPlaying },
   audioRef
 ) {
+
+ 
   const togglePlay = () => {
+    console.log(readyState)
     if (isPlaying && readyState) {
       audioRef.current.pause();
     } else {
@@ -14,6 +17,8 @@ const PlayButton = forwardRef(function PlayButton(
     }
     setIsPlaying(!isPlaying);
   };
+
+  
   return (
     <>
       <button

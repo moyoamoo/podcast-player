@@ -6,7 +6,6 @@ import {
   selectListened,
   setFavouriteGenres,
   setMostListened,
-  selectFavGenresStats,
   setFavGenresStats
 } from "../../redux/statsSlice";
 import { selectPodcastsSeries } from "../../redux/podcastSlice";
@@ -15,6 +14,7 @@ import DiscoverPodcast from "./DiscoverPodcast";
 import { formatGenres, rankList } from "../utils";
 import "../CSS/stats.scss";
 import FavGenresPie from "./FavGenresPie";
+
 
 const Discover = () => {
   const dispatch = useDispatch();
@@ -30,9 +30,9 @@ const Discover = () => {
   useEffect(() => {
     if (genres.length > 0) {
       const formattedGenres = formatGenres(genres);
-      console.log(formattedGenres)
+
       const sortedGenres = rankList(formattedGenres);
-      console.log(sortedGenres)
+
       dispatch(setFavGenresStats(sortedGenres));
 
       if (Object.keys(sortedGenres).length >= 10) {
@@ -65,20 +65,23 @@ const Discover = () => {
     }
   });
 
-  console.log(topGenres)
+
   return (
-    <div>
+    <div className="discover">
+      <h1>Discover</h1>
       <h2>Most Listened</h2>
       <div className="mostListened">
+  
+
         {mostListenedPodcasts.length > 0 ? (
           mostListenedPodcasts.map((podcast) => {
             return <DiscoverPodcast key={podcast.uuid} podcast={podcast} />;
           })
         ) : (
-          <div className="validation">No previous Listens</div>
+          <div className="validation"><p>No previous Listens</p></div>
         )}
       </div>
-      9
+      
       <div>
       
         {favGenres && favGenres.map((genre) => {

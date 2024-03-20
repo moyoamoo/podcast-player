@@ -13,7 +13,7 @@ const initialState = {
 
 export const podcastSlice = createSlice({
   name: "podcastSlice",
-  initialState,
+  initialState: diskData ? diskData : initialState, 
   reducers: {
     storeApiData: (state, { payload }) => {
       state.apiData = payload;
@@ -22,17 +22,14 @@ export const podcastSlice = createSlice({
 
     //adds new episodes
     storeAdditionalApiData: (state, { payload }) => {
-      console.log(payload.getPodcastSeries.uuid);
       const indexOf = state.apiData.searchForTerm.podcastSeries.findIndex(
         (podcast) => {
-          console.log(payload.getPodcastSeries.uuid);
-          console.log(podcast.uuid);
           return podcast.uuid === payload.getPodcastSeries.uuid;
         }
       );
-      console.log(indexOf);
+
       const { episodes } = payload.getPodcastSeries;
-      console.log(episodes);
+
       state.apiData.searchForTerm.podcastSeries[indexOf].episodes.push(
         ...payload.getPodcastSeries.episodes
       );
@@ -120,9 +117,8 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
-
     addToLibrary: (state, { payload }) => {
-      //check if in library 
+      //check if in library
       for (let i = 0; i < state.userLibrary.length; i++) {
         if (state.userLibrary[i] === payload) {
           saveStore("podcast", state);

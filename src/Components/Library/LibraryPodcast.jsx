@@ -25,6 +25,7 @@ const LibraryPodcast = ({ podcast }) => {
       <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
         <div className="libraryPodcastContainer">
           <img
+          loading="lazy"
             src={podcast.imageUrl}
             alt={podcast.name}
             onError={(e) => {
