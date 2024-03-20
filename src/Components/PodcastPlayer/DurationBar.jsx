@@ -4,17 +4,20 @@ const DurationBar = forwardRef(function DurationBar(
   { progress, readyState },
   audioRef
 ) {
+  if (!progress) {
+    progress = 0;
+  }
   const podDurationRef = useRef();
   const changeCurrentTime = () => {
     if (readyState) {
       audioRef.current.currentTime =
         (audioRef.current.duration * podDurationRef.current.value) / 100;
     }
- 
   };
   return (
     <>
-      <input className="durationBar"
+      <input
+        className="durationBar"
         type="range"
         ref={podDurationRef}
         min="0"

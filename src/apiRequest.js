@@ -121,9 +121,6 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       //show more button
     } else if (storeDestination === "showMore") {
       store.dispatch(storeAdditionalApiData(data.data));
-      store.dispatch(
-        storeEpisodeLength(data.data.getPodcastSeries.episodes.length)
-      );
     }
   } catch (error) {
     console.log(error);

@@ -15,7 +15,7 @@ const PodcastPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [timer, setTimer] = useState();
-  const [lastClick, setLastClick] = useState();
+  const [lastClick, setLastClick] = useState(Date.now());
   const audioRef = useRef();
   const dispatch = useDispatch();
   let t;
@@ -28,16 +28,11 @@ const PodcastPlayer = () => {
     clearInterval(t);
   }, [queue]);
 
-  // & lastClick < Date.now() - 4000
-  //when they press play - not allow to play for user
+
   useEffect(() => {
-    // setLastClick(Date.now());
+    
     if (readyState) {
-      audioRef.current.play();
-      setIsPlaying(true);
-      audioRef.current.duration
-        ? setPodDuration(audioRef.current.duration)
-        : setPodDuration("00:00:00");
+      Promise.resolve(audioRef.current.play()).catch(() => {});
     }
   }, [readyState, queue]);
 
@@ -74,6 +69,7 @@ const PodcastPlayer = () => {
             }}
             onPlay={() => {
               displayTime();
+              setIsPlaying(!audioRef.current.paused);
             }}
             onDurationChange={(e) => {
               setPodDuration(e.currentTarget.duration);
