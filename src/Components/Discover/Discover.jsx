@@ -6,12 +6,15 @@ import {
   selectListened,
   setFavouriteGenres,
   setMostListened,
+  selectFavGenresStats,
+  setFavGenresStats
 } from "../../redux/statsSlice";
 import { selectPodcastsSeries } from "../../redux/podcastSlice";
 import { getPodcastByUuid } from "../../apiRequest";
 import DiscoverPodcast from "./DiscoverPodcast";
 import { formatGenres, rankList } from "../utils";
 import "../CSS/stats.scss";
+import FavGenresPie from "./FavGenresPie";
 
 const Discover = () => {
   const dispatch = useDispatch();
@@ -30,7 +33,7 @@ const Discover = () => {
       console.log(formattedGenres)
       const sortedGenres = rankList(formattedGenres);
       console.log(sortedGenres)
-      dispatch(setFavouriteGenres(sortedGenres));
+      dispatch(setFavGenresStats(sortedGenres));
 
       if (Object.keys(sortedGenres).length >= 10) {
         topGenres = Object.keys(sortedGenres).slice(0, 10);
@@ -55,7 +58,7 @@ const Discover = () => {
       });
     }
   }, [listened, genres]);
-
+  
   mostListenedPodcasts = podcasts.filter((podcast) => {
     if (podcast.search) {
       return true;
@@ -86,6 +89,7 @@ const Discover = () => {
           );
         })}
       </div>
+      <FavGenresPie/>
     </div>
   );
 };
