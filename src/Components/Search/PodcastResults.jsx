@@ -6,12 +6,13 @@ import {
 } from "../../redux/podcastSlice";
 import Spinner from "../Spinner";
 import Podcast from "./Podcast";
+import ShowMoreBtn from "../Episodes/ShowMoreBtn";
 import "../CSS/libraryPodcasts.scss";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
   const emptySearch = useSelector(selectEmptySearch);
-  console.log(emptySearch)
+  console.log(emptySearch);
 
   let filteredPodcastSeries;
 
@@ -32,9 +33,13 @@ const PodcastResults = () => {
   //     <p>No results found</p>
   //   </div>
   // ) : (
-    return (filteredPodcastSeries.map((podcast) => {
-      return <Podcast podcast={podcast} key={podcast.uuid} />;
-    })
+  return (
+    <>
+      {filteredPodcastSeries.map((podcast) => {
+        return <Podcast podcast={podcast} key={podcast.uuid} />;
+      })}
+      <ShowMoreBtn/>
+    </>
   );
 };
 

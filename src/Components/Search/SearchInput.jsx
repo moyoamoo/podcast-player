@@ -1,11 +1,14 @@
+import { useDispatch } from "react-redux";
+
 const SearchInput = ({ placeholder, func }) => {
+  const dispatch = useDispatch()
   return (
     <>
       <input
         type="text"
         placeholder={placeholder}
         onInput={(e) => {
-          func(e.target.value);
+          dispatch(func(e.target.value));
         }}
       />
     </>

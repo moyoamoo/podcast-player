@@ -15,7 +15,6 @@ const PodcastPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [timer, setTimer] = useState();
-  const [lastClick, setLastClick] = useState(Date.now());
   const audioRef = useRef();
   const dispatch = useDispatch();
   let t;
@@ -26,11 +25,17 @@ const PodcastPlayer = () => {
     setPodDuration("00:00:00");
     setRemainingDuration("00:00:00");
     clearInterval(t);
-  }, [queue]);
+  }, [queue[queueIndex].audioUrl]);
 
+  //clear interval 
+  // useEffect(() => {
+  //   if (!audioRef.current.currentTime) {
+  //     clearInterval(t);
+  //   }
+  // }, [audioRef]);
 
+  //if audio in ready state audio ref
   useEffect(() => {
-    
     if (readyState) {
       Promise.resolve(audioRef.current.play()).catch(() => {});
     }
@@ -46,13 +51,16 @@ const PodcastPlayer = () => {
       setProgressDuration();
     }, 1000);
     setTimer(t);
+    
   };
 
   const setProgressDuration = () => {
-    const progress = Math.round(
-      (audioRef.current.currentTime / audioRef.current.duration) * 100
-    );
-    setProgress(progress);
+    if (audioRef.current.currentTime) {
+      const progress = Math.round(
+        (audioRef.current.currentTime / audioRef.current.duration) * 100
+      );
+      setProgress(progress);
+    }
   };
 
   return (
