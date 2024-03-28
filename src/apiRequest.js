@@ -21,18 +21,18 @@ export const getPodcastData = async (searchTerm, page) => {
   //   store.dispatch(setEmptySearch(true));
   //   return;
   // }
-  // const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
-  // if (dataFromDisk) {
-  //   store.dispatch(storeApiData(dataFromDisk));
-  //   return;
-  // }
+  const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
+  if (dataFromDisk) {
+    store.dispatch(storeApiData(dataFromDisk));
+    return;
+  }
 
   try {
     const { data } = await axios.post(
       endPoint,
       {
         query: `{
-            searchForTerm(term:"${searchTerm}", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true), page:${page}{
+            searchForTerm(term:"${searchTerm}", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true ){
               searchId
               podcastSeries{
                 genres
@@ -43,7 +43,8 @@ export const getPodcastData = async (searchTerm, page) => {
                 description
                 imageUrl
                 totalEpisodesCount
-                episodes(sortOrder:LATEST, page: 1, limitPerPage: 10){
+                episodes(sortOrder:LATEST, page: ${page}, limitPerPage: 10){
+                 
                     uuid
                     name
                     description
@@ -63,7 +64,7 @@ export const getPodcastData = async (searchTerm, page) => {
     );
     // store.dispatch(setEmptySearch(false));
     store.dispatch(storeApiData(data.data));
-    // localStorage.setItem("getPodcastData", JSON.stringify(data.data));
+    localStorage.setItem("getPodcastData", JSON.stringify(data.data));
   } catch (error) {
     console.log(error);
   }

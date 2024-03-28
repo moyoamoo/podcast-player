@@ -23,6 +23,7 @@ const Library = () => {
   const searchTerm = useSelector(selectSearchTerm);
   const libraryPodcastsUuid = useSelector(selectLibrary);
   let podcasts = useSelector(selectPodcastsSeries);
+  let libraryPodcasts;
 
   useEffect(() => {
     if (!loggedIn) {
