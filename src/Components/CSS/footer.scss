@@ -122,3 +122,17 @@ footer {
   display: flex;
   justify-content: space-between;
 }
+
+
+
+progress{
+  width: 60%;
+}
+
+.durationBarWrapper {
+  width: 75vw;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

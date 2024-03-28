@@ -32,7 +32,7 @@ export const getPodcastData = async (searchTerm, page) => {
       endPoint,
       {
         query: `{
-            searchForTerm(term:"${searchTerm}", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true), page:${page}{
+            searchForTerm(term:"${searchTerm}", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true){
               searchId
               podcastSeries{
                 genres
@@ -43,7 +43,7 @@ export const getPodcastData = async (searchTerm, page) => {
                 description
                 imageUrl
                 totalEpisodesCount
-                episodes(sortOrder:LATEST, page: 1, limitPerPage: 10){
+                episodes(sortOrder:LATEST, page: ${page}, limitPerPage: 10){
                     uuid
                     name
                     description
@@ -120,6 +120,9 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       //show more button
     } else if (storeDestination === "showMore") {
       store.dispatch(storeAdditionalApiData(data.data));
+      store.dispatch(
+        storeEpisodeLength(data.data.getPodcastSeries.episodes.length)
+      );
     }
   } catch (error) {
     console.log(error);

@@ -10,8 +10,10 @@ const EpisodePlayBtn = ({ episodePod }) => {
     <>
       <button
         onClick={() => {
-          if (queue[0].uuid === episodePod.uuid) {
-            return;
+          if(queue.length > 0){
+            if (queue[0].uuid === episodePod.uuid) {
+              return;
+            }
           }
           dispatch(getEpisode(episodePod));
         }}

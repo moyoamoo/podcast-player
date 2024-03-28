@@ -14,51 +14,44 @@ const PodcastPlayer = () => {
   const [remainingDuration, setRemainingDuration] = useState("00:00:00");
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [timer, setTimer] = useState();
+  const [buffered, setBuffered] = useState(0);
+  // const [lastClick, setLastClick] = useState(Date.now());
   const audioRef = useRef();
   const dispatch = useDispatch();
-  let t;
 
   //clean up podcast player
-  useEffect(() => {
-    setReadyState(false);
-    setPodDuration("00:00:00");
-    setRemainingDuration("00:00:00");
-    clearInterval(t);
-  }, [queue[queueIndex].audioUrl]);
-
-  //clear interval 
   // useEffect(() => {
-  //   if (!audioRef.current.currentTime) {
+  //   if(audioRef){
+  //     setReadyState(false);
+  //     setPodDuration("00:00:00");
+  //     setRemainingDuration("00:00:00");
   //     clearInterval(t);
   //   }
-  // }, [audioRef]);
 
-  //if audio in ready state audio ref
+  // }, [queue[queueIndex].audioUrl]);
+
   useEffect(() => {
-    if (readyState) {
-      Promise.resolve(audioRef.current.play()).catch(() => {});
+    if (audioRef) {
+      isPlaying ? audioRef.current.play() : audioRef.current.pause();
+      console.log(isPlaying)
     }
-  }, [readyState, queue]);
-
-  const displayTime = () => {
-    t = setInterval(() => {
-      let seconds = audioRef.current.currentTime;
-      if (typeof seconds !== "number") {
-        return setRemainingDuration(0);
-      }
-      setRemainingDuration(seconds);
-      setProgressDuration();
-    }, 1000);
-    setTimer(t);
-    
-  };
+  }, [queue[queueIndex].audioUrl]);
+  // useEffect(() => {
+  //   if (readyState) {
+  //     audioRef.current.play();
+  //     setIsPlaying(true);
+  //     // audioRef.current.duration
+  //     //   ? setPodDuration(audioRef.current.duration)
+  //     //   : setPodDuration("00:00:00");
+  //   }
+  // }, [readyState, queue]);
 
   const setProgressDuration = () => {
     if (audioRef.current.currentTime) {
       const progress = Math.round(
         (audioRef.current.currentTime / audioRef.current.duration) * 100
       );
+      console.log(progress);
       setProgress(progress);
     }
   };
@@ -72,12 +65,33 @@ const PodcastPlayer = () => {
             src={queue[queueIndex].audioUrl}
             preload="metadata"
             ref={audioRef}
+            onProgress={(e) => {
+              if (e.currentTarget.duration > 0) {
+                for (let i = 0; i < e.currentTarget.buffered.length; i++) {
+                  if (
+                    e.currentTarget.buffered.start(
+                      e.currentTarget.buffered.length - 1 - i
+                    ) < e.currentTarget.currentTime
+                  ) {
+                    setBuffered(
+                      (e.currentTarget.buffered.end(
+                        e.currentTarget.buffered.length - 1 - i
+                      ) *
+                        100) /
+                        e.currentTarget.duration
+                    );
+                    console.log(buffered);
+                  }
+                }
+              }
+            }}
+            onTimeUpdate={(e) => {
+              setRemainingDuration(e.currentTarget.currentTime);
+              setProgressDuration();
+            }}
             onCanPlay={() => {
               setReadyState(true);
-            }}
-            onPlay={() => {
-              displayTime();
-              setIsPlaying(!audioRef.current.paused);
+              setIsPlaying(true);
             }}
             onDurationChange={(e) => {
               setPodDuration(e.currentTarget.duration);
@@ -96,6 +110,7 @@ const PodcastPlayer = () => {
           <Controls
             ref={audioRef}
             queue={queue}
+            buffered={buffered}
             queueIndex={queueIndex}
             setQueueIndex={setQueueIndex}
             readyState={readyState}
