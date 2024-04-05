@@ -1,43 +1,35 @@
 import React, { forwardRef } from "react";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
+import { setIsLoading } from "../../redux/playerSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const PlayButton = forwardRef(function PlayButton(
-  { isPlaying, readyState, setIsPlaying },
+  { isPlaying, setIsPlaying, readyState },
   audioRef
 ) {
+
+
   const togglePlay = () => {
-    console.log(isPlaying)
     if (isPlaying && readyState) {
       audioRef.current.pause();
-      setIsPlaying(false);
-
     } else {
       audioRef.current.play();
-      setIsPlaying(true);
     }
-    console.log(isPlaying)
+    setIsPlaying(!isPlaying);
   };
 
   return (
     <>
-      <button
-        className="controlBtn"
-        // onKeyDown={(e)=>{
-        //   if(e.key === " "){
-        //     togglePlay()
-        //   }
-        // }}
-        onClick={() => {
-          togglePlay();
-        }}
-      >
+      <button className="controlBtn">
         {readyState ? (
-          isPlaying ? (
-            <FaPause />
-          ) : (
-            <FaPlay />
-          )
+          <div
+            onClick={() => {
+              togglePlay();
+            }}
+          >
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </div>
         ) : (
           <div className="pulsing"></div>
         )}

@@ -1,12 +1,9 @@
 import React, { forwardRef, useRef } from "react";
 
 const DurationBar = forwardRef(function DurationBar(
-  { progress, readyState },
+  { progress, readyState, buffered },
   audioRef
 ) {
-  if (!progress) {
-    progress = 0;
-  }
   const podDurationRef = useRef();
   const changeCurrentTime = () => {
     if (readyState) {
@@ -14,19 +11,25 @@ const DurationBar = forwardRef(function DurationBar(
         (audioRef.current.duration * podDurationRef.current.value) / 100;
     }
   };
+
+
   return (
     <>
-      <input
-        className="durationBar"
-        type="range"
-        ref={podDurationRef}
-        min="0"
-        max="100"
-        value={progress}
-        onChange={() => {
-          changeCurrentTime();
-        }}
-      />
+      <div className="durationBarWrapper">
+        <progress value={buffered} min="0" max="100">
+        </progress>
+        <input
+          className="durationBar"
+          type="range"
+          ref={podDurationRef}
+          min="0"
+          max="100"
+          value={progress}
+          onChange={() => {
+            changeCurrentTime();
+          }}
+        />
+      </div>
     </>
   );
 });

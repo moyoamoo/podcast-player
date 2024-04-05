@@ -11,6 +11,7 @@ const SubscribeBtn = ({ podcast }) => {
 
   const addPodcastToLibrary = () => {
     console.log(podcast.uuid);
+    console.log(typeof podcast.uuid);
     dispatch(addToLibrary(podcast.uuid));
 
     // if (loggedIn) {

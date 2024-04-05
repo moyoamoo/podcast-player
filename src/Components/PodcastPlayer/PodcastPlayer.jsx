@@ -1,58 +1,68 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "../CSS/footer.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { selectQueue } from "../../redux/playerSlice";
+import {
+  selectQueue,
+  selectPlayButton,
+  setIsLoading,
+} from "../../redux/playerSlice";
 import { setListened, setGenres } from "../../redux/statsSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
+import axios from "axios";
+import { debounce } from "lodash";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
+  const [buffered, setBuffered] = useState(0);
+  const playButton = useSelector(selectPlayButton);
   let [queueIndex, setQueueIndex] = useState(0);
   const [readyState, setReadyState] = useState(false);
   const [podDuration, setPodDuration] = useState("00:00:00");
   const [remainingDuration, setRemainingDuration] = useState("00:00:00");
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [timer, setTimer] = useState();
-  const [lastClick, setLastClick] = useState(Date.now());
   const audioRef = useRef();
+  const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
-  let t;
 
-  //clean up podcast player
-  useEffect(() => {
-    setReadyState(false);
-    setPodDuration("00:00:00");
-    setRemainingDuration("00:00:00");
-    clearInterval(t);
-  }, [queue]);
+  //
 
+  const box = useCallback(() => {
+    console.log("hello world");
+  });
 
   useEffect(() => {
-    
-    if (readyState) {
-      Promise.resolve(audioRef.current.play()).catch(() => {});
+    if (readyState && playButton && lastClick > 5000) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    } else if (readyState) {
+      audioRef.current.pause();
+      setIsPlaying(false);
     }
-  }, [readyState, queue]);
+  }, [playButton, readyState, audioRef]);
 
-  const displayTime = () => {
-    t = setInterval(() => {
-      let seconds = audioRef.current.currentTime;
-      if (typeof seconds !== "number") {
-        return setRemainingDuration(0);
-      }
-      setRemainingDuration(seconds);
-      setProgressDuration();
-    }, 1000);
-    setTimer(t);
+  const updateServerDuration = async (playbackDuration, playbackPosition) => {
+    console.log("server duration");
+    const { data } = await axios.post(
+      "http://localhost:6001/listened/add",
+      {
+        playbackPosition,
+        playbackDuration,
+        // uuid: queue[queueIndex].uuid,
+      },
+      { headers: { token: 1928752892983 } }
+    );
+    console.log(data);
   };
 
   const setProgressDuration = () => {
-    const progress = Math.round(
-      (audioRef.current.currentTime / audioRef.current.duration) * 100
-    );
-    setProgress(progress);
+    if (audioRef.current.currentTime) {
+      const progress = Math.round(
+        (audioRef.current.currentTime / audioRef.current.duration) * 100
+      );
+      setProgress(progress);
+    }
   };
 
   return (
@@ -64,12 +74,44 @@ const PodcastPlayer = () => {
             src={queue[queueIndex].audioUrl}
             preload="metadata"
             ref={audioRef}
+            onProgress={(e) => {
+              console.log("on progress callback occured");
+
+              if (e.currentTarget.duration > 0) {
+                for (let i = 0; i < e.currentTarget.buffered.length; i++) {
+                  if (
+                    e.currentTarget.buffered.start(
+                      e.currentTarget.buffered.length - 1 - i
+                    ) < e.currentTarget.currentTime
+                  ) {
+                    setBuffered(
+                      (e.currentTarget.buffered.end(
+                        e.currentTarget.buffered.length - 1 - i
+                      ) *
+                        100) /
+                        e.currentTarget.duration
+                    );
+                  }
+                }
+              }
+            }}
+            onTimeUpdate={(e) => {
+              console.log("time update ran");
+              // _.debounce(() => {
+              //   console.log("debounce ran")
+              updateServerDuration(
+                e.currentTarget.duration,
+                e.currentTarget.currentTime
+              );
+              // }, 3000);
+
+              setRemainingDuration(e.currentTarget.currentTime);
+              setProgressDuration();
+            }}
             onCanPlay={() => {
               setReadyState(true);
-            }}
-            onPlay={() => {
-              displayTime();
-              setIsPlaying(!audioRef.current.paused);
+              setIsPlaying(true);
+              dispatch(setIsLoading(false));
             }}
             onDurationChange={(e) => {
               setPodDuration(e.currentTarget.duration);
@@ -82,12 +124,12 @@ const PodcastPlayer = () => {
               } else {
                 queueIndex = 0;
               }
-              clearInterval(t);
             }}
           ></audio>
           <Controls
             ref={audioRef}
             queue={queue}
+            buffered={buffered}
             queueIndex={queueIndex}
             setQueueIndex={setQueueIndex}
             readyState={readyState}
@@ -98,9 +140,7 @@ const PodcastPlayer = () => {
             remainingDuration={remainingDuration}
           />
         </div>
-      ) : (
-        <div></div>
-      )}
+      ) : null}
     </>
   );
 };

@@ -1,23 +1,34 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getEpisode } from "../../redux/playerSlice";
+import { getEpisode, selectIsLoading } from "../../redux/playerSlice";
 import { FaPlay } from "react-icons/fa6";
-import { selectQueue } from "../../redux/playerSlice";
+import {
+  selectQueue,
+  setPlayButton,
+  setIsLoading,
+} from "../../redux/playerSlice";
 
 const EpisodePlayBtn = ({ episodePod }) => {
   const queue = useSelector(selectQueue);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   return (
     <>
-      <button
-        onClick={() => {
-          if (queue[0].uuid === episodePod.uuid) {
-            return;
-          }
-          dispatch(getEpisode(episodePod));
-        }}
-      >
-        <FaPlay />
-      </button>
+      {!isLoading && (
+        <button
+          onClick={() => {
+            if (queue.length > 0) {
+              if (queue[0].uuid === episodePod.uuid) {
+                return;
+              }
+            }
+            dispatch(getEpisode(episodePod));
+            dispatch(setPlayButton(true));
+            dispatch(setIsLoading(true));
+          }}
+        >
+          <FaPlay />
+        </button>
+      )}
     </>
   );
 };

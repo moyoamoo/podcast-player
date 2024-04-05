@@ -1,13 +1,13 @@
 import { getPodcastData } from "../../apiRequest";
 
 const SearchBtn = ({ searchTerm }) => {
+  console.log(searchTerm)
   return (
     <>
       <button
         className="searchBtn"
         onClick={() => {
-          getPodcastData(searchTerm, 1);
-      
+          getPodcastData(searchTerm);
         }}
       >
         Search Podcast

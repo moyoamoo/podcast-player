@@ -15,6 +15,7 @@ const Controls = forwardRef(function Controls(
     podDuration,
     progress,
     remainingDuration,
+    buffered
   },
   audioRef
 ) {
@@ -37,7 +38,11 @@ const Controls = forwardRef(function Controls(
           readyState={readyState}
           podDuration={podDuration}
           progress={progress}
+          isPlaying={isPlaying}
+          setIsPlaying={isPlaying}
           remainingDuration={remainingDuration}
+          buffered={buffered}
+
         />
       </div>
       <div className="bottomControls">
