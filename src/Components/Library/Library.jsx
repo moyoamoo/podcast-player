@@ -43,7 +43,7 @@ const Library = () => {
     newFiltered = podcasts.filter((podcast) => {
       if (podcast.name.toLowerCase().includes(searchTerm)) {
         return true;
-      }
+      } 
     });
   }
 

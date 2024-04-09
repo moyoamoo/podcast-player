@@ -33,6 +33,7 @@ const App = () => {
       <ToastContainer />
 
       <Header />
+
       <Routes>
         <Route path="search" element={<Search />} />
         <Route path="library" element={<Library />} />
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
       </Routes>
+
       <Footer />
     </>
   );

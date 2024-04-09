@@ -43,7 +43,6 @@ const PodcastPlayer = () => {
   }, [playButton, readyState, audioRef]);
 
   const updateServerDuration = async (playbackDuration, playbackPosition) => {
-    console.log("server duration");
     const { data } = await axios.post(
       "http://localhost:6001/listened/add",
       {
@@ -75,8 +74,6 @@ const PodcastPlayer = () => {
             preload="metadata"
             ref={audioRef}
             onProgress={(e) => {
-              console.log("on progress callback occured");
-
               if (e.currentTarget.duration > 0) {
                 for (let i = 0; i < e.currentTarget.buffered.length; i++) {
                   if (
@@ -96,14 +93,13 @@ const PodcastPlayer = () => {
               }
             }}
             onTimeUpdate={(e) => {
-              console.log("time update ran");
               // _.debounce(() => {
               //   console.log("debounce ran")
-              updateServerDuration(
-                e.currentTarget.duration,
-                e.currentTarget.currentTime
-              );
-              // }, 3000);
+              // updateServerDuration(
+              //   e.currentTarget.duration,
+              //   e.currentTarget.currentTime
+              // );
+              // // }, 3000);
 
               setRemainingDuration(e.currentTarget.currentTime);
               setProgressDuration();
