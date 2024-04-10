@@ -1,28 +1,48 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLoggedIn } from "../../redux/librarySlice";
+import { setMessage } from "../../redux/librarySlice";
 import { selectLibrary, addToLibrary } from "../../redux/podcastSlice";
+import axios from "axios";
 
 const SubscribeBtn = ({ podcast }) => {
-  const loggedIn = useSelector(selectLoggedIn);
+  const token = localStorage.getItem("token");
   const [inLibrary, setInLibrary] = useState(false);
   const library = useSelector(selectLibrary);
   const dispatch = useDispatch();
 
-  const addPodcastToLibrary = () => {
-    console.log(podcast.uuid);
-    console.log(typeof podcast.uuid);
-    dispatch(addToLibrary(podcast.uuid));
+  //api request to add uuid to library, passed in params
+  const addPodcast = async (uuid) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:6001/library/add`,
+        {uuid: uuid},
+        {
+          headers: { token: localStorage.getItem("token") },
+        }
+      );
 
-    // if (loggedIn) {
-    //   dispatch(addToLibrary(podcast.uuid));
-    //   dispatch(setMessage("Added to Library"));
-    //   return;
-    // } else {
-    //   dispatch(setMessage("Sign in to add podcast to library"));
-    // }
+      console.log(data);
+      if (data.status) {
+        dispatch(setMessage("Added to Library"));
+      } else {
+        dispatch(setMessage("Could not add podcast to library"));
+      }
+    } catch (e) {
+      console.log(e);
+      dispatch(setMessage("Could not add podcast to library"));
+    }
   };
 
+  //if logged in add podast, if not dispatch message
+  const addPodcastToLibrary = () => {
+    if (token) {
+      addPodcast(podcast.uuid);
+    } else {
+      dispatch(setMessage("Sign in to add podcast to library"));
+    }
+  };
+
+  //if podcast is in library, set in library to true
   useEffect(() => {
     if (library.includes(podcast.uuid)) {
       setInLibrary(true);

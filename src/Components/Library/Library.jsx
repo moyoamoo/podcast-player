@@ -10,24 +10,24 @@ import {
 } from "../../redux/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { selectLoggedIn } from "../../redux/librarySlice";
+import { selectLoggedIn, setWindow } from "../../redux/librarySlice";
 import { useNavigate } from "react-router-dom";
 import { getPodcastByUuid } from "../../apiRequest";
 import "../CSS/libraryPodcasts.scss";
 import LibrarySortBySelect from "./LibrarySortBySelect";
 
 const Library = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loggedIn = useSelector(selectLoggedIn);
+  const loggedIn = localStorage.getItem("token");
   const searchTerm = useSelector(selectSearchTerm);
   const libraryPodcastsUuid = useSelector(selectLibrary);
   let podcasts = useSelector(selectPodcastsSeries);
-  let libraryPodcasts;
+
+  console.log(loggedIn)
 
   useEffect(() => {
     if (!loggedIn) {
-      navigate("/");
+      dispatch(setWindow(0));
     } else {
       dispatch(clearApiData());
       if (libraryPodcastsUuid.length > 0) {
@@ -43,30 +43,33 @@ const Library = () => {
     newFiltered = podcasts.filter((podcast) => {
       if (podcast.name.toLowerCase().includes(searchTerm)) {
         return true;
-      } 
+      }
     });
   }
 
   return (
     <>
-      <div></div>
-      <h1>My Library</h1>
+      <div className="libraryContainer">
+        <h1>My Library</h1>
 
-      <input
-        type="text"
-        placeholder="Search Library"
-        onInput={(e) => {
-          dispatch(setPodcastSearchTerm(e.target.value));
-        }}
-      />
-      <LibrarySortBySelect />
-      {podcasts.length > 0 ? (
-        <LibraryResults libraryPodcasts={searchTerm ? newFiltered : podcasts} />
-      ) : (
-        <div className="validation">
-          <p>No Podcast Found</p>
-        </div>
-      )}
+        <input
+          type="text"
+          placeholder="Search Library"
+          onInput={(e) => {
+            dispatch(setPodcastSearchTerm(e.target.value));
+          }}
+        />
+        <LibrarySortBySelect />
+        {podcasts.length > 0 ? (
+          <LibraryResults
+            libraryPodcasts={searchTerm ? newFiltered : podcasts}
+          />
+        ) : (
+          <div className="validation">
+            <p>No Podcast Found</p>
+          </div>
+        )}
+      </div>
     </>
   );
 };

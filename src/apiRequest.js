@@ -10,103 +10,23 @@ import {
   appendApiDataSearch,
 } from "./redux/podcastSlice";
 
-const endPoint = "https://api.taddy.org";
-const userID = "1098";
-const apiKey =
-  "1f294e69b341b027256c07eff203bbc5b4ca73be67a8f8f8751fdfeb3fa8412948f7a07664e77b3e6585d9109aedb3c88a";
-
 ///search request
-export const getPodcastData = async (searchTerm) => {
+export const getPodcastData = async (searchTerm, page) => {
+  console.log(searchTerm, page);
   try {
-    const { data } = await axios.post(
-      endPoint,
-      {
-        query: `{
-          searchForTerm(term:"This American Life", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true, page: 1){
-            searchId
-            podcastSeries{
-              genres
-              uuid
-              name
-              hash
-              childrenHash
-              description
-              imageUrl
-              totalEpisodesCount
-              episodes(sortOrder:LATEST, page: 1, limitPerPage: 10){
-                  uuid
-                  name
-                  description
-                  datePublished
-                  audioUrl
-                }
-            }
-          }
-        }`,
+    const { data } = await axios.get("http://localhost:6001/search", {
+      headers: {
+        searchTerm: searchTerm,
+        page: page,
       },
-      {
-        headers: {
-          "X-USER-ID": userID,
-          "X-API-Key": apiKey,
-        },
-      }
-    );
-
+    });
     console.log(data);
     store.dispatch(storeApiData(data.data));
-    localStorage.setItem("getPodcastData", JSON.stringify(data.data));
+    // localStorage.setItem("getPodcastData", JSON.stringify(data.data));
   } catch (error) {
     console.log(error);
   }
-  // console.log(searchTerm);
-  // // if (!searchTerm || searchTerm === "undefined") {
-  // //   store.dispatch(setEmptySearch(true));
-  // //   return;
-  // // }
-  // // const dataFromDisk = JSON.parse(localStorage.getItem("getPodcastData"));
-  // // if (dataFromDisk) {
-  // //   store.dispatch(storeApiData(dataFromDisk));
-  // //   return;
-  // // }
-
-  // try {
-  //   const { data } = await axios.post(
-  //     endPoint,
-  //     {
-  //       query: `{
-  //           searchForTerm(term:"${searchTerm}", filterForTypes:PODCASTSERIES, searchResultsBoostType:BOOST_POPULARITY_A_LOT, isSafeMode:true)}{
-  //             searchId
-  //             podcastSeries{
-  //               genres
-  //               uuid
-  //               name
-  //               description
-  //               imageUrl
-  //               totalEpisodesCount
-  //               episodes(sortOrder:LATEST, limitPerPage: 10){
-  //                   uuid
-  //                   name
-  //                   description
-  //                   datePublished
-  //                   audioUrl
-  //                 }
-  //             }
-  //         }`,
-  //     },
-  //     {
-  //       headers: {
-  //         "X-USER-ID": userID,
-  //         "X-API-Key": apiKey,
-  //       },
-  //     }
-  //   );
-  //   // store.dispatch(setEmptySearch(false));
-  //   store.dispatch(storeApiData(data.data));
-  //   localStorage.setItem("getPodcastData", JSON.stringify(data.data));
-  // } catch (error) {
-  //   console.log(error);
-  // }
-};
+}
 
 //search podcast by unique id
 export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
@@ -115,37 +35,17 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
   } else {
     order = "LATEST";
   }
+
   try {
-    const { data } = await axios.post(
-      endPoint,
-      {
-        query: `{
-          getPodcastSeries(uuid: "${uuid}"){
-            uuid
-            genres
-            name
-            hash
-            childrenHash
-            description
-            imageUrl
-            totalEpisodesCount
-            episodes(sortOrder: ${order}, page:${page}, limitPerPage:10){
-            name 
-            uuid
-            description
-            audioUrl
-            datePublished
-           }
-          }
-        }`,
+    const { data } = await axios.get("http://localhost:6001/episodes", {
+      headers: {
+        uuid: uuid,
+        order: order,
+        page, page
       },
-      {
-        headers: {
-          "X-USER-ID": userID,
-          "X-API-Key": apiKey,
-        },
-      }
-    );
+    });
+    console.log(data);
+    store.dispatch(storeApiData(data.data));
 
     if (storeDestination === "append") {
       //add to library

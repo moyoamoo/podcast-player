@@ -7,7 +7,7 @@ const SearchBtn = ({ searchTerm }) => {
       <button
         className="searchBtn"
         onClick={() => {
-          getPodcastData(searchTerm);
+          getPodcastData(searchTerm, 1);
         }}
       >
         Search Podcast

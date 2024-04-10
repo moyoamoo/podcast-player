@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Joi from "joi";
 import axios from "axios";
 import "../CSS/login.scss";
-import { setNewUser, setWindow, setMessage } from "../../redux/librarySlice";
+import { setWindow, setMessage } from "../../redux/librarySlice";
 import { store } from "../../redux/store";
 import { useDispatch } from "react-redux";
 
@@ -50,6 +50,8 @@ const SignUp = () => {
 
       if (data.status) {
         dispatch(setMessage("Account Created"));
+        localStorage.setItem("token", data.token);
+        dispatch(setWindow(2));
       } else if (data.reason === "Duplicate account") {
         dispatch(setMessage("Account already exists! Try agaiin"));
       } else {
@@ -60,6 +62,7 @@ const SignUp = () => {
     }
   };
 
+  //on submit, if no errors make api call
   const onSubmit = (e) => {
     e.preventDefault();
     if (typeof errors === "undefined") {
@@ -67,11 +70,9 @@ const SignUp = () => {
     } else {
       dispatch(setMessage("Invalid password and/or email, try again"));
     }
-    // dispatch(setNewUser(userInput));
-    // dispatch(setWindow(1));
-    // dispatch(setMessage("Account Created"));
+
   };
-  console.log(userInput);
+ 
   return (
     <>
       <div className="login signUp">
