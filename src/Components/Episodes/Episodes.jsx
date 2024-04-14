@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectPodcast } from "../../redux/podcastSlice";
 import { formatGenres } from "../utils";
 import PodcastDetails from "./PodcastDetails";
-import  Spinner from "../Spinner"
+import Spinner from "../Spinner";
 
 const Episodes = () => {
   const { id } = useParams();

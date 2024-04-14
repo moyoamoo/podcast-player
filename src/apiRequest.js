@@ -7,45 +7,64 @@ import {
   appendApiData,
   sortEpisodeOrder,
   setEmptySearch,
+  saveSearchTerm,
   appendApiDataSearch,
 } from "./redux/podcastSlice";
 
 ///search request
-export const getPodcastData = async (searchTerm, page) => {
-  console.log(searchTerm, page);
-  try {
-    const { data } = await axios.get("http://localhost:6001/search", {
-      headers: {
-        searchTerm: searchTerm,
-        page: page,
-      },
-    });
-    console.log(data);
-    store.dispatch(storeApiData(data.data));
-    // localStorage.setItem("getPodcastData", JSON.stringify(data.data));
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-//search podcast by unique id
-export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
+export const getPodcastData = async (
+  searchTerm,
+  order,
+  page,
+  storeDestination
+) => {
   if (order === "1") {
     order = "OLDEST";
   } else {
     order = "LATEST";
   }
 
+  console.log(searchTerm, page);
+  try {
+    const { data } = await axios.get("http://localhost:6001/search", {
+      headers: {
+        searchTerm: searchTerm,
+        page: page,
+        order: order,
+      },
+    });
+    console.log(data.data);
+    if (storeDestination === "search") {
+      store.dispatch(storeApiData(data.data));
+    } else if (storeDestination === "showMore") {
+      store.dispatch(appendApiDataSearch(data.data));
+    }
+
+    // localStorage.setItem("getPodcastData", JSON.stringify(data.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//search podcast by unique id
+export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
+  console.log(uuid, order, page, storeDestination);
+  if (order === "1") {
+    order = "OLDEST";
+  } else {
+    order = "LATEST";
+  }
+
+  console.log(uuid, order, page, storeDestination);
   try {
     const { data } = await axios.get("http://localhost:6001/episodes", {
       headers: {
         uuid: uuid,
         order: order,
-        page, page
+        page: page,
       },
     });
     console.log(data);
-    store.dispatch(storeApiData(data.data));
 
     if (storeDestination === "append") {
       //add to library

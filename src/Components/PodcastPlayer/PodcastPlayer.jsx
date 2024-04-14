@@ -43,16 +43,21 @@ const PodcastPlayer = () => {
   }, [playButton, readyState, audioRef]);
 
   const updateServerDuration = async (playbackDuration, playbackPosition) => {
-    const { data } = await axios.post(
-      "http://localhost:6001/listened/add",
-      {
-        playbackPosition,
-        playbackDuration,
-        // uuid: queue[queueIndex].uuid,
-      },
-      { headers: { token: 1928752892983 } }
-    );
-    console.log(data);
+    console.log("i ran");
+    try {
+      const { data } = await axios.post(
+        "http://localhost:6001/listened/add",
+        {
+          playbackPosition,
+          playbackDuration,
+          // uuid: queue[queueIndex].uuid,
+        },
+        { headers: { token: localStorage.getItem("token") } }
+      );
+      console.log(data, "api call complete");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const setProgressDuration = () => {

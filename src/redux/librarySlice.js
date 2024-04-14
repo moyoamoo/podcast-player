@@ -9,6 +9,7 @@ const initialState = {
   status: "idle",
   window: 1,
   loggedIn: true,
+  userLibrary: [],
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
@@ -39,6 +40,10 @@ export const librarySlice = createSlice({
       state.loggedIn = !state.loggedIn;
       saveStore("library", state);
     },
+
+    setUserLibary: (state, { payload }) => {
+      state.userLibrary.push(...payload);
+    },
   },
 });
 
@@ -55,5 +60,6 @@ export const selectWindow = (state) => state.library.window;
 export const selectUser = (state) => state.library.user;
 export const selectMessage = (state) => state.library.message;
 export const selectLoggedIn = (state) => state.library.loggedIn;
+export const selectUserLibrary = (state) => state.library.userLibrary;
 
 export default librarySlice.reducer;

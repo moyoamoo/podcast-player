@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/librarySlice";
 import { selectLibrary, addToLibrary } from "../../redux/podcastSlice";
 import axios from "axios";
+import { add } from "lodash";
 
 const SubscribeBtn = ({ podcast }) => {
   const token = localStorage.getItem("token");
@@ -15,7 +16,7 @@ const SubscribeBtn = ({ podcast }) => {
     try {
       const { data } = await axios.post(
         `http://localhost:6001/library/add`,
-        {uuid: uuid},
+        { uuid: uuid },
         {
           headers: { token: localStorage.getItem("token") },
         }
@@ -24,6 +25,7 @@ const SubscribeBtn = ({ podcast }) => {
       console.log(data);
       if (data.status) {
         dispatch(setMessage("Added to Library"));
+        dispatch(addToLibrary(uuid));
       } else {
         dispatch(setMessage("Could not add podcast to library"));
       }
