@@ -47,6 +47,11 @@ export const playerSlice = createSlice({
       state.isLoading = payload;
       saveStore("player", state);
     },
+
+    setIsPlaying: (state, { payload }) => {
+      state.isPlaying = payload;
+      saveStore("player", state);
+    },
   },
 });
 
@@ -56,9 +61,11 @@ export const {
   removeFromQueue,
   setPlayButton,
   setIsLoading,
+  setIsPlaying,
 } = playerSlice.actions;
 
 export const selectQueue = (state) => state.player.queue;
 export const selectIsLoading = (state) => state.player.isLoading;
 export const selectPlayButton = (state) => state.player.playButton;
+export const selectIsPlaying = (state) => state.player.isPlaying;
 export default playerSlice.reducer;

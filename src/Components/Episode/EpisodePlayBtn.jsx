@@ -26,7 +26,7 @@ const EpisodePlayBtn = ({ episodePod }) => {
             dispatch(setIsLoading(true));
           }}
         >
-          <FaPlay />
+         { <FaPlay />}
         </button>
       )}
     </>

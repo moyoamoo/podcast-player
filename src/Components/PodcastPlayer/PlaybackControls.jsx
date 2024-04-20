@@ -9,18 +9,22 @@ const PlaybackControls = forwardRef(function PlaybackControls(
   audioRef
 ) {
   const previousPod = () => {
+    console.log(queueIndex);
     if (queueIndex > 0) {
-      setQueueIndex(queueIndex + 1);
+      setQueueIndex(queueIndex - 1);
     } else {
       setQueueIndex(0);
+      console.log(queueIndex);
     }
   };
 
   const nextPod = () => {
     if (queueIndex < queue.length - 1) {
       setQueueIndex(queueIndex + 1);
+      console.log(queueIndex);
     } else {
       setQueueIndex(0);
+      console.log(queueIndex);
     }
   };
 

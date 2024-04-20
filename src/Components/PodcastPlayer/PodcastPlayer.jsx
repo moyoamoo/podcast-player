@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../CSS/footer.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,23 +6,20 @@ import {
   selectPlayButton,
   setIsLoading,
 } from "../../redux/playerSlice";
-import { setListened, setGenres } from "../../redux/statsSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
 import axios from "axios";
-import { debounce } from "underscore";
-import { set } from "lodash";
+import { setListenData } from "../../redux/statsSlice";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
-  const [buffered, setBuffered] = useState(0);
   const playButton = useSelector(selectPlayButton);
+  const [buffered, setBuffered] = useState(0);
   let [queueIndex, setQueueIndex] = useState(0);
   const [readyState, setReadyState] = useState(false);
   const [podDuration, setPodDuration] = useState("00:00:00");
   const [elapsed, setElapsed] = useState(0);
   const [previousElapsed, setPreviousElpased] = useState(0);
-  const [playbackPosition, setPlaybackPosition] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const audioRef = useRef();
@@ -32,6 +29,7 @@ const PodcastPlayer = () => {
 
   //add genres to database
   const addGenres = async () => {
+    console.log("i ran");
     try {
       const { data } = await axios.get(
         "http://localhost:6001/search_term/add",
@@ -62,11 +60,32 @@ const PodcastPlayer = () => {
     if (_elapsed === previousElapsed) {
       return;
     }
-    updateServerDuration(podDuration, _elapsed);
+    updateServerDuration(_elapsed, audioRef.current.duration);
     setPreviousElpased(_elapsed);
   }, [elapsed]);
 
-  const updateServerDuration = async (playbackDuration, playbackPosition) => {
+  const getListenedData = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:6001/listened/get", {
+        headers: {
+          uuid: queue[queueIndex].uuid,
+        },
+      });
+      console.log(data);
+      if (data.data) {
+        dispatch(
+          setListenData({
+            uuid: queue[queueIndex],
+            positionData: data.data,
+            duration: audioRef.current.duration,
+          })
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const updateServerDuration = async (playbackPosition, playbackDuration) => {
     try {
       const { data } = await axios.post(
         "http://localhost:6001/listened/add",
@@ -131,6 +150,9 @@ const PodcastPlayer = () => {
                 addGenres();
               }
             }}
+            onError={(e) => {
+              console.log(e);
+            }}
             onCanPlay={(e) => {
               setReadyState(true);
               setIsPlaying(true);
@@ -146,6 +168,9 @@ const PodcastPlayer = () => {
               } else {
                 queueIndex = 0;
               }
+            }}
+            onPlay={() => {
+              getListenedData();
             }}
           ></audio>
           <Controls

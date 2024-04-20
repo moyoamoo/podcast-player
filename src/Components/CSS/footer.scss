@@ -125,24 +125,24 @@ footer {
 
 progress {
   width: 60%;
-  height: 12px;
+  height: 10px;
   position: absolute;
   bottom: 1;
   border-radius: 55rem;
-  opacity: 0.5;
+  // opacity: 0.6;
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: #053a5f;;
+  background-color: #053a5f;
+  border-radius: 55rem;
 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #5cd5eb;
+  background-color: #000;
   border-radius: 55rem;
 }
-
 
 // progress[value]{
 //   background-color: ;
@@ -156,6 +156,8 @@ progress[value]::-webkit-progress-value {
   flex-direction: column;
   position: relative;
 }
-
 .durationBar {
+  position: absolute;
+  bottom: 1;
+  opacity: 0.6;
 }

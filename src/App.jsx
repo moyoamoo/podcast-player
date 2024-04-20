@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 import Queue from "./Components/Queue/Queue";
 import Discover from "./Components/Discover/Discover";
+import PodcastPlayer from "./Components/FullPodcastPlayer/PodcastPlayer";
 import { getRandom } from "./utils";
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="discover" element={<Discover />} />
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
+        <Route path="playing" element={<PodcastPlayer />} />
       </Routes>
 
       <Footer />
