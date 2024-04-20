@@ -37,10 +37,10 @@ const SubscribeBtn = ({ podcast }) => {
 
   //if logged in add podast, if not dispatch message
   const addPodcastToLibrary = () => {
-    if (token) {
+    if (!token) {
       addPodcast(podcast.uuid);
     } else {
-      dispatch(setMessage("Sign in to add podcast to library"));
+      addPodcast(podcast.uuid);
     }
   };
 

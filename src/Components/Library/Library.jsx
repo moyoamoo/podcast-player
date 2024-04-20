@@ -57,12 +57,18 @@ const Library = () => {
     });
   }, [isLibrary]);
 
+  useEffect(()=>{
+    dispatch(clearApiData());
+
+  }, [])
+
+  
   useEffect(() => {
     if (!token) {
       dispatch(setWindow(0));
       return;
     } else {
-      dispatch(clearApiData());
+
       getLibraryUuids();
     }
   }, [getLibraryUuids, token, libraryUuids]);

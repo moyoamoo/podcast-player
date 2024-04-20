@@ -10,7 +10,8 @@ import { setListened, setGenres } from "../../redux/statsSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
 import axios from "axios";
-import { debounce } from "lodash";
+import { debounce } from "underscore";
+import { set } from "lodash";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
@@ -19,18 +20,32 @@ const PodcastPlayer = () => {
   let [queueIndex, setQueueIndex] = useState(0);
   const [readyState, setReadyState] = useState(false);
   const [podDuration, setPodDuration] = useState("00:00:00");
-  const [remainingDuration, setRemainingDuration] = useState("00:00:00");
+  const [elapsed, setElapsed] = useState(0);
+  const [previousElapsed, setPreviousElpased] = useState(0);
+  const [playbackPosition, setPlaybackPosition] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const audioRef = useRef();
+  const [genreDuration, setGenreDuration] = useState(0);
   const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
 
-  //
-
-  const box = useCallback(() => {
-    console.log("hello world");
-  });
+  //add genres to database
+  const addGenres = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:6001/search_term/add",
+        { genres: queue[queueIndex].genres },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     if (readyState && playButton && lastClick > 5000) {
@@ -42,19 +57,31 @@ const PodcastPlayer = () => {
     }
   }, [playButton, readyState, audioRef]);
 
+  useEffect(() => {
+    const _elapsed = Math.round(elapsed);
+    if (_elapsed === previousElapsed) {
+      return;
+    }
+    updateServerDuration(podDuration, _elapsed);
+    setPreviousElpased(_elapsed);
+  }, [elapsed]);
+
   const updateServerDuration = async (playbackDuration, playbackPosition) => {
-    console.log("i ran");
     try {
       const { data } = await axios.post(
         "http://localhost:6001/listened/add",
         {
           playbackPosition,
           playbackDuration,
-          // uuid: queue[queueIndex].uuid,
+          uuid: queue[queueIndex].uuid,
         },
-        { headers: { token: localStorage.getItem("token") } }
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+            unique: localStorage.getItem("unique"),
+          },
+        }
       );
-      console.log(data, "api call complete");
     } catch (e) {
       console.log(e);
     }
@@ -98,28 +125,22 @@ const PodcastPlayer = () => {
               }
             }}
             onTimeUpdate={(e) => {
-              // _.debounce(() => {
-              //   console.log("debounce ran")
-              // updateServerDuration(
-              //   e.currentTarget.duration,
-              //   e.currentTarget.currentTime
-              // );
-              // // }, 3000);
-
-              setRemainingDuration(e.currentTarget.currentTime);
+              setElapsed(e.currentTarget.currentTime);
               setProgressDuration();
+              if (Math.round(e.currentTarget.currentTime) === genreDuration) {
+                addGenres();
+              }
             }}
-            onCanPlay={() => {
+            onCanPlay={(e) => {
               setReadyState(true);
               setIsPlaying(true);
               dispatch(setIsLoading(false));
+              setGenreDuration(Math.round(e.currentTarget.duration * 0.1));
             }}
             onDurationChange={(e) => {
               setPodDuration(e.currentTarget.duration);
             }}
             onEnded={() => {
-              dispatch(setListened(queue[queueIndex].podcastUuid));
-              dispatch(setGenres(queue[queueIndex].genres));
               if (queueIndex < queue.length - 1) {
                 queueIndex++;
               } else {
@@ -138,7 +159,7 @@ const PodcastPlayer = () => {
             setIsPlaying={setIsPlaying}
             podDuration={podDuration}
             progress={progress}
-            remainingDuration={remainingDuration}
+            remainingDuration={elapsed}
           />
         </div>
       ) : null}

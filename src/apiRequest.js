@@ -32,8 +32,11 @@ export const getPodcastData = async (
         page: page,
         order: order,
       },
-    });
-    console.log(data.data);
+    })
+    if (typeof data == "undefined") {
+      console.log("undefined data");
+      return;
+    }
     if (storeDestination === "search") {
       store.dispatch(storeApiData(data.data));
     } else if (storeDestination === "showMore") {

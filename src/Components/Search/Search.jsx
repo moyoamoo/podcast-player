@@ -14,9 +14,10 @@ const Search = () => {
   const dispatch = useDispatch();
   const podcast = useSelector(selectPodcastsSeries);
   const searchTerm = useSelector(selectSearchTerm);
+
   // useEffect(() => {
   //   dispatch(clearApiData());
-  // }, [podcast]);
+  // }, []);
 
   const callback = (sortBy, page, type) => {
     getPodcastData(searchTerm, sortBy, page, type);

@@ -65,7 +65,7 @@ footer {
 
   input[type="range"]::-webkit-slider-runnable-track {
     background: #053a5f;
-    height: 0.5rem;
+    height: 10px;
     border-radius: 55px;
   }
 
@@ -123,11 +123,30 @@ footer {
   justify-content: space-between;
 }
 
-
-
-progress{
+progress {
   width: 60%;
+  height: 12px;
+  position: absolute;
+  bottom: 1;
+  border-radius: 55rem;
+  opacity: 0.5;
 }
+
+progress[value]::-webkit-progress-bar {
+  background-color: #053a5f;;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #5cd5eb;
+  border-radius: 55rem;
+}
+
+
+// progress[value]{
+//   background-color: ;
+// }
 
 .durationBarWrapper {
   width: 75vw;
@@ -135,4 +154,8 @@ progress{
   align-items: center;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.durationBar {
 }

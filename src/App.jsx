@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 import Queue from "./Components/Queue/Queue";
 import Discover from "./Components/Discover/Discover";
+import { getRandom } from "./utils";
 
 const App = () => {
   const message = useSelector(selectMessage);
@@ -27,6 +28,13 @@ const App = () => {
       dispatch(setMessage(""));
     }, 3000);
   }, [message]);
+
+  useEffect(() => {
+    const unique = localStorage.getItem("unique");
+    if (!unique) {
+      localStorage.setItem("unique", getRandom(32));
+    }
+  }, []);
 
   return (
     <>
