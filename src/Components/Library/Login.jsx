@@ -65,24 +65,29 @@ const Login = () => {
     } catch (error) {}
   };
 
-  //check if already logged in 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (token) {
-      dispatch(setMessage("Already logged in"));
-    }
-    if (typeof errors === "undefined") {
-      loginUser(userInput);
-    } else {
-      dispatch(setMessage("Email and Password are Incorrect! Try Again"));
-    }
-  };
+  //check if already logged in
+  
 
   return (
     <>
       <div className="login">
         <h1>Login</h1>
-        <form onInput={onInput} onSubmit={onSubmit}>
+        <form
+          onInput={onInput}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (token) {
+              dispatch(setMessage("Already logged in"));
+            }
+            if (typeof errors === "undefined") {
+              loginUser(userInput);
+            } else {
+              dispatch(
+                setMessage("Email and Password are Incorrect! Try Again")
+              );
+            }
+          }}
+        >
           <div className="inputContainer">
             <label htmlFor="email">Email</label>
             <input type="email" name="email" id="email" autoComplete="email" />

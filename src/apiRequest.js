@@ -24,6 +24,11 @@ export const getPodcastData = async (
     order = "LATEST";
   }
 
+  if (typeof searchTerm === "undefined") {
+    store.dispatch(message("Please enter a search term"));
+    return;
+  }
+
   console.log(searchTerm, page);
   try {
     const { data } = await axios.get("http://localhost:6001/search", {
@@ -32,8 +37,8 @@ export const getPodcastData = async (
         page: page,
         order: order,
       },
-    })
-    if (typeof data == "undefined") {
+    });
+    if (typeof data.data == "undefined") {
       console.log("undefined data");
       return;
     }

@@ -1,7 +1,8 @@
 import React, { forwardRef, useRef } from "react";
+import Listens from "./Listens";
 
 const DurationBar = forwardRef(function DurationBar(
-  { progress, readyState, buffered },
+  { progress, readyState, buffered, queue, queueIndex },
   audioRef
 ) {
   const podDurationRef = useRef();
@@ -12,12 +13,14 @@ const DurationBar = forwardRef(function DurationBar(
     }
   };
 
-
   return (
     <>
+      <div className="listenData">
+   
+        <Listens queue={queue} queueIndex={queueIndex} />
+      </div>
       <div className="durationBarWrapper">
-        <progress value={buffered} min="0" max="100">
-        </progress>
+        <progress value={buffered} min="0" max="100"></progress>
         <input
           className="durationBar"
           type="range"

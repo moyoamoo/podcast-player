@@ -19,6 +19,7 @@ import { getRandom } from "./utils";
 const App = () => {
   const message = useSelector(selectMessage);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (!message) return;
@@ -31,6 +32,9 @@ const App = () => {
   }, [message]);
 
   useEffect(() => {
+    if (token) {
+      return;
+    }
     const unique = localStorage.getItem("unique");
     if (!unique) {
       localStorage.setItem("unique", getRandom(32));

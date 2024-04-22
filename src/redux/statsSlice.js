@@ -12,7 +12,7 @@ const initialState = {
   searches: [],
   favouriteGenres: [],
   favGenresStats: {},
-  listenData: [],
+  listenData: {},
 };
 export const statsSlice = createSlice({
   name: "statsSlice",
@@ -48,8 +48,7 @@ export const statsSlice = createSlice({
     },
 
     setListenData: (state, { payload }) => {
-      //loop through to see if it is not in array already
-      state.listenData.push(payload);
+      state.listenData = payload;
     },
   },
 });
