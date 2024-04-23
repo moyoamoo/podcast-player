@@ -7,12 +7,12 @@ const initialState = {
   value: 0,
   status: "idle",
   listened: [],
-  genres: [],
   mostListened: {},
   searches: [],
-  favouriteGenres: [],
-  favGenresStats: {},
+  rankedGenres: {},
+  rankedPodcasts: {},
   listenData: {},
+  previousSearches: [],
 };
 export const statsSlice = createSlice({
   name: "statsSlice",
@@ -23,23 +23,15 @@ export const statsSlice = createSlice({
       saveStore("stats", state);
     },
 
-    setGenres: (state, { payload }) => {
-      state.genres.push(...payload);
+    //ranked genres from database
+    setRankedGenres: (state, { payload }) => {
+      state.rankedGenres = payload;
       saveStore("stats", state);
     },
 
-    setMostListened: (state, { payload }) => {
-      state.mostListened = payload;
-      saveStore("stats", state);
-    },
-
-    setFavouriteGenres: (state, { payload }) => {
-      state.favouriteGenres = payload;
-      saveStore("stats", state);
-    },
-
-    setFavGenresStats: (state, { payload }) => {
-      state.favGenresStats = payload;
+    //ranked podcasts from database
+    setRankedPodcasts: (state, { payload }) => {
+      state.rankedPodcasts = payload;
       saveStore("stats", state);
     },
 
@@ -47,6 +39,9 @@ export const statsSlice = createSlice({
       state.searches.push(payload);
     },
 
+    setPreviousSearches: (state, { payload }) => {
+      state.previousSearches = payload;
+    },
     setListenData: (state, { payload }) => {
       state.listenData = payload;
     },
@@ -57,16 +52,18 @@ export const {
   setListened,
   setGenres,
   setMostListened,
-  setFavouriteGenres,
-  setFavGenresStats,
   setSearch,
+  setRankedGenres,
+  setRankedPodcasts,
   setListenData,
+  setPreviousSearches,
 } = statsSlice.actions;
 
 export const selectListened = (state) => state.stats.listened;
 export const selectGenres = (state) => state.stats.genres;
-export const selectFavouriteGenres = (state) => state.stats.favouriteGenres;
-export const selectFavGenresStats = (state) => state.stats.favGenresStats;
+export const selectRankedGenres = (state) => state.stats.rankedGenres;
+export const selectRankedPodcasts = (state) => state.stats.rankedPodcasts;
 export const selectListenData = (state) => state.stats.listenData;
+export const selectPreviousSearches = (state) => state.stats.previousSearches;
 
 export default statsSlice.reducer;

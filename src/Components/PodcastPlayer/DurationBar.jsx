@@ -17,7 +17,7 @@ const DurationBar = forwardRef(function DurationBar(
     <>
       <div className="listenData">
    
-        <Listens queue={queue} queueIndex={queueIndex} />
+        {/* <Listens queue={queue} queueIndex={queueIndex} /> */}
       </div>
       <div className="durationBarWrapper">
         <progress value={buffered} min="0" max="100"></progress>

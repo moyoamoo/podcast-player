@@ -11,6 +11,8 @@ import {
   appendApiDataSearch,
 } from "./redux/podcastSlice";
 
+const token = localStorage.getItem("token");
+
 ///search request
 export const getPodcastData = async (
   searchTerm,
@@ -38,10 +40,16 @@ export const getPodcastData = async (
         order: order,
       },
     });
-    if (typeof data.data == "undefined") {
+    if (!data.data) {
       console.log("undefined data");
       return;
     }
+
+    
+    if (token) {
+      addSearchTerm(searchTerm);
+    }
+
     if (storeDestination === "search") {
       store.dispatch(storeApiData(data.data));
     } else if (storeDestination === "showMore") {
@@ -72,8 +80,13 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
         page: page,
       },
     });
-    console.log(data);
 
+    if (!data.data) {
+      console.log("undefined data");
+      return;
+    }
+
+    
     if (storeDestination === "append") {
       //add to library
       store.dispatch(appendApiData(data.data.getPodcastSeries));
@@ -92,5 +105,16 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+const addSearchTerm = async (searchTerm) => {
+  try {
+    console.log(searchTerm)
+    const { data } = await axios.get("http://localhost:6001/search_term/add", {
+      headers: { token: token, searchTerm: searchTerm },
+    });
+  } catch (e) {
+    console.log(e);
   }
 };

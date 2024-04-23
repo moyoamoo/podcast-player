@@ -1,23 +1,37 @@
-
-.mostListened{
-    display: flex;
-    gap: 2rem;
-    justify-content: left;
-    align-items: center;
-    overflow-x: scroll;
-    overflow: hidden;
+.mostListened {
+  display: flex;
+  gap: 2rem;
+  justify-content: left;
+  align-items: center;
+  overflow-x: scroll;
+  overflow: hidden;
 }
 
-.discoverPodcast{
-    max-width: 250px;
-    border-radius: .7rem;
+.discoverPodcast {
+  max-width: 250px;
+  border-radius: 0.7rem;
 }
 
 .discover {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    h2{
-        color: #fff;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h2 {
+    color: #fff;
+  }
+}
+
+.discoverHeaders {
+  color: #fff;
+  font-size: 25px;
+}
+
+.listenedContainer {
+  border: 2px solid #5cd5eb;
+  border-radius: 0.7rem;
+  p{
+    color: #fff;
+
+    
+  }
 }

@@ -46,9 +46,8 @@ export const podcastSlice = createSlice({
 
     //append search data
     appendApiDataSearch: (state, { payload }) => {
-      state.apiData.searchForTerm.podcastSeries.push(
-        ...payload.searchForTerm.podcastSeries
-      );
+      
+      state.apiData.searchForTerm.podcastSeries.push(payload);
       console.log(state.apiData.searchForTerm.podcastSeries);
       saveStore("podcast", state);
     },
@@ -81,7 +80,7 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
-    setPodcastSearchTerm: (state, { payload }) => {
+    setSearchTerm: (state, { payload }) => {
       state.searchTerm = payload;
       saveStore("podcast", state);
     },
@@ -157,7 +156,7 @@ export const {
   getLibrary,
   addToLibrary,
   deletefromLibrary,
-  setPodcastSearchTerm,
+  setSearchTerm,
   getLibraryState,
   appendApiData,
   sortEpisodeOrder,

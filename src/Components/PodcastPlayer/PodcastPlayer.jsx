@@ -27,6 +27,7 @@ const PodcastPlayer = () => {
   const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
 
+ 
   //add genres to database
   const addGenres = async () => {
     console.log("i ran");
@@ -68,10 +69,9 @@ const PodcastPlayer = () => {
     try {
       const { data } = await axios.get("http://localhost:6001/listened/get", {
         headers: {
-          uuid: queue[queueIndex].uuid,
+          episodeUuid: queue[queueIndex].uuid,
         },
       });
-      console.log(data);
       if (data.data) {
         dispatch(
           setListenData({
@@ -92,7 +92,8 @@ const PodcastPlayer = () => {
         {
           playbackPosition,
           playbackDuration,
-          uuid: queue[queueIndex].uuid,
+          episodeUuid: queue[queueIndex].uuid,
+          podcastUuid: queue[queueIndex].podcastUuid,
         },
         {
           headers: {
@@ -146,10 +147,7 @@ const PodcastPlayer = () => {
             onTimeUpdate={(e) => {
               setElapsed(e.currentTarget.currentTime);
               setProgressDuration();
-              console.log(
-                Math.round(e.currentTarget.currentTime),
-                genreDuration
-              );
+
               if (Math.round(e.currentTarget.currentTime) === genreDuration) {
                 addGenres();
                 return;

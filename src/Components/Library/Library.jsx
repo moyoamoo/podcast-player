@@ -5,8 +5,6 @@ import axios from "axios";
 import {
   clearApiData,
   selectPodcastsSeries,
-  selectSearchTerm,
-  setPodcastSearchTerm,
   selectLibrary,
   addToLibrary,
 } from "../../redux/podcastSlice";
@@ -21,7 +19,6 @@ import "../CSS/libraryPodcasts.scss";
 const Library = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const searchTerm = useSelector(selectSearchTerm);
   const libraryUuids = useSelector(selectLibrary);
   const [isLibrary, setIsLibrary] = useState(false);
   let podcasts = useSelector(selectPodcastsSeries);
@@ -79,14 +76,7 @@ const Library = () => {
     }
   }, [isLibrary]);
 
-  let newFiltered;
-  if (searchTerm) {
-    newFiltered = podcasts.filter((podcast) => {
-      if (podcast.name.toLowerCase().includes(searchTerm)) {
-        return true;
-      }
-    });
-  }
+  
 
   return (
     <>
@@ -101,7 +91,7 @@ const Library = () => {
           }}
         />
         <LibrarySortBySelect />
-        {podcasts.length > 0 ? (
+        {/* {podcasts.length > 0 ? (
           <LibraryResults
             libraryPodcasts={searchTerm ? newFiltered : podcasts}
           />
@@ -109,7 +99,7 @@ const Library = () => {
           <div className="validation">
             <p>No Podcast Found</p>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
