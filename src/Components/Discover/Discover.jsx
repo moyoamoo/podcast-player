@@ -25,7 +25,7 @@ const Discover = () => {
   const getRecentSearches = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:6001/search_term/get",
+        "http://localhost:6001/search_term/get/5",
         {
           headers: {
             token: token,
@@ -43,7 +43,7 @@ const Discover = () => {
 
   const getTopGenres = async () => {
     try {
-      const { data } = await axios.get("http://localhost:6001/genres/get", {
+      const { data } = await axios.get("http://localhost:6001/genres/get/5", {
         headers: {
           token: token,
         },
@@ -59,7 +59,7 @@ const Discover = () => {
 
   const getTopPodcasts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:6001/plays/get", {
+      const { data } = await axios.get("http://localhost:6001/plays/get/5", {
         headers: {
           token: token,
         },

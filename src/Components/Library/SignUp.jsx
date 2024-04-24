@@ -48,12 +48,12 @@ const SignUp = () => {
         userInput
       );
 
-      if (data.status) {
+      if (data.status && data.reason) {
+        dispatch(setMessage("Account already exists! Try agaiin"));
+      } else if (data.status) {
         dispatch(setMessage("Account Created"));
         localStorage.setItem("token", data.token);
         dispatch(setWindow(2));
-      } else if (data.reason === "Duplicate account") {
-        dispatch(setMessage("Account already exists! Try agaiin"));
       } else {
         dispatch(setMessage("Account not created! Try again"));
       }
@@ -70,9 +70,8 @@ const SignUp = () => {
     } else {
       dispatch(setMessage("Invalid password and/or email, try again"));
     }
-
   };
- 
+
   return (
     <>
       <div className="login signUp">
