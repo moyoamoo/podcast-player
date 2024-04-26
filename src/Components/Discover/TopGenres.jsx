@@ -33,8 +33,8 @@ const TopGenres = () => {
         axis: "y",
         label: "Most Listened Genres",
         data: Object.values(rankedGenres),
-        borderColor: "#666a86",
-        backgroundColor: "#5cd5eb",
+        borderColor: "#ddd",
+        backgroundColor: "#ddd"
       },
     ],
   };

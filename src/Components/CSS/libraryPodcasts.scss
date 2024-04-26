@@ -3,6 +3,47 @@ h1 {
   font-size: 3.2rem;
 }
 
+.libraryHeader {
+  width: 100vw;
+  display: flex;
+  font-family: "BDOGrotesk", Courier, monospace;
+  text-transform: uppercase;
+  flex-direction: column;
+  padding: 3rem;
+  justify-content: center;
+  align-items: center;
+  background-color: #99d1ff;
+  background-image: radial-gradient(
+      at 52% 59%,
+      hsla(128, 68%, 70%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 5% 6%, hsla(73, 84%, 62%, 1) 0px, transparent 50%),
+    radial-gradient(at 23% 2%, hsla(224, 85%, 76%, 1) 0px, transparent 50%),
+    radial-gradient(at 75% 82%, hsla(236, 86%, 68%, 1) 0px, transparent 50%),
+    radial-gradient(at 88% 95%, hsla(253, 68%, 70%, 1) 0px, transparent 50%),
+    radial-gradient(at 61% 12%, hsla(271, 87%, 62%, 1) 0px, transparent 50%),
+    radial-gradient(at 96% 16%, hsla(259, 92%, 64%, 1) 0px, transparent 50%),
+    radial-gradient(at 23% 13%, hsla(30, 90%, 74%, 1) 0px, transparent 50%),
+    radial-gradient(at 74% 15%, hsla(18, 64%, 68%, 1) 0px, transparent 50%);
+
+  h2 {
+    background-color: #000;
+    color: #fff;
+    padding: 2rem;
+  }
+
+  input[type="text"] {
+    margin-top: -2px;
+  }
+}
+
+.libraryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .validation {
   margin-top: 2rem;
   background: rgba(255, 255, 255, 0.05);
@@ -19,56 +60,62 @@ h1 {
   }
 }
 
-.libraryContainer {
+.libraryPodcastContainer {
+  margin-top: 2rem;
+  color: #fff;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.libraryPodcastContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 250px;
-  height: 300px;
-  margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  h2 {
-    color: #fff;
-    text-align: center;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
+  width: 220px;
+  min-height: 350px;
+  max-height: 600px;
+  text-transform: uppercase;
+  background-color: #242423;
+  font-weight: 100;
+  font-size: 4rem;
+  // padding: 1rem;
+  color: #fff;
+  border-radius: 1rem;
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+    to bottom right,
+    hsla(271, 87%, 62%, 1) 0%,
+    hsla(224, 85%, 76%, 1) 25%,
+    hsla(73, 84%, 62%, 1) 50%,
+    hsla(30, 90%, 74%, 1) 75%,
+    hsla(18, 64%, 68%, 1) 100%
+  );
+  border-image-slice: 1;
 
   img {
-    width: 100%;
-    border-top-left-radius: 0.7rem;
-    border-top-right-radius: 0.7rem;
+    min-width: 180px;
+    height: 180px;
+    border-radius: 1rem;
+    margin-top: 10px;
+  }
+
+  h2 {
+    font-size: 17px;
+    text-align: center;
   }
 }
 
 .deleteBtn {
   background: #bc2c1a;
   border: none;
-  border-radius: 10rem;
-  width: 25px;
-  height: 25px;
-  margin-bottom: -20px;
-  z-index: 1;
+  color: #fff;
+  width: 50%;
+  margin-top: 15px;
+  padding: 1rem;
+  border: none;
+  font-size: 1.4rem;
+  text-align: center;
+  font-family: "BDOGrotesk", Courier, monospace;
+  text-transform: uppercase;
 
   &:hover {
-    background-color: #fff;
-  }
-  svg {
-    color: #fff;
-
-    &:hover {
-      color: #bc2c1a;
-    }
+    background-color: #c76664;
   }
 }

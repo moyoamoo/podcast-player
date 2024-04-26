@@ -33,16 +33,9 @@ const LibraryPodcast = ({ podcast }) => {
 
   return (
     <div>
-      <button
-        className="deleteBtn"
-        onClick={() => {
-          deleteFromLibrary(podcast.uuid);
-        }}
-      >
-        <RxCross2 />
-      </button>
-      <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
-        <div className="libraryPodcastContainer">
+      <div className="libraryPodcastContainer">
+        <h2>{podcast.name}</h2>
+        <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
           <img
             loading="lazy"
             src={podcast.imageUrl}
@@ -52,10 +45,16 @@ const LibraryPodcast = ({ podcast }) => {
               e.onError = null;
             }}
           />
-
-          <h2>{podcast.name}</h2>
-        </div>
-      </Link>
+        </Link>
+        <button
+          className="deleteBtn"
+          onClick={() => {
+            deleteFromLibrary(podcast.uuid);
+          }}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

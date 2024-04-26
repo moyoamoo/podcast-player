@@ -9,6 +9,7 @@ const PreviousSearch = ({ search }) => {
     <>
       <Link to="/search">
         <button
+          className="previousSearch"
           onClick={() => {
             dispatch(setSearchTerm(search));
           }}

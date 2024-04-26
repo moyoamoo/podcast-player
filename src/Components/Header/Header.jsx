@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <header>
       <div className="headerContainer">
-        <h1>PodLaunch</h1>
+        <h1>LaunchPod</h1>
       </div>
       <nav>
         <ul className={openMenu ? "showMenu" : "menu"}>

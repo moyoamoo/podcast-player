@@ -8,12 +8,12 @@ const Podcast = ({ podcast }) => {
   return (
     <>
       <div className="podcastContainer">
+        <PodcastName name={podcast.name} />
         <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
           <PodcastImage podcast={podcast} />
         </Link>
 
         <div className="podcastHeading">
-          <PodcastName name={podcast.name} />
           <SubscribeBtn podcast={podcast} />
         </div>
       </div>

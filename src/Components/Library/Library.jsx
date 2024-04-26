@@ -69,25 +69,30 @@ const Library = () => {
   }
   return (
     <>
-      <div className="libraryContainer">
-        <h1>My Library</h1>
-
-        <input
-          type="text"
-          placeholder="Search Library"
-          onInput={(e) => {
-            dispatch(setSearchTerm(e.target.value));
-          }}
-        />
-        <LibrarySortBySelect />
-        {podcasts.length ? (
-          <LibraryResults
-            libraryPodcasts={searchTerm ? newFiltered : podcasts}
-          />
-        ) : (
-          <Spinner />
-        )}
-      </div>
+   <main>
+        <div className="libraryContainer">
+        <div className="libraryHeader">
+            <h2>My Library</h2>
+    
+            <input
+              type="text"
+              placeholder="Search Library"
+              onInput={(e) => {
+                dispatch(setSearchTerm(e.target.value));
+              }}
+            />
+               <LibrarySortBySelect />
+        </div>
+       
+          {podcasts.length ? (
+            <LibraryResults
+              libraryPodcasts={searchTerm ? newFiltered : podcasts}
+            />
+          ) : (
+            <Spinner />
+          )}
+        </div>
+   </main>
     </>
   );
 };

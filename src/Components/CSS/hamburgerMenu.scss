@@ -1,25 +1,25 @@
+@font-face {
+  font-family: "BDOGrotesk";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../Fonts/BDOGrotesk-VF.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
 .headerContainer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: left;
   align-items: center;
-  background-color: #99d1ff;
-  background-image: radial-gradient(
-      at 52% 59%,
-      hsla(128, 68%, 70%, 1) 0px,
-      transparent 50%
-    ),
-    radial-gradient(at 5% 6%, hsla(73, 84%, 62%, 1) 0px, transparent 50%),
-    radial-gradient(at 23% 2%, hsla(224, 85%, 76%, 1) 0px, transparent 50%),
-    radial-gradient(at 75% 82%, hsla(236, 86%, 68%, 1) 0px, transparent 50%),
-    radial-gradient(at 88% 95%, hsla(253, 68%, 70%, 1) 0px, transparent 50%),
-    radial-gradient(at 61% 12%, hsla(271, 87%, 62%, 1) 0px, transparent 50%),
-    radial-gradient(at 96% 16%, hsla(259, 92%, 64%, 1) 0px, transparent 50%),
-    radial-gradient(at 23% 13%, hsla(30, 90%, 74%, 1) 0px, transparent 50%),
-    radial-gradient(at 74% 15%, hsla(18, 64%, 68%, 1) 0px, transparent 50%);
-  height: 30vh;
+  width: 100vw;
+  align-content: center;
+  background-color: #fff;
+  height: 6vh;
 
-  img {
-    width: 100px;
+  h1 {
+    font-family: "BDOGrotesk", Courier, monospace;
+    font-size: 20px;
+    color: #000;
+    margin-left: 20px;
+    text-decoration: underline #000;
   }
 }
 
@@ -34,7 +34,7 @@
   padding: 4px;
   border: none;
 
-  background-color: #666a86;
+  background-color: #000;
   cursor: pointer;
 
   svg {
@@ -85,7 +85,7 @@ nav {
         font-size: 2rem;
 
         &:hover {
-          color: #f5cb5c;
+          color: hsla(236, 86%, 68%, 1);
         }
       }
     }

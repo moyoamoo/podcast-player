@@ -21,7 +21,7 @@ const PlayButton = forwardRef(function PlayButton(
 
   return (
     <>
-      <button className="controlBtn">
+      <button className="playBtn">
         {readyState ? (
           <div
             onClick={() => {

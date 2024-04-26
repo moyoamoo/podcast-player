@@ -12,7 +12,7 @@ const Genres = ({ genres }) => {
         <div className="genres">
           {formattedGenres.map((genre) => {
             return (
-              <p key={genre} className={genre.replaceAll(" ", "_") + " genre"}>
+              <p key={genre} className="genre">
                 {genre}
               </p>
             );

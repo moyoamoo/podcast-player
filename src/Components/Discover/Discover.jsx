@@ -83,13 +83,15 @@ const Discover = () => {
     }
   }, []);
 
-  console.log(Object.values(rankedPodcasts).length)
+  console.log(Object.values(rankedPodcasts).length);
   return (
     <main>
-      <h1>Discover</h1>
-      {Object.values(rankedPodcasts).length && <TopPodcasts /> }
-      {Object.values(rankedGenres).length && <TopGenres /> }
-      {previousSearches.length && <PreviousSearches /> }
+      <div className="discoverHeader">
+        <h2>Discover</h2>
+      </div>
+      {Object.values(rankedPodcasts).length && <TopPodcasts />}
+      {Object.values(rankedGenres).length && <TopGenres />}
+      {previousSearches.length && <PreviousSearches />}
     </main>
   );
 };

@@ -9,7 +9,10 @@ const Queue = () => {
   let counter = 1;
   return (
     <>
-      <h1>My Queue</h1>
+      <div className="queueHeading">
+
+        <h2>My Queue</h2>
+      </div>
       {queue.length > 0 ? (
         queue.map((episode) => {
           return (

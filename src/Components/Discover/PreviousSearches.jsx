@@ -4,11 +4,14 @@ import PreviousSearch from "./PreviousSearch";
 const PreviousSearches = () => {
   const previousSearches = useSelector(selectPreviousSearches);
   return (
-    <>
-      {previousSearches.map((search) => {
-        return <PreviousSearch search={search} />;
-      })}
-    </>
+    <div className="searchesContainer">
+      <h3 className="discoverHeaders">Previous Searches</h3>
+      <div className="previousSearches">
+        {previousSearches.map((search) => {
+          return <PreviousSearch search={search} />;
+        })}
+      </div>
+    </div>
   );
 };
 

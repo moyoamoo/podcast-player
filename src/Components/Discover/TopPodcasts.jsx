@@ -25,15 +25,17 @@ const TopPodcasts = () => {
   console.log(podcasts);
   return (
     <>
-      <h3 className="discoverHeaders">Top Listened </h3>
-      <div className="mostListened">
-        {podcasts
-          ? podcasts.map((podcast) => {
-              console.log(podcast);
-              return <TopPodcast podcast={podcast} key={podcast.uuid} />;
-            })
-          : null}
-      </div>
+
+        <h3 className="discoverHeaders">Top Listened </h3>
+        <div className="mostListened">
+          {podcasts
+            ? podcasts.map((podcast) => {
+                console.log(podcast);
+                return <TopPodcast podcast={podcast} key={podcast.uuid} />;
+              })
+            : null}
+        </div>
+
     </>
   );
 };

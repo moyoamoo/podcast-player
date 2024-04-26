@@ -1,9 +1,20 @@
 .topGenres {
-  width: 70vw;
-  border: 2px solid #5cd5eb;
-  border-radius: 2rem;
+  width: 80vw;
+  height: 50vw;
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+    to bottom right,
+    hsla(271, 87%, 62%, 1) 0%,
+    hsla(224, 85%, 76%, 1) 25%,
+    hsla(73, 84%, 62%, 1) 50%,
+    hsla(30, 90%, 74%, 1) 75%,
+    hsla(18, 64%, 68%, 1) 100%
+  );
+  border-image-slice: 1;
+
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 15px;
+ margin-bottom: 10rem;
 }
