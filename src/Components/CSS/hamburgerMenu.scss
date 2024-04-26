@@ -1,13 +1,27 @@
-.headerContainer{
+.headerContainer {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  background-color: #99d1ff;
+  background-image: radial-gradient(
+      at 52% 59%,
+      hsla(128, 68%, 70%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 5% 6%, hsla(73, 84%, 62%, 1) 0px, transparent 50%),
+    radial-gradient(at 23% 2%, hsla(224, 85%, 76%, 1) 0px, transparent 50%),
+    radial-gradient(at 75% 82%, hsla(236, 86%, 68%, 1) 0px, transparent 50%),
+    radial-gradient(at 88% 95%, hsla(253, 68%, 70%, 1) 0px, transparent 50%),
+    radial-gradient(at 61% 12%, hsla(271, 87%, 62%, 1) 0px, transparent 50%),
+    radial-gradient(at 96% 16%, hsla(259, 92%, 64%, 1) 0px, transparent 50%),
+    radial-gradient(at 23% 13%, hsla(30, 90%, 74%, 1) 0px, transparent 50%),
+    radial-gradient(at 74% 15%, hsla(18, 64%, 68%, 1) 0px, transparent 50%);
+  height: 30vh;
 
-  img{
+  img {
     width: 100px;
   }
 }
-
 
 .hamburger {
   width: 45px;
@@ -61,21 +75,19 @@
 }
 
 nav {
-    ul {
-        li{
-            padding: 1rem;
-            width: 100%;
-            a{
-               
-                text-decoration: none;
-                color: #fff;
-                font-size: 2rem;
+  ul {
+    li {
+      padding: 1rem;
+      width: 100%;
+      a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 2rem;
 
-                &:hover{
-                    color: #f5cb5c;
-                }
-            }
-            
+        &:hover {
+          color: #f5cb5c;
         }
+      }
     }
+  }
 }

@@ -37,10 +37,7 @@ const Header = () => {
   return (
     <header>
       <div className="headerContainer">
-        <Link to="/">
-          {" "}
-          <img src={logo} />
-        </Link>
+        <h1>PodLaunch</h1>
       </div>
       <nav>
         <ul className={openMenu ? "showMenu" : "menu"}>
