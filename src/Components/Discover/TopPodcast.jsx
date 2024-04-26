@@ -10,7 +10,7 @@ const TopPodcast = ({ podcast }) => {
       plays = rankedPodcasts[uuid];
     }
   });
-  console.log(plays);
+  
   return (
     <>
       <div className="listenedContainer">
@@ -24,7 +24,7 @@ const TopPodcast = ({ podcast }) => {
               e.onerror = null;
             }}
           />
-          <p className="plays">{plays} Plays</p>
+          <p className="plays"> Plays {plays}</p>
         </Link>
       </div>
     </>

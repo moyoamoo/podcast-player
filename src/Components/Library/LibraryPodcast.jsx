@@ -10,9 +10,9 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 
 const LibraryPodcast = ({ podcast }) => {
+  const dispatch = useDispatch();
   //delete podcast from library
   const deleteFromLibrary = async (uuid) => {
-    console.log("i ran")
     try {
       const { data } = await axios.delete(
         "http://localhost:6001/library/delete",
@@ -23,8 +23,9 @@ const LibraryPodcast = ({ podcast }) => {
           },
         }
       );
-      console.log("i ran")
-      console.log(data);
+      if (data.status) {
+        dispatch(deletefromLibrary(uuid));
+      }
     } catch (e) {
       console.log(e);
     }
@@ -35,7 +36,6 @@ const LibraryPodcast = ({ podcast }) => {
       <button
         className="deleteBtn"
         onClick={() => {
-          console.log("cl");
           deleteFromLibrary(podcast.uuid);
         }}
       >

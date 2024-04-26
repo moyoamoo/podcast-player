@@ -10,10 +10,10 @@ import "../CSS/libraryPodcasts.scss";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
-  const emptySearch = useSelector(selectEmptySearch);
   console.log(podcastSeries);
 
-  return podcastSeries.map((podcast) => {
+  
+  return  podcastSeries.map((podcast) => {
     return <Podcast podcast={podcast} key={podcast.uuid} />;
   });
 };

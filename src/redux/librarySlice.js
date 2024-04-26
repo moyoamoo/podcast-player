@@ -10,6 +10,7 @@ const initialState = {
   window: 1,
   loggedIn: true,
   userLibrary: [],
+  searchTerm: "",
 };
 export const librarySlice = createSlice({
   name: "librarySlice",
@@ -44,6 +45,10 @@ export const librarySlice = createSlice({
     setUserLibary: (state, { payload }) => {
       state.userLibrary.push(...payload);
     },
+
+    setSearchTerm: (state, { payload }) => {
+      state.searchTerm = payload;
+    },
   },
 });
 
@@ -53,6 +58,7 @@ export const {
   setWindow,
   setMessage,
   setLoggedIn,
+  setSearchTerm
 } = librarySlice.actions;
 
 export const selectSearchTerm = (state) => state.library.searchTerm;

@@ -1,13 +1,17 @@
+import { useDispatch } from "react-redux";
 import { getPodcastData } from "../../apiRequest";
+import { setIsLoading } from "../../redux/podcastSlice";
 
 const SearchBtn = ({ searchTerm }) => {
-  console.log(searchTerm)
+  console.log(searchTerm);
+  const dispatch = useDispatch();
   return (
     <>
       <button
         className="searchBtn"
         onClick={() => {
           getPodcastData(searchTerm, 2, 1, "search");
+          dispatch(setIsLoading(true));
         }}
       >
         Search Podcast

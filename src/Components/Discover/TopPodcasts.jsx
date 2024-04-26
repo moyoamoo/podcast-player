@@ -7,6 +7,7 @@ import { getPodcastByUuid } from "../../apiRequest";
 import TopPodcast from "./TopPodcast";
 
 const TopPodcasts = () => {
+  console.log("component mounted");
   const dispatch = useDispatch();
   const rankedPodcasts = useSelector(selectRankedPodcasts);
   const podcasts = useSelector(selectPodcastsSeries);
@@ -20,13 +21,15 @@ const TopPodcasts = () => {
       });
     }
   }, []);
+
+  console.log(podcasts);
   return (
     <>
-     
       <h3 className="discoverHeaders">Top Listened </h3>
       <div className="mostListened">
         {podcasts
           ? podcasts.map((podcast) => {
+              console.log(podcast);
               return <TopPodcast podcast={podcast} key={podcast.uuid} />;
             })
           : null}

@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/librarySlice";
 import { selectLibrary, addToLibrary } from "../../redux/podcastSlice";
 import axios from "axios";
-import { add } from "lodash";
 
 const SubscribeBtn = ({ podcast }) => {
   const token = localStorage.getItem("token");
-  const [inLibrary, setInLibrary] = useState(false);
   const library = useSelector(selectLibrary);
+  const [inLibrary, setInLibrary] = useState(false);
   const dispatch = useDispatch();
 
   //api request to add uuid to library, passed in params
@@ -21,48 +20,41 @@ const SubscribeBtn = ({ podcast }) => {
           headers: { token: localStorage.getItem("token") },
         }
       );
-
       console.log(data);
       if (data.status) {
         dispatch(setMessage("Added to Library"));
         dispatch(addToLibrary(uuid));
-      } else {
-        dispatch(setMessage("Could not add podcast to library"));
       }
     } catch (e) {
       console.log(e);
-      dispatch(setMessage("Could not add podcast to library"));
+      dispatch(setMessage("Duplicate Podcast"));
     }
   };
 
   //if logged in add podast, if not dispatch message
-  const addPodcastToLibrary = () => {
-    if (!token) {
-      addPodcast(podcast.uuid);
-    } else {
-      addPodcast(podcast.uuid);
-    }
-  };
 
   //if podcast is in library, set in library to true
   useEffect(() => {
-    if (library.includes(podcast.uuid)) {
-      setInLibrary(true);
-    }
+    library.forEach((uuid) => {
+      if (podcast.uuid === uuid) {
+        setInLibrary(true);
+        console.log(inLibrary);
+        return;
+      }
+    });
   }, [library]);
 
   return (
     <>
-      {!inLibrary ? (
+      {token && (
         <button
           onClick={() => {
-            addPodcastToLibrary();
+            addPodcast(podcast.uuid);
           }}
+          disabled={inLibrary && true}
         >
-          Subscribe
+          {inLibrary ? "Subscribed" : "Subscribe"}
         </button>
-      ) : (
-        <button disabled="disabled">Subscribed</button>
       )}
     </>
   );

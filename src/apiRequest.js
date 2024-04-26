@@ -45,7 +45,6 @@ export const getPodcastData = async (
       return;
     }
 
-    
     if (token) {
       addSearchTerm(searchTerm);
     }
@@ -86,7 +85,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       return;
     }
 
-    
+    console.log(data.data, "here");
     if (storeDestination === "append") {
       //add to library
       store.dispatch(appendApiData(data.data.getPodcastSeries));
@@ -110,7 +109,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
 
 const addSearchTerm = async (searchTerm) => {
   try {
-    console.log(searchTerm)
+    console.log(searchTerm);
     const { data } = await axios.get("http://localhost:6001/search_term/add", {
       headers: { token: token, searchTerm: searchTerm },
     });

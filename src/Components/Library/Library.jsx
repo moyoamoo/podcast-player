@@ -10,18 +10,22 @@ import {
 } from "../../redux/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setWindow, setMessage } from "../../redux/librarySlice";
-import { useNavigate } from "react-router-dom";
+import {
+  setWindow,
+  setMessage,
+  selectSearchTerm,
+  setSearchTerm,
+} from "../../redux/librarySlice";
 import { getPodcastByUuid } from "../../apiRequest";
 
 import "../CSS/libraryPodcasts.scss";
+import Spinner from "../Spinner";
 
 const Library = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const libraryUuids = useSelector(selectLibrary);
-  const [isLibrary, setIsLibrary] = useState(false);
   let podcasts = useSelector(selectPodcastsSeries);
+  const searchTerm = useSelector(selectSearchTerm);
 
   //gets uuids from database
   const getLibraryUuids = useCallback(async () => {
@@ -32,52 +36,37 @@ const Library = () => {
         },
       });
 
-      console.log(data.Library);
+      console.log(data.data);
 
-      if (data.status && data.library) {
-        data.library.forEach((uuid) => {
-          dispatch(addToLibrary(uuid));
-          setIsLibrary(true);
+      if (data.data) {
+        data.data.forEach((uuid) => {
+          getPodcastByUuid(uuid, 2, 1, "append");
         });
       }
     } catch (e) {
-      console.log(e);
       dispatch(setMessage("Podcasts Unavailable"));
-      setIsLibrary(false);
     }
   }, []);
 
   //get podcasts using uuids
-  const getLibrary = useCallback(async () => {
-    libraryUuids.forEach((uuid) => {
-      getPodcastByUuid(uuid, 2, 1, "append");
-    });
-  }, [isLibrary]);
 
-  useEffect(()=>{
-    dispatch(clearApiData());
-
-  }, [])
-
-  
   useEffect(() => {
     if (!token) {
       dispatch(setWindow(0));
       return;
-    } else {
-
-      getLibraryUuids();
     }
-  }, [getLibraryUuids, token, libraryUuids]);
+    dispatch(clearApiData());
+    getLibraryUuids();
+  }, []);
 
-  useEffect(() => {
-    if (isLibrary) {
-      getLibrary();
-    }
-  }, [isLibrary]);
-
-  
-
+  let newFiltered;
+  if (searchTerm) {
+    newFiltered = podcasts.filter((podcast) => {
+      if (podcast.name.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+    });
+  }
   return (
     <>
       <div className="libraryContainer">
@@ -87,19 +76,17 @@ const Library = () => {
           type="text"
           placeholder="Search Library"
           onInput={(e) => {
-            dispatch(setPodcastSearchTerm(e.target.value));
+            dispatch(setSearchTerm(e.target.value));
           }}
         />
         <LibrarySortBySelect />
-        {/* {podcasts.length > 0 ? (
+        {podcasts.length ? (
           <LibraryResults
             libraryPodcasts={searchTerm ? newFiltered : podcasts}
           />
         ) : (
-          <div className="validation">
-            <p>No Podcast Found</p>
-          </div>
-        )} */}
+          <Spinner />
+        )}
       </div>
     </>
   );

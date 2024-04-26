@@ -7,8 +7,7 @@
   // padding: 1rem;
   color: #fff;
   border-radius: 2rem;
-  border: 1px solid  #5cd5eb;
-  
+  border: 1px solid #5cd5eb;
 
   img {
     width: 220px;
@@ -16,13 +15,7 @@
     border-top-left-radius: 0.7rem;
     border-bottom-left-radius: 0.7rem;
   }
-
- 
-
-
 }
-
-
 
 .epDate {
   color: #5cd5eb;
@@ -36,7 +29,6 @@
   width: 0;
 }
 
-
 .podcastHeading {
   display: flex;
   flex-direction: column;
@@ -48,7 +40,7 @@
   text-align: left;
   margin-left: 1rem;
 
-  h2{
+  h2 {
     font-size: 1.5rem;
   }
 
@@ -61,10 +53,15 @@
     font-size: 1.2rem;
     text-align: center;
 
-    &:hover{
+    &:hover {
       background-color: #666a86;
       color: #fff;
     }
-  
+
+    button:disabled,
+    button[disabled] {
+      background-color: #666a86;
+      color: #fff;
+    }
   }
 }

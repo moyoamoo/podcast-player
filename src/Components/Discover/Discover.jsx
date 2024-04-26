@@ -12,7 +12,7 @@ import {
 import TopGenres from "./TopGenres";
 import axios from "axios";
 import "../CSS/stats.scss";
-import TopPodcasts from "./Top Podcasts";
+import TopPodcasts from "./TopPodcasts";
 import PreviousSearches from "./PreviousSearches";
 
 const Discover = () => {
@@ -83,12 +83,13 @@ const Discover = () => {
     }
   }, []);
 
+  console.log(Object.values(rankedPodcasts).length)
   return (
     <main>
       <h1>Discover</h1>
-      {Object.values(rankedPodcasts).length ? <TopPodcasts /> : null}
-      {Object.values(rankedGenres).length ? <TopGenres /> : null}
-      {previousSearches.length ? <PreviousSearches /> : null}
+      {Object.values(rankedPodcasts).length && <TopPodcasts /> }
+      {Object.values(rankedGenres).length && <TopGenres /> }
+      {previousSearches.length && <PreviousSearches /> }
     </main>
   );
 };
