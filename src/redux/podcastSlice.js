@@ -34,15 +34,20 @@ export const podcastSlice = createSlice({
 
     //adds new episodes to store
     storeAdditionalApiData: (state, { payload }) => {
+      console.log(state.apiData.searchForTerm.podcastSeries)
       const indexOf = state.apiData.searchForTerm.podcastSeries.findIndex(
         (podcast) => {
-          return podcast.uuid === payload.getPodcastSeries.uuid;
+          console.log(podcast)
+          return podcast.uuid === payload.uuid;
         }
       );
       state.apiData.searchForTerm.podcastSeries[indexOf].episodes.push(
-        ...payload.getPodcastSeries.episodes
+        ...payload.episodes
       );
       saveStore("podcast", state);
+    },
+    setIsLoading: (state, { payload }) => {
+      state.isLoading = payload;
     },
     setIsLoading: (state, { payload }) => {
       state.isLoading = payload;

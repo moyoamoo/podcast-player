@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSortOrder } from "../../redux/podcastSlice";
 
-const ShowMoreBtn = ({ callback, totalEpisodesCount }) => {
+const ShowMoreBtn = ({ callback,  totalEpisodesCount}) => {
   const sortBy = useSelector(selectSortOrder);
   console.log(sortBy);
   const [page, setPage] = useState(1);

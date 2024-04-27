@@ -13,6 +13,7 @@ import Spinner from "../Spinner";
 const Episodes = () => {
   const { id } = useParams();
   const podcast = useSelector(selectPodcast(id));
+  console.log(id)
   if (!podcast) {
     getPodcastByUuid(id, 2, 1, "showMore");
     return <Spinner />;
@@ -25,6 +26,7 @@ const Episodes = () => {
   }
 
   const callback = (sortBy, page, type) => {
+    console.log(podcast.uuid)
     getPodcastByUuid(podcast.uuid, sortBy, page, type);
   };
 
