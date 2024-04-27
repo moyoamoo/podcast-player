@@ -7,16 +7,17 @@ import PodcastName from "./PodcastName";
 const Podcast = ({ podcast }) => {
   return (
     <>
-      <div className="podcastContainer">
-        <PodcastName name={podcast.name} />
-        <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
-          <PodcastImage podcast={podcast} />
-        </Link>
-
-        <div className="podcastHeading">
-          <SubscribeBtn podcast={podcast} />
+      <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
+        <div className="podcastContainer">
+          <div className="podcastHeading">
+            <PodcastImage podcast={podcast} />
+            <div className="subscribe">
+              <PodcastName name={podcast.name} />
+              <SubscribeBtn podcast={podcast} />
+            </div>
+          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };

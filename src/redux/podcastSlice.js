@@ -50,7 +50,7 @@ export const podcastSlice = createSlice({
 
     //append search data
     appendApiDataSearch: (state, { payload }) => {
-      state.apiData.searchForTerm.podcastSeries.push(payload);
+      state.apiData.searchForTerm.podcastSeries.push(...payload);
       console.log(state.apiData.searchForTerm.podcastSeries);
       saveStore("podcast", state);
     },
@@ -155,10 +155,10 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
-    clearUserLibrary: (state, {payload})=>{
+    clearUserLibrary: (state, { payload }) => {
       state.userLibrary = [];
       saveStore("podcast", state);
-    }
+    },
   },
 });
 
@@ -180,7 +180,7 @@ export const {
   appendApiDataSearch,
   saveSearchTerm,
   setIsLoading,
-  clearUserLibrary
+  clearUserLibrary,
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>
@@ -206,6 +206,10 @@ export const selectSortOrder = (state) => {
 };
 export const selectEpisodeLength = (state) => {
   state.podcast.episodeLength;
+};
+
+export const selectIsLoading = (state) => {
+  state.podcast.isLoading;
 };
 
 export default podcastSlice.reducer;

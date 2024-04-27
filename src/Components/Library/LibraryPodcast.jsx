@@ -32,9 +32,8 @@ const LibraryPodcast = ({ podcast }) => {
   };
 
   return (
-    <div>
+    <>
       <div className="libraryPodcastContainer">
-        <h2>{podcast.name}</h2>
         <Link to={"/episodes/" + podcast.uuid} state={{ podcast }}>
           <img
             loading="lazy"
@@ -46,16 +45,20 @@ const LibraryPodcast = ({ podcast }) => {
             }}
           />
         </Link>
-        <button
-          className="deleteBtn"
-          onClick={() => {
-            deleteFromLibrary(podcast.uuid);
-          }}
-        >
-          Delete
-        </button>
+        <div className="libraryPodcastHeading">
+          <h2>{podcast.name}</h2>
+
+          <button
+            className="deleteBtn"
+            onClick={() => {
+              deleteFromLibrary(podcast.uuid);
+            }}
+          >
+            Delete
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

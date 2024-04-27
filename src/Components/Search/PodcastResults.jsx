@@ -1,12 +1,17 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectPodcastsSeries } from "../../redux/podcastSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPodcastsSeries, setIsLoading } from "../../redux/podcastSlice";
 
 import Podcast from "./Podcast";
 import "../CSS/libraryPodcasts.scss";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setIsLoading(false));
+  }, []);
   console.log(podcastSeries);
 
   return podcastSeries.map((podcast) => {

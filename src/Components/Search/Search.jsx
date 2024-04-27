@@ -6,25 +6,27 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearApiData,
   clearUserLibrary,
+  selectIsLoading,
   selectPodcastsSeries,
   selectSearchTerm,
   setSearchTerm,
 } from "../../redux/podcastSlice";
 import { getPodcastData } from "../../apiRequest";
+import Spinner from "../Spinner";
 
 const Search = () => {
   const dispatch = useDispatch();
   const podcast = useSelector(selectPodcastsSeries);
   const searchTerm = useSelector(selectSearchTerm);
   const podcastSeries = useSelector(selectPodcastsSeries);
-
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(clearApiData());
-    dispatch(clearUserLibrary())
+    dispatch(clearUserLibrary());
     if (searchTerm) {
-      getPodcastData(searchTerm, 2, 1, "search");
-      dispatch(setSearchTerm(""))
+      getPodcastData(searchTerm, 2, 1, "append");
+      dispatch(setSearchTerm(""));
     }
   }, []);
 
@@ -36,7 +38,7 @@ const Search = () => {
     <>
       <main>
         <SearchBar />
-        {podcastSeries && <PodcastResults />}
+        {isLoading ? <Spinner /> : podcastSeries && <PodcastResults />}
         {podcast.length && (
           <ShowMoreBtn
             callback={callback}

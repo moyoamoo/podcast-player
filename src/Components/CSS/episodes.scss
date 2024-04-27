@@ -98,6 +98,14 @@
   }
 }
 
+.libraryPodcastHeading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+}
+
 .showBtn {
   border: none;
   background-color: #ddd;
