@@ -23,7 +23,7 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
-    //adds new episodes
+    //adds new episodes to store
     storeAdditionalApiData: (state, { payload }) => {
       const indexOf = state.apiData.searchForTerm.podcastSeries.findIndex(
         (podcast) => {
