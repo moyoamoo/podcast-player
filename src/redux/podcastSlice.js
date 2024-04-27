@@ -30,7 +30,6 @@ export const podcastSlice = createSlice({
           return podcast.uuid === payload.getPodcastSeries.uuid;
         }
       );
-
       state.apiData.searchForTerm.podcastSeries[indexOf].episodes.push(
         ...payload.getPodcastSeries.episodes
       );
@@ -50,7 +49,9 @@ export const podcastSlice = createSlice({
 
     //append search data
     appendApiDataSearch: (state, { payload }) => {
-      state.apiData.searchForTerm.podcastSeries.push(...payload.searchForTerm.podcastSeries);
+      state.apiData.searchForTerm.podcastSeries.push(
+        ...payload.searchForTerm.podcastSeries
+      );
       console.log(state.apiData.searchForTerm.podcastSeries);
       saveStore("podcast", state);
     },

@@ -14,7 +14,7 @@ const Episodes = () => {
   const { id } = useParams();
   const podcast = useSelector(selectPodcast(id));
   if (!podcast) {
-    getPodcastByUuid(id, 2, 1, "append");
+    getPodcastByUuid(id, 2, 1, "showMore");
     return <Spinner />;
   }
 
