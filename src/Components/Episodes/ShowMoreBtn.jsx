@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSortOrder } from "../../redux/podcastSlice";
 
-const ShowMoreBtn = ({ callback, total }) => {
+const ShowMoreBtn = ({ callback, totalEpisodesCount }) => {
   const sortBy = useSelector(selectSortOrder);
   console.log(sortBy);
   const [page, setPage] = useState(1);
@@ -13,7 +13,7 @@ const ShowMoreBtn = ({ callback, total }) => {
     setPage(page + 1);
   };
 
-  if (total <= page * 10) {
+  if (totalEpisodesCount <= page * 10) {
     return null;
   }
 
