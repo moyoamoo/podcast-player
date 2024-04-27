@@ -25,7 +25,7 @@ const Search = () => {
     dispatch(clearApiData());
     dispatch(clearUserLibrary());
     if (searchTerm) {
-      getPodcastData(searchTerm, 2, 1, "append");
+      getPodcastData(searchTerm, 2, 1, "appendSearch");
       dispatch(setSearchTerm(""));
     }
   }, []);

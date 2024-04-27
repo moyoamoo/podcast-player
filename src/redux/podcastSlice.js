@@ -50,7 +50,7 @@ export const podcastSlice = createSlice({
 
     //append search data
     appendApiDataSearch: (state, { payload }) => {
-      state.apiData.searchForTerm.podcastSeries.push(...payload);
+      state.apiData.searchForTerm.podcastSeries.push(...payload.searchForTerm.podcastSeries);
       console.log(state.apiData.searchForTerm.podcastSeries);
       saveStore("podcast", state);
     },
