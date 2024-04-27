@@ -25,7 +25,7 @@ const Search = () => {
     dispatch(clearApiData());
     dispatch(clearUserLibrary());
     if (searchTerm) {
-      getPodcastData(searchTerm, 2, 1, "appendSearch");
+      getPodcastData(searchTerm, 2, 1, "");
       dispatch(setSearchTerm(""));
     }
   }, []);
@@ -38,7 +38,7 @@ const Search = () => {
     <>
       <main>
         <SearchBar />
-        {isLoading ? <Spinner /> : podcastSeries && <PodcastResults />}
+        {podcastSeries && <PodcastResults />}
         {podcast.length && (
           <ShowMoreBtn
             callback={callback}

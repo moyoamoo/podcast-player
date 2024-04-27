@@ -11,6 +11,7 @@ import {
   storeLibrary,
   appendApiDataSearch,
 } from "./redux/podcastSlice";
+import { setMessage } from "./redux/librarySlice";
 
 const token = localStorage.getItem("token");
 
@@ -28,11 +29,11 @@ export const getPodcastData = async (
   }
 
   if (typeof searchTerm === "undefined") {
-    store.dispatch(message("Please enter a search term"));
+    store.dispatch(setMessage("Please enter a search term"));
     return;
   }
 
-  console.log(searchTerm, page);
+  console.log(searchTerm, page, order, storeDestination);
   try {
     const { data } = await axios.get("http://localhost:6001/search", {
       headers: {
@@ -45,6 +46,7 @@ export const getPodcastData = async (
       console.log("undefined data");
       return;
     }
+    console.log(data.data)
 
     if (token) {
       addSearchTerm(searchTerm);

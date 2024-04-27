@@ -7,12 +7,9 @@ import "../CSS/libraryPodcasts.scss";
 
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setIsLoading(false));
-  }, []);
-  console.log(podcastSeries);
+ 
+    
 
   return podcastSeries.map((podcast) => {
     return <Podcast podcast={podcast} key={podcast.uuid} />;
