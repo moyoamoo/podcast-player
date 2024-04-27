@@ -1,5 +1,4 @@
 import React from "react";
-import { getPodcastByUuid } from "../../apiRequest";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSortOrder } from "../../redux/podcastSlice";

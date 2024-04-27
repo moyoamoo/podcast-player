@@ -87,10 +87,10 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
 
     console.log(data.data, "here");
     if (storeDestination === "append") {
-      //add to library
+       //add to most listened
       store.dispatch(appendApiData(data.data.getPodcastSeries));
     } else if (storeDestination === "appendSearch") {
-      //add to most listened
+      //adds to search 
       store.dispatch(appendApiDataSearch(data.data.getPodcastSeries));
     } else if (storeDestination === "sorted") {
       //sort select

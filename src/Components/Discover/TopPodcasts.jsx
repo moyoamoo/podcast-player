@@ -17,7 +17,7 @@ const TopPodcasts = () => {
 
     if (rankedPodcasts) {
       Object.keys(rankedPodcasts).forEach((uuid) => {
-        getPodcastByUuid(uuid, 2, 1, "appendSearch");
+        getPodcastByUuid(uuid, 2, 1, "append");
       });
     }
   }, []);
