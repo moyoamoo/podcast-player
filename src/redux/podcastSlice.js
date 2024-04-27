@@ -23,6 +23,15 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
+    storeLibrary: (state, { payload }) => {
+      console.log(payload);
+      if (!payload) {
+        return;
+      }
+      state.apiData.searchForTerm.podcastSeries.push(payload);
+      saveStore("podcast", state);
+    },
+
     //adds new episodes to store
     storeAdditionalApiData: (state, { payload }) => {
       const indexOf = state.apiData.searchForTerm.podcastSeries.findIndex(
@@ -48,6 +57,7 @@ export const podcastSlice = createSlice({
 
     //append search data
     appendApiDataSearch: (state, { payload }) => {
+      console.log(payload);
       state.apiData.searchForTerm.podcastSeries.push(
         ...payload.searchForTerm.podcastSeries
       );
@@ -131,9 +141,9 @@ export const podcastSlice = createSlice({
       //check if in library
       for (let i = 0; i < state.userLibrary.length; i++) {
         if (state.userLibrary[i] === payload) {
-          saveStore("podcast", state);
           return;
         }
+        saveStore("podcast", state);
       }
       state.userLibrary.push(payload);
       saveStore("podcast", state);
@@ -181,6 +191,7 @@ export const {
   saveSearchTerm,
   setIsLoading,
   clearUserLibrary,
+  storeLibrary,
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>

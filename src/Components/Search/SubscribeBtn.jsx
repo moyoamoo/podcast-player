@@ -50,6 +50,7 @@ const SubscribeBtn = ({ podcast }) => {
         <button
           onClick={() => {
             addPodcast(podcast.uuid);
+            console.log(podcast.uuid)
           }}
           disabled={inLibrary && true}
         >

@@ -8,6 +8,7 @@ import {
   sortEpisodeOrder,
   setEmptySearch,
   saveSearchTerm,
+  storeLibrary,
   appendApiDataSearch,
 } from "./redux/podcastSlice";
 
@@ -85,12 +86,14 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       return;
     }
 
-    console.log(data.data, "here");
     if (storeDestination === "append") {
-       //add to most listened
+      console.log(data.data)
+      //add to most listened
       store.dispatch(appendApiData(data.data.getPodcastSeries));
+
     } else if (storeDestination === "appendSearch") {
-      //adds to search 
+      //adds to search
+      console.log(data.data);
       store.dispatch(appendApiDataSearch(data.data.getPodcastSeries));
     } else if (storeDestination === "sorted") {
       //sort select
@@ -101,6 +104,11 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       store.dispatch(
         storeEpisodeLength(data.data.getPodcastSeries.episodes.length)
       );
+    } else if (storeDestination === "library") {
+      if (!data.data) {
+        return;
+      }
+      store.dispatch(storeLibrary(data.data.getPodcastSeries));
     }
   } catch (error) {
     console.log(error);

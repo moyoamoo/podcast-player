@@ -43,6 +43,9 @@ export const librarySlice = createSlice({
     },
 
     setUserLibary: (state, { payload }) => {
+      if (state.userLibrary.includes(payload)) {
+        return;
+      }
       state.userLibrary.push(...payload);
     },
 
@@ -58,7 +61,7 @@ export const {
   setWindow,
   setMessage,
   setLoggedIn,
-  setSearchTerm
+  setSearchTerm,
 } = librarySlice.actions;
 
 export const selectSearchTerm = (state) => state.library.searchTerm;

@@ -19,13 +19,14 @@ import {
 import { getPodcastByUuid } from "../../apiRequest";
 
 import "../CSS/libraryPodcasts.scss";
-import Spinner from "../Spinner";
 
 const Library = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   let podcasts = useSelector(selectPodcastsSeries);
   const searchTerm = useSelector(selectSearchTerm);
+
+  console.log(podcasts.length)
 
   //gets uuids from database
   const getLibraryUuids = useCallback(async () => {
@@ -36,15 +37,14 @@ const Library = () => {
         },
       });
 
-      console.log(data.data);
-
-      if (data.data) {
+      if (data.status) {
         data.data.forEach((uuid) => {
-          getPodcastByUuid(uuid, 2, 1, "append");
+          getPodcastByUuid(uuid, 2, 1, "library");
         });
       }
     } catch (e) {
       dispatch(setMessage("Podcasts Unavailable"));
+      console.log(e);
     }
   }, []);
 
@@ -57,6 +57,7 @@ const Library = () => {
     }
     dispatch(clearApiData());
     getLibraryUuids();
+ 
   }, []);
 
   let newFiltered;
@@ -69,11 +70,11 @@ const Library = () => {
   }
   return (
     <>
-   <main>
+      <main>
         <div className="libraryContainer">
-        <div className="libraryHeader">
+          <div className="libraryHeader">
             <h2>My Library</h2>
-    
+
             <input
               type="text"
               placeholder="Search Library"
@@ -81,18 +82,19 @@ const Library = () => {
                 dispatch(setSearchTerm(e.target.value));
               }}
             />
-               <LibrarySortBySelect />
-        </div>
-       
-          {podcasts.length ? (
+            <LibrarySortBySelect />
+          </div>
+
+        
+
+          {podcasts.length && (
+            
             <LibraryResults
               libraryPodcasts={searchTerm ? newFiltered : podcasts}
             />
-          ) : (
-            <Spinner />
           )}
         </div>
-   </main>
+      </main>
     </>
   );
 };
