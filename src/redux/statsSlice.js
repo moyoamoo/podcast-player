@@ -13,6 +13,7 @@ const initialState = {
   rankedPodcasts: {},
   listenData: {},
   previousSearches: [],
+  country: "",
 };
 export const statsSlice = createSlice({
   name: "statsSlice",
@@ -45,6 +46,10 @@ export const statsSlice = createSlice({
     setListenData: (state, { payload }) => {
       state.listenData = payload;
     },
+
+    setCurrentCountry: (state, { payload }) => {
+      state.country = payload;
+    },
   },
 });
 
@@ -57,6 +62,7 @@ export const {
   setRankedPodcasts,
   setListenData,
   setPreviousSearches,
+  setCurrentCountry,
 } = statsSlice.actions;
 
 export const selectListened = (state) => state.stats.listened;
@@ -65,5 +71,6 @@ export const selectRankedGenres = (state) => state.stats.rankedGenres;
 export const selectRankedPodcasts = (state) => state.stats.rankedPodcasts;
 export const selectListenData = (state) => state.stats.listenData;
 export const selectPreviousSearches = (state) => state.stats.previousSearches;
+export const selectCountry = (state) => state.stats.country;
 
 export default statsSlice.reducer;

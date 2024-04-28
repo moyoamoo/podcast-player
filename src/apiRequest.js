@@ -10,8 +10,10 @@ import {
   saveSearchTerm,
   storeLibrary,
   appendApiDataSearch,
+  addTopChartsCountry
 } from "./redux/podcastSlice";
 import { setMessage } from "./redux/librarySlice";
+import { setCurrentCountry } from "./redux/statsSlice";
 
 const token = localStorage.getItem("token");
 
@@ -46,7 +48,7 @@ export const getPodcastData = async (
       console.log("undefined data");
       return;
     }
-    console.log(data.data)
+    console.log(data.data);
 
     if (token) {
       addSearchTerm(searchTerm);
@@ -89,10 +91,9 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
     }
 
     if (storeDestination === "append") {
-      console.log(data.data)
+      console.log(data.data);
       //add to most listened
       store.dispatch(appendApiData(data.data.getPodcastSeries));
-
     } else if (storeDestination === "appendSearch") {
       //adds to search
       console.log(data.data);
@@ -102,7 +103,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       store.dispatch(sortEpisodeOrder(data.data.getPodcastSeries));
       //show more button
     } else if (storeDestination === "showMore") {
-      console.log(data.data)
+      console.log(data.data);
       store.dispatch(storeAdditionalApiData(data.data.getPodcastSeries));
       store.dispatch(
         storeEpisodeLength(data.data.getPodcastSeries.episodes.length)
@@ -124,6 +125,44 @@ const addSearchTerm = async (searchTerm) => {
     const { data } = await axios.get("http://localhost:6001/search_term/add", {
       headers: { token: token, searchTerm: searchTerm },
     });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getLocationName = async (coords) => {
+  const { lon, lat } = coords;
+  try {
+    const { data } = await axios.get(
+      "http://localhost:6001/reverse_geocoding",
+      {
+        headers: { lon: lon, lat: lat },
+      }
+    );
+    if (!data.data) {
+      store.dispatch(setCurrentCountry("UNITED_STATES_OF_AMERICA"));
+      return;
+    }
+
+    store.dispatch(setCurrentCountry(data.data));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getCountryCharts = async (country) => {
+  try {
+    const { data } = await axios.get(
+      "http://localhost:6001/top_charts/country",
+      {
+        headers: { country: country },
+      }
+    );
+    if (!data.data) {
+      return;
+    }
+    console.log(data.data.getTopChartsByCountry.podcastSeries)
+    store.dispatch(addTopChartsCountry(data.data.getTopChartsByCountry.podcastSeries));
   } catch (e) {
     console.log(e);
   }

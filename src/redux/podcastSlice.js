@@ -140,6 +140,20 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
+    addTopChartsCountry: (state, { payload }) => {
+      payload.forEach((podcast) => {
+        state.apiData.searchForTerm.podcastSeries.forEach((_podcast) => {
+          if ((podcast.uuid = _podcast.uuid)) {
+            console.log("true");
+            return;
+          }
+        });
+        podcast.topChartsCountry = true;
+      });
+      state.apiData.searchForTerm.podcastSeries.push(...payload);
+      saveStore("podcast", state);
+    },
+
     //add to userLibary array
     addToLibrary: (state, { payload }) => {
       console.log(payload);
@@ -197,6 +211,7 @@ export const {
   setIsLoading,
   clearUserLibrary,
   storeLibrary,
+  addTopChartsCountry,
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>
