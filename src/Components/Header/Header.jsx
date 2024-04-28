@@ -65,6 +65,9 @@ const Header = () => {
               <NavLink to="/">Login</NavLink>
             </li>
           )}
+          {token && <li>
+              <NavLink to="change_password">Change Password</NavLink>
+            </li>}
         </ul>
         <button className="hamburger" onClick={ToggleMenu}>
           {openMenu ? <IoClose /> : <IoMenuOutline />}

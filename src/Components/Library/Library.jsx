@@ -26,7 +26,7 @@ const Library = () => {
   let podcasts = useSelector(selectPodcastsSeries);
   const searchTerm = useSelector(selectSearchTerm);
 
-  console.log(podcasts.length)
+  console.log(podcasts.length);
 
   //gets uuids from database
   const getLibraryUuids = useCallback(async () => {
@@ -55,9 +55,11 @@ const Library = () => {
       dispatch(setWindow(0));
       return;
     }
+  }, [window]);
+
+  useEffect(() => {
     dispatch(clearApiData());
     getLibraryUuids();
- 
   }, []);
 
   let newFiltered;
@@ -85,10 +87,7 @@ const Library = () => {
             <LibrarySortBySelect />
           </div>
 
-        
-
           {podcasts.length && (
-            
             <LibraryResults
               libraryPodcasts={searchTerm ? newFiltered : podcasts}
             />

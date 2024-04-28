@@ -15,6 +15,7 @@ import Queue from "./Components/Queue/Queue";
 import Discover from "./Components/Discover/Discover";
 import PodcastPlayer from "./Components/FullPodcastPlayer/PodcastPlayer";
 import { getRandom } from "./utils";
+import ChangePassword from "./Components/Library/ChangePassword";
 
 const App = () => {
   const message = useSelector(selectMessage);
@@ -54,7 +55,9 @@ const App = () => {
         <Route path="discover" element={<Discover />} />
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
-        <Route path="playing" element={<PodcastPlayer />} />
+        <Route path="playing" element={<PodcastPlayer />} />        
+        <Route path="change_password" element={<ChangePassword />} />
+
       </Routes>
 
       <Footer />

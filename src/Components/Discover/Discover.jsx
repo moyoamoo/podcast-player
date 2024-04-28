@@ -89,9 +89,9 @@ const Discover = () => {
       <div className="discoverHeader">
         <h2>Discover</h2>
       </div>
-      {Object.values(rankedPodcasts).length && <TopPodcasts />}
-      {Object.values(rankedGenres).length && <TopGenres />}
-      {previousSearches.length && <PreviousSearches />}
+      {token && Object.values(rankedPodcasts).length && <TopPodcasts />}
+      {token && Object.values(rankedGenres).length && <TopGenres />}
+      {token && previousSearches.length && <PreviousSearches />}
     </main>
   );
 };
