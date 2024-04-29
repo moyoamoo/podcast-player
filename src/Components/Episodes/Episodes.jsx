@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Episode from "../Episode/Episode";
 import "../CSS/episodes.scss";
@@ -13,7 +13,15 @@ import Spinner from "../Spinner";
 const Episodes = () => {
   const { id } = useParams();
   const podcast = useSelector(selectPodcast(id));
-  console.log(id)
+  console.log(id);
+
+  useEffect(() => {
+    if (!podcast.episodes) {
+      getPodcastByUuid(id, 2, 1, "addNew");
+    }
+    
+  }, []);
+
   if (!podcast) {
     getPodcastByUuid(id, 2, 1, "showMore");
     return <Spinner />;
@@ -26,18 +34,19 @@ const Episodes = () => {
   }
 
   const callback = (sortBy, page, type) => {
-    console.log(podcast.uuid)
+    console.log(podcast.uuid);
     getPodcastByUuid(podcast.uuid, sortBy, page, type);
   };
 
   return (
     <>
       <PodcastDetails podcast={podcast} />
-      {podcast.episodes.map((episode) => {
-        return (
-          <Episode episode={episode} podcast={podcast} key={episode.uuid} />
-        );
-      })}
+      {podcast.episodes &&
+        podcast.episodes.map((episode) => {
+          return (
+            <Episode episode={episode} podcast={podcast} key={episode.uuid} />
+          );
+        })}
       <div className="showMoreContainer">
         <ShowMoreBtn
           callback={callback}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/librarySlice";
-import { getLocationName, getCountryCharts } from "../../apiRequest";
+import {  getCountryCharts } from "../../apiRequest";
 import {
   selectRankedGenres,
   setRankedGenres,
@@ -9,7 +9,7 @@ import {
   selectRankedPodcasts,
   setPreviousSearches,
   selectPreviousSearches,
-  setCurrentCountry,
+  
   selectCountry,
 } from "../../redux/statsSlice";
 import TopGenres from "./TopGenres";
@@ -31,19 +31,8 @@ const Discover = () => {
   const country = useSelector(selectCountry);
   const [topPodcasts, setTopPodcasts] = useState([]);
 
-  const displayTopGenres = () => {
-    let _podcasts = [];
-    if (podcasts) {
-      podcasts.forEach((podcast) => {
-        if (podcast.topChartsCountry) {
-          _podcasts.push(podcast);
-        }
-      });
-      setTopPodcasts(_podcasts);
-    }
-  };
+ 
 
-  
   const getRecentSearches = async () => {
     try {
       const { data } = await axios.get(
@@ -98,8 +87,7 @@ const Discover = () => {
 
   useEffect(() => {
     dispatch(clearApiData());
-    // getCoordinates();
-    getCountryCharts(country);
+    getCountryCharts();
     if (token) {
       getTopGenres();
       getTopPodcasts();
@@ -107,16 +95,14 @@ const Discover = () => {
     }
   }, []);
 
-  useEffect(() => {
-    displayTopGenres();
-  }, [podcasts]);
+
 
   return (
     <main>
       <div className="discoverHeader">
         <h2>Discover</h2>
       </div>
-      {topPodcasts.length && <TopCharts topChartsCountry={topPodcasts} />}
+      <TopCharts/>
       {token && Object.values(rankedPodcasts).length && <TopPodcasts />}
       {token && Object.values(rankedGenres).length && <TopGenres />}
       {token && previousSearches.length && <PreviousSearches />}
