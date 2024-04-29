@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { IoMenuOutline, IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -17,6 +17,8 @@ const Header = () => {
     setMenu(!openMenu);
   };
 
+
+ 
   const logout = async () => {
     try {
       const { data } = await axios.delete("http://localhost:6001/logout", {
@@ -88,7 +90,7 @@ const Header = () => {
                 to="/"
                 onClick={() => {
                   setMenu(!openMenu);
-                  logout;
+                  logout();
                 }}
               >
                 Logout
@@ -109,12 +111,12 @@ const Header = () => {
           {token && (
             <li>
               <NavLink
-                to="change_password"
+                to="update_account"
                 onClick={() => {
                   setMenu(!openMenu);
                 }}
               >
-                Change Password
+               Update Account
               </NavLink>
             </li>
           )}

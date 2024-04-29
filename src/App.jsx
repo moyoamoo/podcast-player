@@ -50,14 +50,16 @@ const App = () => {
 
       <Routes>
         <Route path="search" element={<Search />} />
-        <Route path="library" element={<Library />} />
+        <Route path="library" element={token ? <Library /> : <Index />} />
         <Route path="queue" element={<Queue />} />
         <Route path="discover" element={<Discover />} />
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
-        <Route path="playing" element={<PodcastPlayer />} />        
-        <Route path="change_password" element={<ChangePassword />} />
-
+        <Route path="playing" element={<PodcastPlayer />} />
+        <Route
+          path="update_account"
+          element={token ? <ChangePassword /> : <Index />}
+        />
       </Routes>
 
       <Footer />

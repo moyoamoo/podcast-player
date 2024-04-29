@@ -75,7 +75,7 @@ const SignUp = () => {
   return (
     <>
       <div className="login signUp">
-        <h1>Create an Account</h1>
+        <h2>Create an Account</h2>
         <form onInput={onInput} onSubmit={onSubmit}>
           <div className="inputContainer">
             <label htmlFor="email">Email</label>

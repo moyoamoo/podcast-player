@@ -81,7 +81,7 @@ const Login = () => {
   return (
     <>
       <div className="login">
-        <h1>Login</h1>
+        <h2>Login</h2>
         <form onInput={onInput} onSubmit={onSubmit}>
           <div className="inputContainer">
             <label htmlFor="email">Email</label>
@@ -93,20 +93,16 @@ const Login = () => {
             <input type="password" name="password" id="password" />
             <p>{errors && errors.password}</p>
           </div>
-          <div className="lowerFormContainer">
-            <button>Forgotton Password</button>
+          <div className="linkContainer">
             <button
               onClick={() => {
                 dispatch(setWindow(0));
               }}
             >
-              Sign Up
+              Don't have an account?
             </button>
           </div>
-          <div className="rememberContainer">
-            <input type="checkbox"></input>
-            <label htmlFor="remember">Remember Me</label>
-          </div>
+
           <button className="submit">Login</button>
         </form>
       </div>

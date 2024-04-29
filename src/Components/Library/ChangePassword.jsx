@@ -1,14 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, setMessage } from "../../redux/librarySlice";
+import { selectUser, setMessage, setWindow } from "../../redux/librarySlice";
 import axios from "axios";
 import Joi from "joi";
+import { Navigate } from "react-router-dom";
+
 const ChangePassword = () => {
   const [userInput, setUserInput] = useState({});
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const token = localStorage.getItem("token");
+
+
+  const deleteAccount = async () => {
+    try {
+      const { data } = await axios.delete("http://localhost:6001/user/delete", {
+        headers: {
+          token: token,
+        },
+      });
+
+      if (data.status) {
+        dispatch(setMessage("Account Deleted!"));
+        localStorage.removeItem("token");
+      }
+    } catch (e) {
+      dispatch(setMessage("Account could not be deleted, try again!"));
+      console.log(e);
+    }
+  };
 
   const changeAccDetails = async () => {
     try {
@@ -22,8 +43,8 @@ const ChangePassword = () => {
         }
       );
       console.log(data);
-      if(data.status){
-        dispatch(setMessage("Account Details Changed"))
+      if (data.status) {
+        dispatch(setMessage("Account Details Changed"));
       }
     } catch (e) {
       console.log(e);
@@ -94,6 +115,15 @@ const ChangePassword = () => {
             </button>
           </form>
         </div>
+
+        <button
+          className="deleteAccountBtn"
+          onClick={() => {
+            deleteAccount();
+          }}
+        >
+          Delete Account
+        </button>
       </main>
     </>
   );
