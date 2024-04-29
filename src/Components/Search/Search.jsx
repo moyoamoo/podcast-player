@@ -19,13 +19,13 @@ const Search = () => {
   const podcast = useSelector(selectPodcastsSeries);
   const searchTerm = useSelector(selectSearchTerm);
   const podcastSeries = useSelector(selectPodcastsSeries);
-  const isLoading = useSelector(selectIsLoading);
 
+  console.log(podcast);
   useEffect(() => {
     dispatch(clearApiData());
     dispatch(clearUserLibrary());
     if (searchTerm) {
-      getPodcastData(searchTerm, 2, 1, "");
+      getPodcastData(searchTerm, 2, 1, "search");
       dispatch(setSearchTerm(""));
     }
   }, []);

@@ -89,6 +89,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       return;
     }
 
+    console.log(data.data)
     if (storeDestination === "append") {
       console.log(data.data);
       //add to most listened
@@ -122,7 +123,6 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
 
 const addSearchTerm = async (searchTerm) => {
   try {
-    console.log(searchTerm);
     const { data } = await axios.get("http://localhost:6001/search_term/add", {
       headers: { token: token, searchTerm: searchTerm },
     });

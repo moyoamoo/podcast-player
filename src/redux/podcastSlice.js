@@ -55,8 +55,9 @@ export const podcastSlice = createSlice({
 
     //adds to library
     appendApiData: (state, { payload }) => {
+      console.log(payload)
       state.apiData.searchForTerm.podcastSeries.push(payload);
-      console.log(state.apiData.searchForTerm.podcastSeries);
+
       saveStore("podcast", state);
     },
 
