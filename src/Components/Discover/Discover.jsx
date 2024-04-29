@@ -52,7 +52,6 @@ const Discover = () => {
         lon: currentCoordinates.coords.longitude,
         lat: currentCoordinates.coords.latitude,
       });
-      console.log(coords);
     } catch (e) {
       console.log(e);
       dispatch(setCurrentCountry("UNITED_STATES_OF_AMERICA"));
@@ -114,7 +113,8 @@ const Discover = () => {
 
   useEffect(() => {
     dispatch(clearApiData());
-    getCoordinates();
+    // getCoordinates();
+    getCountryCharts(country);
     if (token) {
       getTopGenres();
       getTopPodcasts();
@@ -122,13 +122,15 @@ const Discover = () => {
     }
   }, []);
 
-  useEffect(() => {
-    getLocationName(coords);
-  }, [coords]);
+  // useEffect(() => {
+  //   getLocationName(coords);
+  //   console.log(coords)
+  // }, [coords]);
 
-  useEffect(() => {
-    getCountryCharts(country);
-  }, [country]);
+  // useEffect(() => {
+  //   getCountryCharts(country);
+  //   console.log(country);
+  // }, [country]);
 
   useEffect(() => {
     displayTopGenres();

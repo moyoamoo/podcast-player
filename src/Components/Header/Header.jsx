@@ -42,32 +42,82 @@ const Header = () => {
       <nav>
         <ul className={openMenu ? "showMenu" : "menu"}>
           <li>
-            <NavLink to="search">Search</NavLink>
+            <NavLink
+              to="search"
+              onClick={() => {
+                setMenu(!openMenu);
+              }}
+            >
+              Search
+            </NavLink>
           </li>
           <li>
-            <NavLink to="library">Library</NavLink>
+            <NavLink
+              to="library"
+              onClick={() => {
+                setMenu(!openMenu);
+              }}
+            >
+              Library
+            </NavLink>
           </li>
           <li>
-            <NavLink to="queue">Queue</NavLink>
+            <NavLink
+              to="queue"
+              onClick={() => {
+                setMenu(!openMenu);
+              }}
+            >
+              Queue
+            </NavLink>
           </li>
           <li>
-            <NavLink to="discover">Discover</NavLink>
+            <NavLink
+              to="discover"
+              onClick={() => {
+                setMenu(!openMenu);
+              }}
+            >
+              Discover
+            </NavLink>
           </li>
 
           {token ? (
             <li>
-              <NavLink to="/" onClick={logout}>
+              <NavLink
+                to="/"
+                onClick={() => {
+                  setMenu(!openMenu);
+                  logout;
+                }}
+              >
                 Logout
               </NavLink>
             </li>
           ) : (
             <li>
-              <NavLink to="/">Login</NavLink>
+              <NavLink
+                to="/"
+                onClick={() => {
+                  setMenu(!openMenu);
+                }}
+              >
+                Login
+              </NavLink>
             </li>
           )}
-          {token && <li>
-              <NavLink to="change_password">Change Password</NavLink>
-            </li>}
+          {token && (
+            <li>
+              <NavLink
+                to="change_password"
+                onClick={() => {
+                  setMenu(!openMenu);
+                }}
+              >
+                Change Password
+              </NavLink>
+            </li>
+          )}
         </ul>
         <button className="hamburger" onClick={ToggleMenu}>
           {openMenu ? <IoClose /> : <IoMenuOutline />}

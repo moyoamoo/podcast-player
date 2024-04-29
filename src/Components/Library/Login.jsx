@@ -107,9 +107,7 @@ const Login = () => {
             <input type="checkbox"></input>
             <label htmlFor="remember">Remember Me</label>
           </div>
-          <button className="submit" type="submit">
-            Login
-          </button>
+          <button className="submit">Login</button>
         </form>
       </div>
     </>

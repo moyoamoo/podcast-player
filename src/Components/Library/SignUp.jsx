@@ -96,7 +96,7 @@ const SignUp = () => {
               Already have account?
             </button>
           </div>
-          <button className="submit" type="submit">
+          <button className="submit" >
             Sign Up
           </button>
         </form>
