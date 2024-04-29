@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { selectRankedPodcasts } from "../../redux/statsSlice";
 
 const TopPodcast = ({ podcast }) => {
+  
+  console.log(podcast, "hello")
   const rankedPodcasts = useSelector(selectRankedPodcasts);
   let plays;
   Object.keys(rankedPodcasts).forEach((uuid) => {
@@ -10,7 +12,7 @@ const TopPodcast = ({ podcast }) => {
       plays = rankedPodcasts[uuid];
     }
   });
-  
+
   return (
     <>
       <div className="listenedContainer">

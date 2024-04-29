@@ -62,7 +62,10 @@ const Login = () => {
       } else if (data.reason === "user/password combo was not found") {
         dispatch(setMessage("User not found, try again"));
       }
-    } catch (error) {}
+    } catch (e) {
+      dispatch(setMessage("Login unsucessful, try again!"));
+      console.log(e);
+    }
   };
 
   const onSubmit = (e) => {

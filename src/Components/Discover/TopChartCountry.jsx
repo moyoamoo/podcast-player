@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import PodcastImage from "../Search/PodcastImage";
-import PodcastName from "../Search/PodcastName";
 
 const TopChartCountry = ({ podcast }) => {
+  console.log(podcast.uuid)
   return (
     <>
       <div>

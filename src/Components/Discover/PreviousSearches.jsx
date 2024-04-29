@@ -8,7 +8,7 @@ const PreviousSearches = () => {
       <h3 className="discoverHeaders">Previous Searches</h3>
       <div className="previousSearches">
         {previousSearches.map((search) => {
-          return <PreviousSearch search={search} />;
+          return <PreviousSearch search={search} key={search} />;
         })}
       </div>
     </div>

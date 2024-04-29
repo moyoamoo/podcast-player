@@ -8,7 +8,7 @@ const TopCharts = ({ topChartsCountry}) => {
     <div className="topCharts">
         <h2>Top Charts</h2>
     {topChartsCountry.map((podcast) => {
-        return <TopChartCountry podcast={podcast} key={podcast.uuid} />;
+        return <TopChartCountry podcast={podcast} key={podcast.uuid + "A"} />;
       })}
     </div>
  

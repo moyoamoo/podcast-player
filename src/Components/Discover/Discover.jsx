@@ -28,7 +28,6 @@ const Discover = () => {
   const rankedPodcasts = useSelector(selectRankedPodcasts);
   const previousSearches = useSelector(selectPreviousSearches);
   const token = localStorage.getItem("token");
-  const [coords, setCoords] = useState({});
   const country = useSelector(selectCountry);
   const [topPodcasts, setTopPodcasts] = useState([]);
 
@@ -44,20 +43,7 @@ const Discover = () => {
     }
   };
 
-  const getCoordinates = useCallback(async () => {
-    try {
-      const currentCoordinates = await getCurrentCoordinates();
-      console.log(currentCoordinates);
-      setCoords({
-        lon: currentCoordinates.coords.longitude,
-        lat: currentCoordinates.coords.latitude,
-      });
-    } catch (e) {
-      console.log(e);
-      dispatch(setCurrentCountry("UNITED_STATES_OF_AMERICA"));
-    }
-  }, []);
-
+  
   const getRecentSearches = async () => {
     try {
       const { data } = await axios.get(
@@ -103,7 +89,6 @@ const Discover = () => {
 
       if (data.data) {
         dispatch(setRankedPodcasts(data.data));
-        console.log(data.data);
       }
     } catch (e) {
       console.log(e);
@@ -121,16 +106,6 @@ const Discover = () => {
       getRecentSearches();
     }
   }, []);
-
-  // useEffect(() => {
-  //   getLocationName(coords);
-  //   console.log(coords)
-  // }, [coords]);
-
-  // useEffect(() => {
-  //   getCountryCharts(country);
-  //   console.log(country);
-  // }, [country]);
 
   useEffect(() => {
     displayTopGenres();

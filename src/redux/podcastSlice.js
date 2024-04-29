@@ -154,6 +154,12 @@ export const podcastSlice = createSlice({
       saveStore("podcast", state);
     },
 
+    addTopPodcasts: (state, { payload }) => {
+      payload.topPodcast = true;
+      state.apiData.searchForTerm.podcastSeries.push(payload);
+      saveStore("podcast", state);
+    },
+
     //add to userLibary array
     addToLibrary: (state, { payload }) => {
       console.log(payload);
@@ -212,6 +218,7 @@ export const {
   clearUserLibrary,
   storeLibrary,
   addTopChartsCountry,
+  addTopPodcasts
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>

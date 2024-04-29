@@ -10,7 +10,8 @@ import {
   saveSearchTerm,
   storeLibrary,
   appendApiDataSearch,
-  addTopChartsCountry
+  addTopChartsCountry,
+  addTopPodcasts,
 } from "./redux/podcastSlice";
 import { setMessage } from "./redux/librarySlice";
 import { setCurrentCountry } from "./redux/statsSlice";
@@ -68,14 +69,12 @@ export const getPodcastData = async (
 
 //search podcast by unique id
 export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
-  console.log(uuid, order, page, storeDestination);
   if (order === "1") {
     order = "OLDEST";
   } else {
     order = "LATEST";
   }
 
-  console.log(uuid, order, page, storeDestination);
   try {
     const { data } = await axios.get("http://localhost:6001/episodes", {
       headers: {
@@ -113,6 +112,8 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
         return;
       }
       store.dispatch(storeLibrary(data.data.getPodcastSeries));
+    } else if (storeDestination === "appendTopPodcasts") {
+      store.dispatch(addTopPodcasts(data.data.getPodcastSeries));
     }
   } catch (error) {
     console.log(error);
@@ -161,8 +162,10 @@ export const getCountryCharts = async (country) => {
     if (!data.data) {
       return;
     }
-    console.log(data.data.getTopChartsByCountry.podcastSeries)
-    store.dispatch(addTopChartsCountry(data.data.getTopChartsByCountry.podcastSeries));
+    console.log(data.data.getTopChartsByCountry.podcastSeries);
+    store.dispatch(
+      addTopChartsCountry(data.data.getTopChartsByCountry.podcastSeries)
+    );
   } catch (e) {
     console.log(e);
   }
