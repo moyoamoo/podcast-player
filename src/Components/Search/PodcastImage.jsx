@@ -1,11 +1,11 @@
-import defaultImage from "../CSS/assets/podcast-icon.jpg"
+import defaultImage from "../CSS/assets/podcast-icon.jpg";
 
 const PodcastImage = ({ podcast }) => {
   return (
     <>
       <img
         loading="lazy"
-        src={podcast.imageUrl}
+        src={podcast.imageUrl ? podcast.imageUrl : defaultImage}
         alt={podcast.name}
         onError={(e) => {
           e.target.src = defaultImage;
