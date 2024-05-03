@@ -38,7 +38,11 @@ const Search = () => {
     <>
       <main>
         <SearchBar />
-        {podcastSeries && <PodcastResults />}
+        {podcastSeries && (
+          <div className="podcastResultsContainer">
+            <PodcastResults />
+          </div>
+        )}
         {podcast.length && (
           <ShowMoreBtn
             callback={callback}

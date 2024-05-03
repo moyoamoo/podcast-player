@@ -5,7 +5,6 @@ import { selectSortOrder } from "../../redux/podcastSlice";
 
 const ShowMoreBtn = ({ callback,  totalEpisodesCount}) => {
   const sortBy = useSelector(selectSortOrder);
-  console.log(sortBy);
   const [page, setPage] = useState(1);
 
   const addPage = () => {

@@ -14,14 +14,13 @@ const EpisodePlayBtn = ({ episodePod }) => {
   const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   const [playing, setPlaying] = useState(false);
-  console.log(episodePod.uuid);
   useEffect(() => {
     if (queue[0].uuid === episodePod.uuid) {
       setPlaying(true);
-    } 
+    }
 
-    if(queue[0].uuid != episodePod.uuid){
-      setPlaying(false)
+    if (queue[0].uuid != episodePod.uuid) {
+      setPlaying(false);
     }
   }, [queue]);
 

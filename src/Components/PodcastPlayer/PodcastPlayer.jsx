@@ -27,7 +27,6 @@ const PodcastPlayer = () => {
   const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
 
- 
   //add genres to database
   const addGenres = async () => {
     console.log("i ran");
@@ -46,6 +45,8 @@ const PodcastPlayer = () => {
     }
   };
 
+
+
   useEffect(() => {
     if (readyState && playButton && lastClick > 5000) {
       audioRef.current.play();
@@ -56,14 +57,14 @@ const PodcastPlayer = () => {
     }
   }, [playButton, readyState, audioRef]);
 
-  useEffect(() => {
-    const _elapsed = Math.round(elapsed);
-    if (_elapsed === previousElapsed) {
-      return;
-    }
-    updateServerDuration(_elapsed, audioRef.current.duration);
-    setPreviousElpased(_elapsed);
-  }, [elapsed]);
+  // useEffect(() => {
+  //   const _elapsed = Math.round(elapsed);
+  //   if (_elapsed === previousElapsed) {
+  //     return;
+  //   }
+  //   updateServerDuration(_elapsed, audioRef.current.duration);
+  //   setPreviousElpased(_elapsed);
+  // }, [elapsed]);
 
   const getListenedData = async () => {
     try {
@@ -141,6 +142,7 @@ const PodcastPlayer = () => {
                         e.currentTarget.duration
                     );
                   }
+                  break;
                 }
               }
             }}

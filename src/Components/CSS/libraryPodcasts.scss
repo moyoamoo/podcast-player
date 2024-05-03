@@ -102,3 +102,65 @@ h1 {
     background-color: #c76664;
   }
 }
+
+//small screen
+@media (min-width: 480px) and (max-width: 767px) {
+  .libraryPodcastContainer {
+    width: 35rem;
+  }
+}
+
+
+
+//small tablets
+@media (min-width: 768px) and (max-width: 991px) {
+  .libraryPodcastContainer {
+    width: 30rem;
+  }
+
+  .resultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .libraryPodcastContainer {
+    width: 40rem;
+  }
+
+  .resultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.searchContainer{
+  input[type="text"]{
+    width: 50vw;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .libraryPodcastContainer {
+    width: 40rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
+  }
+
+  .resultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  input[type="text"]{
+    width: 45vw;
+  }
+}

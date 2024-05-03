@@ -19,7 +19,6 @@
     max-width: 80px;
     height: 80px;
     border-radius: 1rem;
-
   }
 }
 
@@ -75,5 +74,79 @@
       background-color: #666a86;
       color: #fff;
     }
+  }
+}
+
+//small screen
+@media (min-width: 480px) and (max-width: 767px) {
+  .podcastContainer {
+    width: 35rem;
+  }
+}
+
+//small tablets
+@media (min-width: 768px) and (max-width: 991px) {
+  .podcastContainer {
+    width: 30rem;
+  }
+
+  .podcastResultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+//small tablets
+@media (min-width: 768px) and (max-width: 991px) {
+  .podcastContainer {
+    width: 30rem;
+  }
+
+  .podcastResultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .podcastContainer {
+    width: 40rem;
+  }
+
+  .podcastResultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.searchContainer{
+  input[type="text"]{
+    width: 50vw;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .podcastContainer {
+    width: 40rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
+  }
+
+  .podcastResultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  input[type="text"]{
+    width: 45vw;
   }
 }

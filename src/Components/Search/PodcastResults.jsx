@@ -8,11 +8,10 @@ import "../CSS/libraryPodcasts.scss";
 const PodcastResults = () => {
   const podcastSeries = useSelector(selectPodcastsSeries);
 
-  let counter = 1
  
 
   return podcastSeries.map((podcast) => {
-    return <Podcast podcast={podcast} key={podcast.uuid}  counter={counter++}/>;
+    return <Podcast podcast={podcast} key={podcast.uuid}  />;
   });
 };
 

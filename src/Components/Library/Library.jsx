@@ -88,9 +88,11 @@ const Library = () => {
           </div>
 
           {podcasts.length && (
-            <LibraryResults
-              libraryPodcasts={searchTerm ? newFiltered : podcasts}
-            />
+            <div className="resultsContainer">
+              <LibraryResults
+                libraryPodcasts={searchTerm ? newFiltered : podcasts}
+              />
+            </div>
           )}
         </div>
       </main>
