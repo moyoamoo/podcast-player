@@ -5,6 +5,8 @@ import { onFormSubmit } from "../../validation/formSubmit";
 import { onFormInput } from "../../validation/formInput";
 import FormBtn from "./FormBtn";
 import FormInput from "./FormInput";
+import { passwordSchema } from "../../validation/joiSchemas";
+import { changeAccDetails } from "../../apiRequests/Account/changeAccountDetails";
 
 const ChangePassword = () => {
   const email = useSelector(selectEmail);
@@ -30,10 +32,18 @@ const ChangePassword = () => {
           <h2>Change Password</h2>
           <form
             onInput={(e) => {
-              onFormInput(e, userInput, setUserInput, setErrors);
+              onFormInput(
+                e,
+                passwordSchema,
+                userInput,
+                setUserInput,
+                setErrors
+              );
             }}
             onSubmit={(e) => {
-              onFormSubmit(e, errors, { password: userInput.repeatPassword });
+              onFormSubmit(e, errors, changeAccDetails, {
+                password: userInput.repeatPassword,
+              });
             }}
           >
             <FormInput

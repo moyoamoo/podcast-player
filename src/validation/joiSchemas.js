@@ -22,3 +22,18 @@ export const emailSchema = {
     "any.required": "Confirm email is required",
   }),
 };
+
+
+export const loginSchema = {
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string().min(4).required(),
+};
+
+export const signUpSchema = {
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string().min(4).required(),
+};

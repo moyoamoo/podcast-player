@@ -1,109 +1,56 @@
 import React, { useState } from "react";
-import Joi from "joi";
-import axios from "axios";
 import "../CSS/login.scss";
-import {
-  setWindow,
-  setMessage,
-  setEmail,
-  setToken,
-} from "../../redux/librarySlice";
-import { store } from "../../redux/store";
+import { setWindow } from "../../redux/librarySlice";
 import { useDispatch } from "react-redux";
+import FormBtn from "./FormBtn";
+import FormInput from "./FormInput";
+import { onFormSubmit } from "../../validation/formSubmit";
+import { onFormInput } from "../../validation/formInput";
+import { signUpSchema } from "../../validation/joiSchemas";
 
 const SignUp = () => {
   const [userInput, setUserInput] = useState({});
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
-  //validation schema
-  const schema = {
-    email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required(),
-    password: Joi.string().min(4).required(),
-  };
-
-  //add input to state and validate, adds errors to state
-  const onInput = async (e) => {
-    const newUserInput = { ...userInput };
-    newUserInput[e.target.id] = e.target.value;
-    setUserInput(newUserInput);
-
-    const _joiInstance = Joi.object(schema);
-
-    try {
-      await _joiInstance.validateAsync(userInput);
-      setErrors(undefined);
-    } catch (e) {
-      const newErrors = {};
-      e.details.forEach((error) => {
-        newErrors[error.context.key] = error.message;
-      });
-
-      setErrors(newErrors);
-    }
-  };
-
-  //add new user, send userInput to api
-  const addNewUser = async (userInput) => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:6001/user/add",
-        userInput
-      );
-      console.log(data);
-      if (data.status && data.reason) {
-        dispatch(setMessage("Account already exists! Try agaiin"));
-      } else if (data.status) {
-        dispatch(setMessage("Account Created"));
-        dispatch(setToken(data.token));
-        dispatch(setEmail(data.email));
-        dispatch(setWindow(2));
-      } else {
-        dispatch(setMessage("Account not created! Try again"));
-      }
-    } catch (e) {
-      console.log(e);
-      dispatch(setMessage("Unable to connect to create account, try again!"));
-    }
-  };
-
-  //on submit, if no errors make api call
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (typeof errors === "undefined") {
-      addNewUser(userInput);
-    } else {
-      dispatch(setMessage("Invalid password and/or email, try again"));
-    }
+  const callback = () => {
+    dispatch(setWindow(1));
   };
 
   return (
     <>
       <div className="accountForm signUp">
         <h2>Create an Account</h2>
-        <form onInput={onInput} onSubmit={onSubmit}>
-          <div className="inputContainer">
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" autoComplete="email" />
-            <p>{errors && errors.email}</p>
-          </div>
-          <div className="inputContainer">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-            <p>{errors && errors.password}</p>
-          </div>
-          <div className="linkContainer">
-            <button
-              onClick={() => {
-                dispatch(setWindow(1));
-              }}
-            >
-              Already have account?
-            </button>
-          </div>
-          <button className="submitBtn">Sign Up</button>
+        <form
+          onInput={(e) => {
+            onFormInput(e, signUpSchema, userInput, setUserInput, setErrors);
+          }}
+          onSubmit={(e) => {
+            onFormSubmit(e, adddNewUser, func, userInput);
+          }}
+        >
+          <FormInput
+            className="inputContainer"
+            type="email"
+            text="Email"
+            name="email"
+            errors={errors}
+          />
+
+          <FormInput
+            className="inputContainer"
+            type="password"
+            text="Password"
+            name="password"
+            errors={errors}
+          />
+          <FormBtn
+            type="button"
+            func={callback}
+            text="Already have an acoount?"
+            className="linkContainer"
+          />
+          <FormBtn type="submit" className="submitBtn" text="Sign Up" />
         </form>
       </div>
     </>

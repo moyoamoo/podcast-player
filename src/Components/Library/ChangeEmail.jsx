@@ -5,6 +5,8 @@ import FormBtn from "./FormBtn";
 import FormInput from "./FormInput";
 import { onFormSubmit } from "../../validation/formSubmit";
 import { onFormInput } from "../../validation/formInput";
+import { emailSchema } from "../../validation/joiSchemas";
+import { changeAccDetails } from "../../apiRequests/Account/changeAccountDetails";
 
 const ChangeEmail = () => {
   const email = useSelector(selectEmail);
@@ -30,10 +32,10 @@ const ChangeEmail = () => {
           <h2>Change Email</h2>
           <form
             onInput={(e) => {
-              onFormInput(e, userInput, setUserInput, setErrors);
+              onFormInput(e, emailSchema, userInput, setUserInput, setErrors);
             }}
             onSubmit={(e) => {
-              onFormSubmit(e, errors, { email: userInput.repeatEmail });
+              onFormSubmit(e, errors, changeAccDetails, { email: userInput.repeatEmail });
             }}
           >
             <FormInput

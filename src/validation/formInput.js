@@ -1,10 +1,10 @@
 import Joi from "joi"
-import { emailSchema } from "./joiSchemas";
+import { loginSchema } from "./joiSchemas";
 
-export const onFormInput = async (e, userInput, setUserInput, setErrors) => {
+export const onFormInput = async (e, schema, userInput, setUserInput, setErrors) => {
     const newUserInput = { ...userInput, [e.target.id]: e.target.value };
     setUserInput(newUserInput);
-    const _joiInstance = Joi.object(emailSchema).options({
+    const _joiInstance = Joi.object(schema).options({
       stripUnknown: true,
     });
 
@@ -21,3 +21,4 @@ export const onFormInput = async (e, userInput, setUserInput, setErrors) => {
       console.log(newUserInput);
     }
   };
+
