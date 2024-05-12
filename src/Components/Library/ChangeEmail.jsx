@@ -9,6 +9,11 @@ import {
   setScreen,
 } from "../../redux/librarySlice";
 import Joi from "joi";
+import { emailSchema } from "../../validation/joiSchemas";
+import FormBtn from "./FormBtn";
+import FormInput from "./FormInput";
+import SubmitBtn from "./SubmitBtn";
+import FormReadOnlyInput from "./FormReadOnlyInput";
 
 const ChangeEmail = () => {
   const email = useSelector(selectEmail);
@@ -18,18 +23,10 @@ const ChangeEmail = () => {
   const user = useSelector(selectUser);
   const token = useSelector(selectToken);
 
-  //validation schema
-  const schema = {
-    email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required(),
-    repeatEmail: Joi.ref("email"),
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (typeof errors === "undefined") {
-      changeAccDetails({ email: userInput.email });
+      changeAccDetails({ email: userInput.repeatEmail });
     } else {
       dispatch(setMessage("Email and Password are Invalid! Try Again"));
     }
@@ -39,7 +36,7 @@ const ChangeEmail = () => {
   const onInput = async (e) => {
     const newUserInput = { ...userInput, [e.target.id]: e.target.value };
     setUserInput(newUserInput);
-    const _joiInstance = Joi.object(schema);
+    const _joiInstance = Joi.object(emailSchema);
 
     try {
       await _joiInstance.validateAsync(newUserInput);
@@ -51,47 +48,47 @@ const ChangeEmail = () => {
       });
 
       setErrors(newErrors);
-      console.log(userInput);
+      console.log(newUserInput);
     }
+  };
+
+  const callback = () => {
+    dispatch(setScreen(1));
   };
 
   return (
     <>
       <main>
-        <button className="switchBtn"
-          onClick={() => {
-            dispatch(setScreen(1));
-          }}
-        >
-          Change Password
-        </button>
+        <FormBtn
+          type="button"
+          className="switchBtn"
+          text="Change Password"
+          func={callback}
+        />
+
         <div className="accountForm">
           <h2>Change Email</h2>
           <form onInput={onInput} onSubmit={onSubmit}>
-            <div className="inputContainer">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={userInput.email}
-                readOnly={true}
-              />
-            </div>
-
-            <div className="inputContainer">
-              <label htmlFor="newEmail">New Email</label>
-              <input type="email" name="email" id="newEmail" />
-            </div>
-
-            <div className="inputContainer">
-              <label htmlFor="confirmEmail">Email</label>
-              <input type="email" name="email" id="confirmEmail" />
-            </div>
-
-            <button className="submit" type="submit">
-              Change Account Details
-            </button>
+            <FormReadOnlyInput className="inputContainer" type="email" name="oldEmail" value={email} text="Current Email"/>
+            <FormInput
+              className="inputContainer"
+              type="email"
+              text="New Email"
+              name="newEmail"
+              errors={errors}
+            />
+            <FormInput
+              className="inputContainer"
+              type="email"
+              text="Repeat Email"
+              name="repeatEmail"
+              errors={errors}
+            />
+            <SubmitBtn
+              type="submit"
+              className="submitBtn"
+              text=" Change Account Email"
+            />
           </form>
         </div>
       </main>

@@ -10,6 +10,7 @@ import {
   setScreen,
 } from "../../redux/librarySlice";
 import { changeAccDetails } from "../../apiRequests/Account/changeAccountDetails";
+import { passwordSchema } from "../../validation/joiSchemas";
 import Joi from "joi";
 import { Navigate } from "react-router-dom";
 //dynamic imports
@@ -23,17 +24,6 @@ const ChangePassword = () => {
   const token = useSelector(selectToken);
 
   //validation schema
-  const schema = {
-    password: Joi.string().min(4).required().label("password"),
-    repeatPassword: Joi.string()
-      .required()
-      .valid(Joi.ref("password"))
-      .label("repeat password")
-      .messages({
-        "any.only": "Passwords do not match",
-        "any.required": "Confirm password is required",
-      }),
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +37,7 @@ const ChangePassword = () => {
   const onInput = async (e) => {
     const newUserInput = { ...userInput, [e.target.id]: e.target.value };
     setUserInput(newUserInput);
-    const _joiInstance = Joi.object(schema);
+    const _joiInstance = Joi.object(passwordSchema);
 
     try {
       await _joiInstance.validateAsync(newUserInput);
@@ -97,7 +87,7 @@ const ChangePassword = () => {
               <input type="password" name="password" id="repeatPassword" />
               <p>{errors && errors.repeatPassword}</p>
             </div>
-            <button className="submit" type="submit">
+            <button className="submitBtn" type="submit">
               Change Account Details
             </button>
           </form>
