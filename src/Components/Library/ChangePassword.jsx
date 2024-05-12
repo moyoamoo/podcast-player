@@ -9,7 +9,7 @@ import {
   setEmail,
   setScreen,
 } from "../../redux/librarySlice";
-import axios from "axios";
+import { changeAccDetails } from "../../apiRequests/Account/changeAccountDetails";
 import Joi from "joi";
 import { Navigate } from "react-router-dom";
 //dynamic imports
@@ -24,17 +24,21 @@ const ChangePassword = () => {
 
   //validation schema
   const schema = {
-    email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required(),
-    password: Joi.string().min(4).required(),
-    repeatPassword: Joi.ref("password"),
+    password: Joi.string().min(4).required().label("password"),
+    repeatPassword: Joi.string()
+      .required()
+      .valid(Joi.ref("password"))
+      .label("repeat password")
+      .messages({
+        "any.only": "Passwords do not match",
+        "any.required": "Confirm password is required",
+      }),
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (typeof errors === "undefined") {
-      changeAccDetails(userInput.password);
+      changeAccDetails({ password: userInput.password });
     } else {
       dispatch(setMessage("Email and Password are Invalid! Try Again"));
     }
@@ -55,10 +59,9 @@ const ChangePassword = () => {
       });
 
       setErrors(newErrors);
-      console.log(userInput)
+      console.log(userInput);
     }
   };
-
 
   return (
     <>
@@ -92,7 +95,7 @@ const ChangePassword = () => {
             <div className="inputContainer">
               <label htmlFor="repeatPassword">Confirm Password</label>
               <input type="password" name="password" id="repeatPassword" />
-              <p>{errors && "Passwords must match"}</p>
+              <p>{errors && errors.repeatPassword}</p>
             </div>
             <button className="submit" type="submit">
               Change Account Details

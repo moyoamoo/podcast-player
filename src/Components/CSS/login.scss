@@ -87,6 +87,21 @@ form {
   }
 }
 
+.switchBtn {
+  margin-top: 30px;
+  color: #a14af2;
+
+  border: none;
+  border-radius: 4px;
+  width: 250px;
+  padding: 15px 10px;
+  font-size: 20px;
+
+ &:hover{
+   background-color: #e4d6f1;
+ }
+}
+
 .lowerFormContainer {
   display: flex;
   align-items: center;

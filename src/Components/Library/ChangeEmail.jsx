@@ -6,7 +6,7 @@ import {
   selectEmail,
   selectToken,
   setEmail,
-  setScreen
+  setScreen,
 } from "../../redux/librarySlice";
 import Joi from "joi";
 
@@ -23,27 +23,26 @@ const ChangeEmail = () => {
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .required(),
-    password: Joi.string().min(4).required(),
+    repeatEmail: Joi.ref("email"),
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (typeof errors === "undefined") {
-      changeAccDetails(userInput.email);
+      changeAccDetails({ email: userInput.email });
     } else {
       dispatch(setMessage("Email and Password are Invalid! Try Again"));
     }
   };
   //add input to state and validate, adds errors to state
-  const onInput = async (e) => {
-    const newUserInput = { ...userInput };
-    newUserInput[e.target.id] = e.target.value;
-    setUserInput(newUserInput);
 
+  const onInput = async (e) => {
+    const newUserInput = { ...userInput, [e.target.id]: e.target.value };
+    setUserInput(newUserInput);
     const _joiInstance = Joi.object(schema);
 
     try {
-      await _joiInstance.validateAsync(userInput);
+      await _joiInstance.validateAsync(newUserInput);
       setErrors(undefined);
     } catch (e) {
       const newErrors = {};
@@ -52,12 +51,14 @@ const ChangeEmail = () => {
       });
 
       setErrors(newErrors);
+      console.log(userInput);
     }
   };
+
   return (
     <>
       <main>
-        <button
+        <button className="switchBtn"
           onClick={() => {
             dispatch(setScreen(1));
           }}
@@ -73,28 +74,19 @@ const ChangeEmail = () => {
                 type="email"
                 name="email"
                 id="email"
-                defaultValue={userInput.email}
+                value={userInput.email}
+                readOnly={true}
               />
             </div>
 
             <div className="inputContainer">
               <label htmlFor="newEmail">New Email</label>
-              <input
-                type="email"
-                name="email"
-                id="newEmail"
-                defaultValue={userInput.email}
-              />
+              <input type="email" name="email" id="newEmail" />
             </div>
 
             <div className="inputContainer">
               <label htmlFor="confirmEmail">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="confirmEmail"
-                defaultValue={userInput.email}
-              />
+              <input type="email" name="email" id="confirmEmail" />
             </div>
 
             <button className="submit" type="submit">
@@ -102,8 +94,6 @@ const ChangeEmail = () => {
             </button>
           </form>
         </div>
-
-  
       </main>
     </>
   );

@@ -1,22 +1,30 @@
+import axios from "axios";
+import { store } from "../../redux/store";
+import { setMessage, setEmail } from "../../redux/librarySlice";
+
+export const changeAccDetails = async (userInput) => {
+  const state = store.getState();
+  const token = state.library.token;
 
 
-export const changeAccDetails = async (details) => {
   try {
     const { data } = await axios.patch(
       "http://localhost:6001/user/update",
-      details,
+      userInput,
       {
         headers: {
           token,
         },
       }
     );
-    console.log(data);
     if (data.status) {
       store.dispatch(setMessage("Account Details Changed"));
-      dispatch(setEmail(userInput.email));
+      if (userInput.email) {
+        store.dispatch(setEmail(userInput.email));
+      }
     }
   } catch (e) {
     console.log(e);
+    store.dispatch(setMessage("Unable to change account details"));
   }
 };
