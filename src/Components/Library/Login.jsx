@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import "../CSS/login.scss";
 import {
   selectUser,
-  setLoggedIn,
   setMessage,
   setWindow,
   selectWindow,
-  setEmail,
   selectToken,
-  setToken,
 } from "../../redux/librarySlice";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+
 import Joi from "joi";
+import { loginUser } from "../../apiRequests/Account/loginUser";
 
 const Login = () => {
   const [userInput, setUserInput] = useState({});
@@ -51,28 +49,6 @@ const Login = () => {
     }
   };
 
-  const loginUser = async (userInput) => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:6001/login",
-        userInput
-      );
-      console.log(data);
-      if (data.status) {
-        dispatch(setMessage("Login sucessful"));
-        dispatch(setToken(data.token));
-        dispatch(setEmail(data.email));
-        dispatch(setWindow(2));
-      } else if (data.reason === "user/password combo was not found") {
-        dispatch(setMessage("User not found, try again"));
-      } else if (!data.status) {
-        dispatch(setMessage("Email and/or Password Incorrect!"));
-      }
-    } catch (e) {
-      dispatch(setMessage("Login unsucessful, try again!"));
-      console.log(e);
-    }
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -1,9 +1,15 @@
-const FormInput = ({className, type, name, text, errors}) => {
+const FormInput = ({ className, type, name, text, errors, value }) => {
   return (
     <>
       <div className={className}>
-        <label htmlFor={name}>{text}</label>
-        <input type={type} name={name} id={name} />
+        <label htmlFor={name}> {text}</label>
+        <input
+          type={type}
+          name={name}
+          id={name}
+          value={value && value}
+          readOnly={value ? true : false}
+        />
         <p>{errors && errors[name]}</p>
       </div>
     </>

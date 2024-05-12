@@ -1,95 +1,67 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectUser,
-  setMessage,
-  setWindow,
-  selectEmail,
-  selectToken,
-  setEmail,
-  setScreen,
-} from "../../redux/librarySlice";
-import { changeAccDetails } from "../../apiRequests/Account/changeAccountDetails";
-import { passwordSchema } from "../../validation/joiSchemas";
-import Joi from "joi";
-import { Navigate } from "react-router-dom";
-//dynamic imports
+import { selectEmail, setScreen } from "../../redux/librarySlice";
+import { onFormSubmit } from "../../validation/formSubmit";
+import { onFormInput } from "../../validation/formInput";
+import FormBtn from "./FormBtn";
+import FormInput from "./FormInput";
 
 const ChangePassword = () => {
   const email = useSelector(selectEmail);
   const [userInput, setUserInput] = useState({ email });
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const token = useSelector(selectToken);
 
-  //validation schema
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (typeof errors === "undefined") {
-      changeAccDetails({ password: userInput.password });
-    } else {
-      dispatch(setMessage("Email and Password are Invalid! Try Again"));
-    }
-  };
-  //add input to state and validate, adds errors to state
-  const onInput = async (e) => {
-    const newUserInput = { ...userInput, [e.target.id]: e.target.value };
-    setUserInput(newUserInput);
-    const _joiInstance = Joi.object(passwordSchema);
-
-    try {
-      await _joiInstance.validateAsync(newUserInput);
-      setErrors(undefined);
-    } catch (e) {
-      const newErrors = {};
-      e.details.forEach((error) => {
-        newErrors[error.context.key] = error.message;
-      });
-
-      setErrors(newErrors);
-      console.log(userInput);
-    }
+  const callback = () => {
+    dispatch(setScreen(0));
   };
 
   return (
     <>
       <main>
-        <button
-          onClick={() => {
-            dispatch(setScreen(0));
-          }}
-        >
-          Change Email
-        </button>
+        <FormBtn
+          type="button"
+          className="switchBtn"
+          text="Change Email"
+          func={callback}
+        />
+
         <div className="accountForm">
           <h2>Change Password</h2>
-          <form onInput={onInput} onSubmit={onSubmit}>
-            <div className="inputContainer">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={userInput.email}
-                readOnly={true}
-              />
-            </div>
-            <div className="inputContainer">
-              <label htmlFor="password">New Password</label>
-              <input type="password" name="password" id="password" />
-              <p>{errors && errors.password}</p>
-            </div>
-
-            <div className="inputContainer">
-              <label htmlFor="repeatPassword">Confirm Password</label>
-              <input type="password" name="password" id="repeatPassword" />
-              <p>{errors && errors.repeatPassword}</p>
-            </div>
-            <button className="submitBtn" type="submit">
-              Change Account Details
-            </button>
+          <form
+            onInput={(e) => {
+              onFormInput(e, userInput, setUserInput, setErrors);
+            }}
+            onSubmit={(e) => {
+              onFormSubmit(e, errors, { password: userInput.repeatPassword });
+            }}
+          >
+            <FormInput
+              className="inputContainer"
+              type="email"
+              name="oldEmail"
+              value={email}
+              text="Current Email"
+            />
+            <FormInput
+              className="inputContainer"
+              type="password"
+              text="New Password"
+              name="password"
+              errors={errors}
+            />
+            <FormInput
+              className="inputContainer"
+              type="password"
+              text="Repeat Password"
+              name="repeatPassword"
+              errors={errors}
+            />
+            <FormBtn
+              type="submit"
+              className="submitBtn"
+              text=" Change Account Details"
+            />
           </form>
         </div>
       </main>

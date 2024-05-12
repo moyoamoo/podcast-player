@@ -5,7 +5,7 @@ const FormBtn = ({ type, className, text, func }) => {
         type={type}
         className={className}
         onClick={() => {
-          func();
+          func && func();
         }}
       >
         {text}
