@@ -6,6 +6,9 @@ import {
   setMessage,
   setWindow,
   selectWindow,
+  setEmail,
+  selectToken,
+  setToken,
 } from "../../redux/librarySlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -17,7 +20,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const window = useSelector(selectWindow);
-  const token = localStorage.getItem("token");
+  const token = useSelector(selectToken);
 
   //validation schema
   const schema = {
@@ -57,10 +60,13 @@ const Login = () => {
       console.log(data);
       if (data.status) {
         dispatch(setMessage("Login sucessful"));
-        localStorage.setItem("token", data.token);
+        dispatch(setToken(data.token));
+        dispatch(setEmail(data.email));
         dispatch(setWindow(2));
       } else if (data.reason === "user/password combo was not found") {
         dispatch(setMessage("User not found, try again"));
+      } else if (!data.status) {
+        dispatch(setMessage("Email and/or Password Incorrect!"));
       }
     } catch (e) {
       dispatch(setMessage("Login unsucessful, try again!"));
@@ -83,7 +89,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="login">
+      <div className="accountForm">
         <h2>Login</h2>
         <form onInput={onInput} onSubmit={onSubmit}>
           <div className="inputContainer">

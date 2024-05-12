@@ -203,6 +203,11 @@ export const podcastSlice = createSlice({
       state.userLibrary = [];
       saveStore("podcast", state);
     },
+
+    clearLibrary: (state, { payload }) => {
+      Object.assign(state, initialState);
+      saveStore("podcast", state);
+    },
   },
 });
 
@@ -228,7 +233,7 @@ export const {
   storeLibrary,
   addTopChartsCountry,
   addTopPodcasts,
-  addNewEpisodes
+  addNewEpisodes,
 } = podcastSlice.actions;
 
 export const selectPodcastsSeries = (state) =>

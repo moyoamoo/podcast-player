@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectUser,
   setMessage,
-  setWindow,
   selectEmail,
   selectToken,
   setEmail,
-  setScreen,
+  setScreen
 } from "../../redux/librarySlice";
-import axios from "axios";
 import Joi from "joi";
-import { Navigate } from "react-router-dom";
-//dynamic imports
 
-const ChangePassword = () => {
+const ChangeEmail = () => {
   const email = useSelector(selectEmail);
   const [userInput, setUserInput] = useState({ email });
   const [errors, setErrors] = useState({});
@@ -28,25 +24,26 @@ const ChangePassword = () => {
       .email({ tlds: { allow: false } })
       .required(),
     password: Joi.string().min(4).required(),
-    repeatPassword: Joi.ref("password"),
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (typeof errors === "undefined") {
-      changeAccDetails(userInput.password);
+      changeAccDetails(userInput.email);
     } else {
       dispatch(setMessage("Email and Password are Invalid! Try Again"));
     }
   };
   //add input to state and validate, adds errors to state
   const onInput = async (e) => {
-    const newUserInput = { ...userInput, [e.target.id]: e.target.value };
+    const newUserInput = { ...userInput };
+    newUserInput[e.target.id] = e.target.value;
     setUserInput(newUserInput);
+
     const _joiInstance = Joi.object(schema);
 
     try {
-      await _joiInstance.validateAsync(newUserInput);
+      await _joiInstance.validateAsync(userInput);
       setErrors(undefined);
     } catch (e) {
       const newErrors = {};
@@ -55,23 +52,20 @@ const ChangePassword = () => {
       });
 
       setErrors(newErrors);
-      console.log(userInput)
     }
   };
-
-
   return (
     <>
       <main>
         <button
           onClick={() => {
-            dispatch(setScreen(0));
+            dispatch(setScreen(1));
           }}
         >
-          Change Email
+          Change Password
         </button>
         <div className="accountForm">
-          <h2>Change Password</h2>
+          <h2>Change Email</h2>
           <form onInput={onInput} onSubmit={onSubmit}>
             <div className="inputContainer">
               <label htmlFor="email">Email</label>
@@ -79,29 +73,40 @@ const ChangePassword = () => {
                 type="email"
                 name="email"
                 id="email"
-                value={userInput.email}
-                readOnly={true}
+                defaultValue={userInput.email}
               />
-            </div>
-            <div className="inputContainer">
-              <label htmlFor="password">New Password</label>
-              <input type="password" name="password" id="password" />
-              <p>{errors && errors.password}</p>
             </div>
 
             <div className="inputContainer">
-              <label htmlFor="repeatPassword">Confirm Password</label>
-              <input type="password" name="password" id="repeatPassword" />
-              <p>{errors && "Passwords must match"}</p>
+              <label htmlFor="newEmail">New Email</label>
+              <input
+                type="email"
+                name="email"
+                id="newEmail"
+                defaultValue={userInput.email}
+              />
             </div>
+
+            <div className="inputContainer">
+              <label htmlFor="confirmEmail">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="confirmEmail"
+                defaultValue={userInput.email}
+              />
+            </div>
+
             <button className="submit" type="submit">
               Change Account Details
             </button>
           </form>
         </div>
+
+  
       </main>
     </>
   );
 };
 
-export default ChangePassword;
+export default ChangeEmail;

@@ -11,11 +11,10 @@ footer {
   background-color: #000;
   color: #fff;
   font-family: "BDOGrotesk", Courier, monospace;
-
   padding: 1.2rem;
 
   p {
-    color: #8eaaf6;
+    color: #ccef4d;
     font-size: 1.5rem;
     text-wrap: wrap;
     text-transform: uppercase;
@@ -46,7 +45,6 @@ footer {
 .controlBtn {
   background: none;
   border: none;
-
   min-width: 40px;
 
   svg {
@@ -91,9 +89,9 @@ footer {
   }
 
   input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    background-color: #8eaaf6;
+    background-color: #ccef4d;
     height: 12px;
     width: 12px;
     border-radius: 55px;
@@ -123,7 +121,7 @@ footer {
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    background-color: #8eaaf6;
+    background-color: #ccef4d;
     height: 12px;
     width: 12px;
     border-radius: 55px;
@@ -149,13 +147,11 @@ progress {
   position: absolute;
   bottom: 1;
   border-radius: 55rem;
-  // opacity: 0.6;
 }
 
 progress[value]::-webkit-progress-bar {
   background-color: #053a5f;
   border-radius: 55rem;
-
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
@@ -163,10 +159,6 @@ progress[value]::-webkit-progress-value {
   background-color: #000;
   border-radius: 55rem;
 }
-
-// progress[value]{
-//   background-color: ;
-// }
 
 .durationBarWrapper {
   width: 70vw;
@@ -181,3 +173,75 @@ progress[value]::-webkit-progress-value {
   bottom: 1;
   opacity: 0.6;
 }
+
+//small screen
+// @media (min-width: 480px) and (max-width: 767px) {
+//   .podcastContainer {
+//     width: 35rem;
+//   }
+// }
+
+// //small tablets
+@media screen and (min-width: 768px) {
+}
+
+//   .podcastResultsContainer {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     align-items: center;
+//   }
+// }
+
+// //small tablets
+// @media (min-width: 768px) and (max-width: 991px) {
+//   .podcastContainer {
+//     width: 30rem;
+//   }
+
+//   .podcastResultsContainer {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     align-items: center;
+//   }
+// }
+
+// @media (min-width: 992px) and (max-width: 1200px) {
+//   .podcastContainer {
+//     width: 40rem;
+//   }
+
+//   .podcastResultsContainer {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     align-items: center;
+//   }
+// }
+
+// .searchContainer{
+//   input[type="text"]{
+//     width: 50vw;
+//   }
+// }
+
+// @media screen and (min-width: 1201px) {
+//   .podcastContainer {
+//     width: 40rem;
+//     margin-left: 10rem;
+//     margin-right: 10rem;
+//   }
+
+//   .podcastResultsContainer {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     align-items: center;
+
+//   }
+
+//   input[type="text"]{
+//     width: 45vw;
+//   }
+// }

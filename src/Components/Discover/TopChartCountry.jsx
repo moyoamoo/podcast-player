@@ -5,7 +5,7 @@ const TopChartCountry = ({ podcast }) => {
   console.log(podcast.name, podcast.uuid);
   return (
     <>
-      <div>
+      <div className="topChart">
         <div className="topChartHeading">
           <div className="topChartImage">
             <Link

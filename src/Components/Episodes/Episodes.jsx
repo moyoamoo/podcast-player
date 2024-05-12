@@ -19,7 +19,6 @@ const Episodes = () => {
     if (!podcast.episodes) {
       getPodcastByUuid(id, 2, 1, "addNew");
     }
-    
   }, []);
 
   if (!podcast) {
@@ -41,12 +40,16 @@ const Episodes = () => {
   return (
     <>
       <PodcastDetails podcast={podcast} />
-      {podcast.episodes &&
-        podcast.episodes.map((episode) => {
-          return (
-            <Episode episode={episode} podcast={podcast} key={episode.uuid} />
-          );
-        })}
+      <div className="podContainer">
+        {" "}
+        {podcast.episodes &&
+          podcast.episodes.map((episode) => {
+            return (
+              <Episode episode={episode} podcast={podcast} key={episode.uuid} />
+            );
+          })}
+      </div>
+
       <div className="showMoreContainer">
         <ShowMoreBtn
           callback={callback}

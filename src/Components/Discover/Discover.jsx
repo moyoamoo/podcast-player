@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/librarySlice";
-import {  getCountryCharts } from "../../apiRequest";
+import { getCountryCharts } from "../../apiRequest";
 import {
   selectRankedGenres,
   setRankedGenres,
@@ -9,7 +9,6 @@ import {
   selectRankedPodcasts,
   setPreviousSearches,
   selectPreviousSearches,
-  
   selectCountry,
 } from "../../redux/statsSlice";
 import TopGenres from "./TopGenres";
@@ -27,11 +26,9 @@ const Discover = () => {
   const rankedGenres = useSelector(selectRankedGenres);
   const rankedPodcasts = useSelector(selectRankedPodcasts);
   const previousSearches = useSelector(selectPreviousSearches);
-  const token = localStorage.getItem("token");
+  const token = useSelector(selectToken);
   const country = useSelector(selectCountry);
   const [topPodcasts, setTopPodcasts] = useState([]);
-
- 
 
   const getRecentSearches = async () => {
     try {
@@ -95,14 +92,12 @@ const Discover = () => {
     }
   }, []);
 
-
-
   return (
     <main>
       <div className="discoverHeader">
         <h2>Discover</h2>
       </div>
-      <TopCharts/>
+      <TopCharts />
       {token && Object.values(rankedPodcasts).length && <TopPodcasts />}
       {token && Object.values(rankedGenres).length && <TopGenres />}
       {token && previousSearches.length && <PreviousSearches />}

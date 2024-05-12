@@ -10,6 +10,7 @@ import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
 import axios from "axios";
 import { setListenData } from "../../redux/statsSlice";
+import {selectToken} from "../../redux/librarySlice"
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
@@ -26,6 +27,7 @@ const PodcastPlayer = () => {
   const [genreDuration, setGenreDuration] = useState(0);
   const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
 
   //add genres to database
   const addGenres = async () => {
@@ -36,7 +38,7 @@ const PodcastPlayer = () => {
         { genres: queue[queueIndex].genres },
         {
           headers: {
-            token: localStorage.getItem("token"),
+            token
           },
         }
       );
@@ -44,8 +46,6 @@ const PodcastPlayer = () => {
       console.log(e);
     }
   };
-
-
 
   useEffect(() => {
     if (readyState && playButton && lastClick > 5000) {
@@ -98,7 +98,7 @@ const PodcastPlayer = () => {
         },
         {
           headers: {
-            token: localStorage.getItem("token"),
+            token,
             unique: localStorage.getItem("unique"),
           },
         }

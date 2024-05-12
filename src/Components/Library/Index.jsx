@@ -11,13 +11,11 @@ const Index = () => {
 
   return (
     <>
-      <div className="mainContainer">
+      <main className="mainContainer">
         {window === 0 && <SignUp />}
         {window === 1 && <Login />}
         {window === 2 && <Library />}
-        {window === 3 && <ChangePassword/>}
-
-      </div>
+      </main>
     </>
   );
 };

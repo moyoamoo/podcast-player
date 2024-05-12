@@ -6,11 +6,13 @@ import "../CSS/libraryPodcasts.scss";
 import { Link } from "react-router-dom";
 import { deletefromLibrary } from "../../redux/podcastSlice";
 import { RxCross2 } from "react-icons/rx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { selectToken } from "../../redux/librarySlice";
 
 const LibraryPodcast = ({ podcast }) => {
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
   //delete podcast from library
   const deleteFromLibrary = async (uuid) => {
     try {
@@ -18,8 +20,8 @@ const LibraryPodcast = ({ podcast }) => {
         "http://localhost:6001/library/delete",
         {
           headers: {
-            token: localStorage.getItem("token"),
-            uuid: uuid,
+            token,
+            uuid,
           },
         }
       );

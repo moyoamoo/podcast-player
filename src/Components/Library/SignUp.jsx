@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import Joi from "joi";
 import axios from "axios";
 import "../CSS/login.scss";
-import { setWindow, setMessage } from "../../redux/librarySlice";
+import {
+  setWindow,
+  setMessage,
+  setEmail,
+  setToken,
+} from "../../redux/librarySlice";
 import { store } from "../../redux/store";
 import { useDispatch } from "react-redux";
 
@@ -47,17 +52,19 @@ const SignUp = () => {
         "http://localhost:6001/user/add",
         userInput
       );
-
+      console.log(data);
       if (data.status && data.reason) {
         dispatch(setMessage("Account already exists! Try agaiin"));
       } else if (data.status) {
         dispatch(setMessage("Account Created"));
-        localStorage.setItem("token", data.token);
+        dispatch(setToken(data.token));
+        dispatch(setEmail(data.email));
         dispatch(setWindow(2));
       } else {
         dispatch(setMessage("Account not created! Try again"));
       }
     } catch (e) {
+      console.log(e);
       dispatch(setMessage("Unable to connect to create account, try again!"));
     }
   };
@@ -74,7 +81,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="login signUp">
+      <div className="accountForm signUp">
         <h2>Create an Account</h2>
         <form onInput={onInput} onSubmit={onSubmit}>
           <div className="inputContainer">
@@ -96,9 +103,7 @@ const SignUp = () => {
               Already have account?
             </button>
           </div>
-          <button className="submit" >
-            Sign Up
-          </button>
+          <button className="submit">Sign Up</button>
         </form>
       </div>
     </>

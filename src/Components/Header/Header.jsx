@@ -5,20 +5,18 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "../CSS/hamburgerMenu.scss";
 import logo from "../CSS/assets/pod.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setMessage } from "../../redux/librarySlice";
+import { setMessage, setToken, selectToken } from "../../redux/librarySlice";
 
 const Header = () => {
   const [openMenu, setMenu] = useState(false);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
+  const token = useSelector(selectToken);
   const ToggleMenu = () => {
     setMenu(!openMenu);
   };
 
-
- 
   const logout = async () => {
     try {
       const { data } = await axios.delete("http://localhost:6001/logout", {
@@ -28,7 +26,7 @@ const Header = () => {
       });
 
       if (data.status === 1) {
-        localStorage.removeItem("token");
+        dispatch(setToken(undefined));
         dispatch(setMessage("Logout Successful"));
       }
     } catch (e) {
@@ -116,7 +114,7 @@ const Header = () => {
                   setMenu(!openMenu);
                 }}
               >
-               Update Account
+                Update Account
               </NavLink>
             </li>
           )}

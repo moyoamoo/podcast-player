@@ -1,11 +1,12 @@
 .mainContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-.login {
+.accountForm {
   margin-top: 10rem;
   width: 70vw;
   height: 60vh;
@@ -128,8 +129,9 @@ form {
   }
 }
 
-.deleteAccountBtn{
-  margin-top: 10rem;
+.deleteAccountBtn {
+  margin-top: -18rem;
+  margin-bottom: 2rem;
   background-color: #bc2c1a;
   color: #fff;
   border: none;
@@ -137,7 +139,7 @@ form {
   width: 200px;
   padding: 15px 10px;
   font-size: 20px;
-  
+
   &:hover {
     background-color: #c76664;
   }

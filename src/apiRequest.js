@@ -6,17 +6,17 @@ import {
   storeEpisodeLength,
   appendApiData,
   sortEpisodeOrder,
-  setEmptySearch,
-  saveSearchTerm,
   storeLibrary,
   appendApiDataSearch,
   addTopChartsCountry,
   addTopPodcasts,
-  addNewEpisodes
+  addNewEpisodes,
 } from "./redux/podcastSlice";
-import { setMessage } from "./redux/librarySlice";
+import { setMessage, selectToken } from "./redux/librarySlice";
 
-const token = localStorage.getItem("token");
+const state = store.getState();
+const token = state.library.token;
+console.log(token);
 
 ///search request
 export const getPodcastData = async (
@@ -112,8 +112,8 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       store.dispatch(storeLibrary(data.data.getPodcastSeries));
     } else if (storeDestination === "appendTopPodcasts") {
       store.dispatch(addTopPodcasts(data.data.getPodcastSeries));
-    } else if (storeDestination = "addNew"){
-      store.dispatch(addNewEpisodes(data.data.getPodcastSeries))
+    } else if ((storeDestination = "addNew")) {
+      store.dispatch(addNewEpisodes(data.data.getPodcastSeries));
     }
   } catch (error) {
     console.log(error);
@@ -129,8 +129,6 @@ const addSearchTerm = async (searchTerm) => {
     console.log(e);
   }
 };
-
-
 
 export const getCountryCharts = async () => {
   console.log("i ran");

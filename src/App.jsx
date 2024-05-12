@@ -8,19 +8,20 @@ import Footer from "./Components/Footer";
 import Index from "./Components/Library/Index";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectMessage, setMessage } from "./redux/librarySlice";
+import { selectMessage, setMessage, selectToken } from "./redux/librarySlice";
 import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 import Queue from "./Components/Queue/Queue";
 import Discover from "./Components/Discover/Discover";
 import PodcastPlayer from "./Components/FullPodcastPlayer/PodcastPlayer";
 import { getRandom } from "./utils";
-import ChangePassword from "./Components/Library/ChangePassword";
+import ChangeAccountDetails from "./Components/Library/ChangeAccountDetails";
 
 const App = () => {
   const message = useSelector(selectMessage);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
+  const token = useSelector(selectToken);
+
 
   useEffect(() => {
     if (!message) return;
@@ -58,7 +59,7 @@ const App = () => {
         <Route path="playing" element={<PodcastPlayer />} />
         <Route
           path="update_account"
-          element={token ? <ChangePassword /> : <Index />}
+          element={token ? <ChangeAccountDetails/> : <Index />}
         />
       </Routes>
 

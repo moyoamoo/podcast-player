@@ -23,7 +23,7 @@ h1 {
     radial-gradient(at 75% 82%, hsla(236, 86%, 68%, 1) 0px, transparent 50%),
     radial-gradient(at 88% 95%, hsla(253, 68%, 70%, 1) 0px, transparent 50%),
     radial-gradient(at 61% 12%, hsla(271, 87%, 62%, 1) 0px, transparent 50%),
-    radial-gradient(at 96% 16%, hsla(259, 92%, 64%, 1) 0px, transparent 50%),
+    radial-gradient(at 96% 16%, #844ff8 0px, transparent 50%),
     radial-gradient(at 23% 13%, hsla(30, 90%, 74%, 1) 0px, transparent 50%),
     radial-gradient(at 74% 15%, hsla(18, 64%, 68%, 1) 0px, transparent 50%);
 
@@ -104,7 +104,7 @@ h1 {
 }
 
 //small screen
-@media (min-width: 480px) and (max-width: 767px) {
+@media screen and  (min-width: 480px) and (max-width: 767px) {
   .libraryPodcastContainer {
     width: 35rem;
   }
@@ -113,7 +113,7 @@ h1 {
 
 
 //small tablets
-@media (min-width: 768px) and (max-width: 991px) {
+@media scren and  (min-width: 768px) and (max-width: 991px) {
   .libraryPodcastContainer {
     width: 30rem;
   }
@@ -126,7 +126,7 @@ h1 {
   }
 }
 
-@media (min-width: 992px) and (max-width: 1200px) {
+@media screen and (min-width: 992px) and (max-width: 1200px) {
   .libraryPodcastContainer {
     width: 40rem;
   }

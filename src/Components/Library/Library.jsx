@@ -15,6 +15,7 @@ import {
   setMessage,
   selectSearchTerm,
   setSearchTerm,
+  selectToken
 } from "../../redux/librarySlice";
 import { getPodcastByUuid } from "../../apiRequest";
 
@@ -22,7 +23,7 @@ import "../CSS/libraryPodcasts.scss";
 
 const Library = () => {
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
+  const token = useSelector(selectToken);
   let podcasts = useSelector(selectPodcastsSeries);
   const searchTerm = useSelector(selectSearchTerm);
 
