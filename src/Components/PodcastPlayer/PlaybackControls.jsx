@@ -5,9 +5,16 @@ import { TbRewindForward30, TbRewindBackward30 } from "react-icons/tb";
 import PlayButton from "./PlayButton";
 
 const PlaybackControls = forwardRef(function PlaybackControls(
-  { queue, queueIndex, setQueueIndex, readyState, isPlaying, setIsPlaying },
-  audioRef,
-  setPodDuration
+  {
+    queue,
+    queueIndex,
+    setQueueIndex,
+    readyState,
+    isPlaying,
+    setIsPlaying,
+    setPodDuration,
+  },
+  audioRef
 ) {
   const resetPlayer = () => {
     audioRef.current.currentTime = 0;

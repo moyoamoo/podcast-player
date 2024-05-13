@@ -53,7 +53,7 @@ const App = () => {
         <Route path="search" element={<Search />} />
         <Route path="library" element={token ? <Library /> : <Index />} />
         <Route path="queue" element={<Queue />} />
-        <Route path="discover" element={<Discover />} />
+        <Route path="discover" element={ token ?  <Discover /> : <Index/> } />
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
         <Route path="playing" element={<PodcastPlayer />} />

@@ -4,7 +4,7 @@ import Description from "./Description";
 import Genres from "./Genres";
 import SortBySelect from "./SortBySelect";
 
-const PodcastDetails = ({podcast}) => {
+const PodcastDetails = ({ podcast }) => {
   return (
     <>
       <div className="episodesContainer">
@@ -14,7 +14,8 @@ const PodcastDetails = ({podcast}) => {
         </div>
         <Description description={podcast.description} />
         <Genres genres={podcast.genres} />
-        <div>
+
+        <div className="sortContainer">
           <SortBySelect uuid={podcast.uuid} />
         </div>
       </div>

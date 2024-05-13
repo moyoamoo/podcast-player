@@ -20,9 +20,11 @@ const EpisodePlayBtn = ({ episodePod }) => {
     }
     if (queue) {
       if (queue[0].uuid === episodePod.uuid) {
+        console.log(episodePod.uuid);
         setPlaying(true);
       } else {
         setPlaying(false);
+        console.log(episodePod.uuid);
       }
     }
   }, [queue, episodePod]);
@@ -32,14 +34,19 @@ const EpisodePlayBtn = ({ episodePod }) => {
       {!isLoading ? (
         <button
           onClick={() => {
+            if (queue.length === 0) {
+              dispatch(getEpisode(episodePod));
+              dispatch(setPlayButton(true));
+              dispatch(setIsLoading(true));
+            }
             if (queue.length > 0) {
               if (queue[0].uuid === episodePod.uuid) {
                 return;
               }
+              dispatch(getEpisode(episodePod));
+              dispatch(setPlayButton(true));
+              dispatch(setIsLoading(true));
             }
-            dispatch(getEpisode(episodePod));
-            dispatch(setPlayButton(true));
-            dispatch(setIsLoading(true));
           }}
         >
           {playing ? <img src={playingGif} /> : <FaPlay />}

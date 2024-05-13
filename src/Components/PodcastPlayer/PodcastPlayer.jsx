@@ -10,7 +10,7 @@ import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
 import axios from "axios";
 import { setListenData } from "../../redux/statsSlice";
-import {selectToken} from "../../redux/librarySlice"
+import { selectToken } from "../../redux/librarySlice";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
@@ -38,7 +38,7 @@ const PodcastPlayer = () => {
         { genres: queue[queueIndex].genres },
         {
           headers: {
-            token
+            token,
           },
         }
       );
@@ -56,6 +56,9 @@ const PodcastPlayer = () => {
       setIsPlaying(false);
     }
   }, [playButton, readyState, audioRef]);
+
+
+  
 
   // useEffect(() => {
   //   const _elapsed = Math.round(elapsed);
@@ -156,6 +159,7 @@ const PodcastPlayer = () => {
               }
             }}
             onCanPlay={(e) => {
+              console.log(readyState);
               setReadyState(true);
               setIsPlaying(true);
               dispatch(setIsLoading(false));

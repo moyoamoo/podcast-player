@@ -88,6 +88,8 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       return;
     }
 
+    console.log(data.data)
+
     if (storeDestination === "append") {
       //add to most listened
       store.dispatch(appendApiData(data.data.getPodcastSeries));
@@ -112,7 +114,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       store.dispatch(storeLibrary(data.data.getPodcastSeries));
     } else if (storeDestination === "appendTopPodcasts") {
       store.dispatch(addTopPodcasts(data.data.getPodcastSeries));
-    } else if ((storeDestination = "addNew")) {
+    } else if ((storeDestination === "addNew")) {
       store.dispatch(addNewEpisodes(data.data.getPodcastSeries));
     }
   } catch (error) {
