@@ -13,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import Library from "./Components/Library/Library";
 import Queue from "./Components/Queue/Queue";
 import Discover from "./Components/Discover/Discover";
-import PodcastPlayer from "./Components/FullPodcastPlayer/PodcastPlayer";
 import { getRandom } from "./utils";
 import ChangeAccountDetails from "./Components/Library/ChangeAccountDetails";
 
@@ -56,7 +55,6 @@ const App = () => {
         <Route path="discover" element={ token ?  <Discover /> : <Index/> } />
         <Route path="/episodes/:id" element={<Episodes />} />
         <Route path="/" element={<Index />} />
-        <Route path="playing" element={<PodcastPlayer />} />
         <Route
           path="update_account"
           element={token ? <ChangeAccountDetails/> : <Index />}

@@ -1,13 +1,10 @@
 import { IoMenuOutline, IoClose } from "react-icons/io5";
 
-const Hamburger = ({ setMenu, openMenu }) => {
-  const ToggleMenu = () => {
-    setMenu(!openMenu);
-  };
+const Hamburger = ({toggleMenu, openMenu}) => {
 
   return (
     <>
-      <button className="hamburger" onClick={ToggleMenu}>
+      <button className="hamburger" onClick={toggleMenu}>
         {openMenu ? <IoClose /> : <IoMenuOutline />}
       </button>
     </>
