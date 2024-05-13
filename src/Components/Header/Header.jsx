@@ -37,10 +37,14 @@ const Header = () => {
   return (
     <header>
       <div className="headerContainer">
-        <h1>LaunchPod</h1>
+      <button className="hamburger" onClick={ToggleMenu}>
+          {openMenu ? <IoClose /> : <IoMenuOutline />}
+        </button>
+       
       </div>
       <nav>
         <ul className={openMenu ? "showMenu" : "menu"}>
+       
           <li>
             <NavLink
               to="search"
@@ -119,9 +123,7 @@ const Header = () => {
             </li>
           )}
         </ul>
-        <button className="hamburger" onClick={ToggleMenu}>
-          {openMenu ? <IoClose /> : <IoMenuOutline />}
-        </button>
+
       </nav>
     </header>
   );
