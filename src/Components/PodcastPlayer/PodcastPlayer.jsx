@@ -58,16 +58,16 @@ const PodcastPlayer = () => {
   }, [playButton, readyState, audioRef]);
 
 
-  
 
-  // useEffect(() => {
-  //   const _elapsed = Math.round(elapsed);
-  //   if (_elapsed === previousElapsed) {
-  //     return;
-  //   }
-  //   updateServerDuration(_elapsed, audioRef.current.duration);
-  //   setPreviousElpased(_elapsed);
-  // }, [elapsed]);
+
+  useEffect(() => {
+    const _elapsed = Math.round(elapsed);
+    if (_elapsed === previousElapsed) {
+      return;
+    }
+    updateServerDuration(_elapsed, audioRef.current.duration);
+    setPreviousElpased(_elapsed);
+  }, [elapsed]);
 
   const getListenedData = async () => {
     try {
@@ -102,7 +102,6 @@ const PodcastPlayer = () => {
         {
           headers: {
             token,
-            unique: localStorage.getItem("unique"),
           },
         }
       );

@@ -7,6 +7,8 @@ import FormInput from "./FormInput";
 import { onFormSubmit } from "../../validation/formSubmit";
 import { onFormInput } from "../../validation/formInput";
 import { signUpSchema } from "../../validation/joiSchemas";
+import { addNewUser } from "../../apiRequests/Account/addNewUser";
+import { setMessage } from "../../redux/librarySlice";
 
 const SignUp = () => {
   const [userInput, setUserInput] = useState({});
@@ -26,7 +28,7 @@ const SignUp = () => {
             onFormInput(e, signUpSchema, userInput, setUserInput, setErrors);
           }}
           onSubmit={(e) => {
-            onFormSubmit(e, adddNewUser, func, userInput);
+            onFormSubmit(e, errors, addNewUser, userInput);
           }}
         >
           <FormInput

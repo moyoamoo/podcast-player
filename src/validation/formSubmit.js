@@ -4,10 +4,13 @@ import { setMessage } from "../redux/librarySlice";
 import { loginUser } from "../apiRequests/Account/loginUser";
 
 export const onFormSubmit = (e, errors, func, userInput) => {
-  console.log(func);
   e.preventDefault();
   if (typeof errors === "undefined") {
-    func(userInput);
+    try {
+      func(userInput);
+    } catch (e) {
+      console.log(e);
+    }
   } else {
     console.log(errors);
     store.dispatch(setMessage("Email and Password are Invalid! Try Again"));
