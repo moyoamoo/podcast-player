@@ -131,20 +131,3 @@ const addSearchTerm = async (searchTerm) => {
     console.log(e);
   }
 };
-
-export const getCountryCharts = async () => {
-  console.log("i ran");
-  try {
-    const { data } = await axios.get(
-      "http://localhost:6001/top_charts/country"
-    );
-    if (!data.data) {
-      return;
-    }
-    store.dispatch(
-      addTopChartsCountry(data.data.getTopChartsByCountry.podcastSeries)
-    );
-  } catch (e) {
-    console.log(e);
-  }
-};

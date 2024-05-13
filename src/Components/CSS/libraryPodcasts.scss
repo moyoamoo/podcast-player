@@ -103,6 +103,15 @@ h1 {
   }
 }
 
+.libraryValidation{
+  margin-top: 5rem;
+  p{
+    background-color: #fff;
+    color: #000;
+    text-transform: uppercase;
+    padding: 2rem;
+  }
+}
 //small screen
 @media screen and  (min-width: 480px) and (max-width: 767px) {
   .libraryPodcastContainer {

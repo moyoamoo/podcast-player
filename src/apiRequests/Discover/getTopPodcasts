@@ -1,0 +1,21 @@
+import axios from "axios";
+import { store } from "../../redux/store";
+import { setRankedPodcasts } from "../../redux/statsSlice";
+
+export const getTopPodcasts = async () => {
+  const state = store.getState();
+  const token = state.library.token;
+  try {
+    const { data } = await axios.get("http://localhost:6001/plays/get/5", {
+      headers: {
+        token: token,
+      },
+    });
+
+    if (data.data) {
+      store.dispatch(setRankedPodcasts(data.data));
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};

@@ -15,7 +15,7 @@ import {
   setMessage,
   selectSearchTerm,
   setSearchTerm,
-  selectToken
+  selectToken,
 } from "../../redux/librarySlice";
 import { getPodcastByUuid } from "../../apiRequest";
 
@@ -77,22 +77,29 @@ const Library = () => {
         <div className="libraryContainer">
           <div className="libraryHeader">
             <h2>My Library</h2>
-
-            <input
-              type="text"
-              placeholder="Search Library"
-              onInput={(e) => {
-                dispatch(setSearchTerm(e.target.value));
-              }}
-            />
-            <LibrarySortBySelect />
+            {podcasts.length ? (
+              <>
+                <input
+                  type="text"
+                  placeholder="Search Library"
+                  onInput={(e) => {
+                    dispatch(setSearchTerm(e.target.value));
+                  }}
+                />
+                <LibrarySortBySelect />
+              </>
+            ) : null }
           </div>
 
-          {podcasts.length && (
+          {podcasts.length ? (
             <div className="resultsContainer">
               <LibraryResults
                 libraryPodcasts={searchTerm ? newFiltered : podcasts}
               />
+            </div>
+          ) : (
+            <div className="libraryValidation">
+              <p>No Podcasts in Library</p>
             </div>
           )}
         </div>
