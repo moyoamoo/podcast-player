@@ -6,25 +6,33 @@ import PlayButton from "./PlayButton";
 
 const PlaybackControls = forwardRef(function PlaybackControls(
   { queue, queueIndex, setQueueIndex, readyState, isPlaying, setIsPlaying },
-  audioRef
+  audioRef,
+  setPodDuration
 ) {
+  const resetPlayer = () => {
+    audioRef.current.currentTime = 0;
+    setPodDuration(0);
+    setIsPlaying(false);
+  };
+
   const previousPod = () => {
     console.log(queueIndex);
     if (queueIndex > 0) {
       setQueueIndex(queueIndex - 1);
+      resetPlayer();
     } else {
       setQueueIndex(0);
-      console.log(queueIndex);
+      resetPlayer();
     }
   };
 
   const nextPod = () => {
     if (queueIndex < queue.length - 1) {
       setQueueIndex(queueIndex + 1);
-      console.log(queueIndex);
+      resetPlayer();
     } else {
       setQueueIndex(0);
-      console.log(queueIndex);
+      resetPlayer();
     }
   };
 

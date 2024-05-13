@@ -187,6 +187,7 @@ const PodcastPlayer = () => {
             podDuration={podDuration}
             progress={progress}
             remainingDuration={elapsed}
+            setPodDuration={setPodDuration}
           />
         </div>
       ) : null}

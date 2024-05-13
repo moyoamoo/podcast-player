@@ -15,14 +15,17 @@ const EpisodePlayBtn = ({ episodePod }) => {
   const dispatch = useDispatch();
   const [playing, setPlaying] = useState(false);
   useEffect(() => {
-    if (queue[0].uuid === episodePod.uuid) {
-      setPlaying(true);
+    if (!queue.length) {
+      return;
     }
-
-    if (queue[0].uuid != episodePod.uuid) {
-      setPlaying(false);
+    if (queue) {
+      if (queue[0].uuid === episodePod.uuid) {
+        setPlaying(true);
+      } else {
+        setPlaying(false);
+      }
     }
-  }, [queue]);
+  }, [queue, episodePod]);
 
   return (
     <>
