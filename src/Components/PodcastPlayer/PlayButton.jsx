@@ -15,10 +15,11 @@ const PlayButton = forwardRef(function PlayButton({ readyState }, audioRef) {
   const togglePlay = () => {
     if (isPlaying && readyState) {
       audioRef.current.pause();
+      dispatch(setIsPlaying(false));
     } else {
       audioRef.current.play();
+      dispatch(setIsPlaying(true));
     }
-    dispatch(setIsPlaying(!isPlaying));
   };
 
   return (

@@ -7,6 +7,7 @@ import {
   setIsLoading,
   selectIsPlaying,
   setIsPlaying,
+  setCurrentPlaying
 } from "../../redux/playerSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
@@ -44,28 +45,11 @@ const PodcastPlayer = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      dispatch(setIsPlaying(false));
+      // dispatch(setIsPlaying(false));
+      dispatch(setCurrentPlaying(queue[queueIndex]))
     }
   }, [audioRef]);
-  // useEffect(() => {
-  //   console.log(audioRef)
-  //   if (!audioRef.current) {
-  //     return;
-  //   } else {
-  //     resetPlayer();
-  //   }
-
-  // }, [queue[queueIndex].audioUrl]);
-
-  // useEffect(() => {
-  //   if (readyState && playButton && lastClick > 5000) {
-  //     audioRef.current.play();
-  //     dispatch(setIsPlaying(true));
-  //   } else if (readyState) {
-  //     audioRef.current.pause();
-  //     dispatch(setIsPlaying(false));
-  //   }
-  // }, [playButton, readyState, audioRef]);
+ 
 
   useEffect(() => {
     const _elapsed = Math.round(elapsed);
@@ -155,8 +139,9 @@ const PodcastPlayer = () => {
             onCanPlay={(e) => {
               console.log(readyState);
               setReadyState(true);
-              // setIsPlaying(true);
-              // dispatch(setIsLoading(false));
+              dispatch(setIsLoading(false));
+              console.log(readyState);
+
               setGenreDuration(Math.round(e.currentTarget.duration * 0.1));
             }}
             onDurationChange={(e) => {
