@@ -12,15 +12,11 @@ const PlaybackControls = forwardRef(function PlaybackControls(
     readyState,
     isPlaying,
     setIsPlaying,
-    setPodDuration,
+    resetPlayer
+
   },
   audioRef
 ) {
-  const resetPlayer = () => {
-    audioRef.current.currentTime = 0;
-    setPodDuration(0);
-    setIsPlaying(false);
-  };
 
   const previousPod = () => {
     console.log(queueIndex);

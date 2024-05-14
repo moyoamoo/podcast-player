@@ -8,8 +8,8 @@ export const updateServerDuration = async (
   queue,
   queueIndex
 ) => {
-  const state = store.useState();
-  const token = state.token.library;
+  const state = store.getState();
+  const token = state.library.token;
   try {
     const { data } = await axios.post(
       `${url}/listened/add`,

@@ -20,11 +20,9 @@ const EpisodePlayBtn = ({ episodePod }) => {
     }
     if (queue) {
       if (queue[0].uuid === episodePod.uuid) {
-        console.log(episodePod.uuid);
         setPlaying(true);
       } else {
         setPlaying(false);
-        console.log(episodePod.uuid);
       }
     }
   }, [queue, episodePod]);

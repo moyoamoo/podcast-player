@@ -10,13 +10,11 @@ const Controls = forwardRef(function Controls(
     queueIndex,
     setQueueIndex,
     readyState,
-    isPlaying,
-    setIsPlaying,
     podDuration,
     progress,
     remainingDuration,
     buffered,
-    setPodDuration
+    resetPlayer
   },
   audioRef
 ) {
@@ -28,10 +26,9 @@ const Controls = forwardRef(function Controls(
           queueIndex={queueIndex}
           setQueueIndex={setQueueIndex}
           readyState={readyState}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
+          
           ref={audioRef}
-          setPodDuration={setPodDuration}
+          resetPlayer={resetPlayer}
     
         />
       </div>
@@ -41,8 +38,7 @@ const Controls = forwardRef(function Controls(
           readyState={readyState}
           podDuration={podDuration}
           progress={progress}
-          isPlaying={isPlaying}
-          setIsPlaying={isPlaying}
+        
           remainingDuration={remainingDuration}
           buffered={buffered}
           queue={queue}

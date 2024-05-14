@@ -5,6 +5,8 @@ import {
   selectQueue,
   selectPlayButton,
   setIsLoading,
+  selectIsPlaying,
+  setIsPlaying,
 } from "../../redux/playerSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
@@ -14,8 +16,10 @@ import { selectToken } from "../../redux/librarySlice";
 import { url } from "../../config";
 import { addGenres } from "../../apiRequests/PodcastPlayer/addGenres";
 import { updateServerDuration } from "../../apiRequests/PodcastPlayer/updateServerDuration";
+import { useAudioContext } from "./AudioContext";
 
 const PodcastPlayer = () => {
+  const audioRef = useAudioContext();
   const queue = useSelector(selectQueue);
   const playButton = useSelector(selectPlayButton);
   const [buffered, setBuffered] = useState(0);
@@ -24,30 +28,56 @@ const PodcastPlayer = () => {
   const [podDuration, setPodDuration] = useState("00:00:00");
   const [elapsed, setElapsed] = useState(0);
   const [previousElapsed, setPreviousElpased] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const audioRef = useRef();
   const [genreDuration, setGenreDuration] = useState(0);
   const [lastClick, setLastClick] = useState(Date.now());
+  const isPlaying = useSelector(selectIsPlaying);
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
 
+  const resetPlayer = () => {
+    audioRef.current.currentTime = 0;
+    setPodDuration(0);
+    setBuffered(0);
+    dispatch(setIsPlaying(false));
+  };
+
   useEffect(() => {
-    if (readyState && playButton && lastClick > 5000) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else if (readyState) {
-      audioRef.current.pause();
-      setIsPlaying(false);
+    if (audioRef.current) {
+      dispatch(setIsPlaying(false));
     }
-  }, [playButton, readyState, audioRef]);
+  }, [audioRef]);
+  // useEffect(() => {
+  //   console.log(audioRef)
+  //   if (!audioRef.current) {
+  //     return;
+  //   } else {
+  //     resetPlayer();
+  //   }
+
+  // }, [queue[queueIndex].audioUrl]);
+
+  // useEffect(() => {
+  //   if (readyState && playButton && lastClick > 5000) {
+  //     audioRef.current.play();
+  //     dispatch(setIsPlaying(true));
+  //   } else if (readyState) {
+  //     audioRef.current.pause();
+  //     dispatch(setIsPlaying(false));
+  //   }
+  // }, [playButton, readyState, audioRef]);
 
   useEffect(() => {
     const _elapsed = Math.round(elapsed);
     if (_elapsed === previousElapsed) {
       return;
     }
-    updateServerDuration(_elapsed, audioRef.current.duration, queue, queueIndex);
+    updateServerDuration(
+      _elapsed,
+      audioRef.current.duration,
+      queue,
+      queueIndex
+    );
     setPreviousElpased(_elapsed);
   }, [elapsed]);
 
@@ -71,8 +101,6 @@ const PodcastPlayer = () => {
       console.log(e);
     }
   };
- 
-
 
   const setProgressDuration = () => {
     if (audioRef.current.currentTime) {
@@ -127,8 +155,8 @@ const PodcastPlayer = () => {
             onCanPlay={(e) => {
               console.log(readyState);
               setReadyState(true);
-              setIsPlaying(true);
-              dispatch(setIsLoading(false));
+              // setIsPlaying(true);
+              // dispatch(setIsLoading(false));
               setGenreDuration(Math.round(e.currentTarget.duration * 0.1));
             }}
             onDurationChange={(e) => {
@@ -152,12 +180,10 @@ const PodcastPlayer = () => {
             queueIndex={queueIndex}
             setQueueIndex={setQueueIndex}
             readyState={readyState}
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
             podDuration={podDuration}
             progress={progress}
             remainingDuration={elapsed}
-            setPodDuration={setPodDuration}
+            resetPlayer={resetPlayer}
           />
         </div>
       ) : null}
