@@ -1,13 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import LibraryResults from "./LibraryResults";
 import LibrarySortBySelect from "./LibrarySortBySelect";
 import axios from "axios";
-import {
-  clearApiData,
-  selectPodcastsSeries,
-  selectLibrary,
-  addToLibrary,
-} from "../../redux/podcastSlice";
+import { clearApiData, selectPodcastsSeries } from "../../redux/podcastSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -18,8 +13,10 @@ import {
   selectToken,
 } from "../../redux/librarySlice";
 import { getPodcastByUuid } from "../../apiRequest";
-
 import "../CSS/libraryPodcasts.scss";
+import None from "./None";
+import { url } from "../../config";
+
 
 const Library = () => {
   const dispatch = useDispatch();
@@ -32,7 +29,7 @@ const Library = () => {
   //gets uuids from database
   const getLibraryUuids = useCallback(async () => {
     try {
-      const { data } = await axios.get("http://localhost:6001/library/get", {
+      const { data } = await axios.get(`${url}/library/get`, {
         headers: {
           token: token,
         },
@@ -88,7 +85,7 @@ const Library = () => {
                 />
                 <LibrarySortBySelect />
               </>
-            ) : null }
+            ) : null}
           </div>
 
           {podcasts.length ? (
@@ -97,11 +94,7 @@ const Library = () => {
                 libraryPodcasts={searchTerm ? newFiltered : podcasts}
               />
             </div>
-          ) : (
-            <div className="libraryValidation">
-              <p>No Podcasts in Library</p>
-            </div>
-          )}
+          ) : <None text="No podcasts in Library"/>}
         </div>
       </main>
     </>

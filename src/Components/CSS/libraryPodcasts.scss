@@ -5,6 +5,7 @@ h1 {
 
 .libraryHeader {
   width: 100vw;
+  height: 30vh;
   display: flex;
   font-family: "BDOGrotesk", Courier, monospace;
   text-transform: uppercase;
@@ -103,13 +104,16 @@ h1 {
   }
 }
 
-.libraryValidation{
+.noneValidation{
   margin-top: 5rem;
+  width: 70%;
+
   p{
     background-color: #fff;
     color: #000;
     text-transform: uppercase;
     padding: 2rem;
+    text-align: center;
   }
 }
 //small screen

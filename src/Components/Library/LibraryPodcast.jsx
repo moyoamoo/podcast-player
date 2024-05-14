@@ -9,6 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { selectToken } from "../../redux/librarySlice";
+import { url } from "../../config";
 
 const LibraryPodcast = ({ podcast }) => {
   const dispatch = useDispatch();
@@ -16,15 +17,12 @@ const LibraryPodcast = ({ podcast }) => {
   //delete podcast from library
   const deleteFromLibrary = async (uuid) => {
     try {
-      const { data } = await axios.delete(
-        "http://localhost:6001/library/delete",
-        {
-          headers: {
-            token,
-            uuid,
-          },
-        }
-      );
+      const { data } = await axios.delete(`${url}/library/delete`, {
+        headers: {
+          token,
+          uuid,
+        },
+      });
       if (data.status) {
         dispatch(deletefromLibrary(uuid));
       }

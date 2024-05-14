@@ -12,6 +12,7 @@ import {
   addNewEpisodes,
 } from "./redux/podcastSlice";
 import { setMessage, selectToken } from "./redux/librarySlice";
+import { url } from "./config";
 
 const state = store.getState();
 const token = state.library.token;
@@ -37,7 +38,7 @@ export const getPodcastData = async (
 
   console.log(searchTerm, page, order, storeDestination);
   try {
-    const { data } = await axios.get("http://localhost:6001/search", {
+    const { data } = await axios.get(`${url}/search`, {
       headers: {
         searchTerm: searchTerm,
         page: page,
@@ -74,7 +75,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
   }
 
   try {
-    const { data } = await axios.get("http://localhost:6001/episodes", {
+    const { data } = await axios.get(`${url}/episodes`, {
       headers: {
         uuid: uuid,
         order: order,
@@ -87,7 +88,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       return;
     }
 
-    console.log(data.data)
+    console.log(data.data);
 
     if (storeDestination === "append") {
       //add to most listened
@@ -113,7 +114,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
       store.dispatch(storeLibrary(data.data.getPodcastSeries));
     } else if (storeDestination === "appendTopPodcasts") {
       store.dispatch(addTopPodcasts(data.data.getPodcastSeries));
-    } else if ((storeDestination === "addNew")) {
+    } else if (storeDestination === "addNew") {
       store.dispatch(addNewEpisodes(data.data.getPodcastSeries));
     }
   } catch (error) {
@@ -123,7 +124,7 @@ export const getPodcastByUuid = async (uuid, order, page, storeDestination) => {
 
 const addSearchTerm = async (searchTerm) => {
   try {
-    const { data } = await axios.get("http://localhost:6001/search_term/add", {
+    const { data } = await axios.get(`${url}/search_term/add`, {
       headers: { token: token, searchTerm: searchTerm },
     });
   } catch (e) {

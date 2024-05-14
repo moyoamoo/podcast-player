@@ -11,6 +11,7 @@ import Controls from "./Controls";
 import axios from "axios";
 import { setListenData } from "../../redux/statsSlice";
 import { selectToken } from "../../redux/librarySlice";
+import { url } from "../../config";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
@@ -34,7 +35,7 @@ const PodcastPlayer = () => {
     console.log("i ran");
     try {
       const { data } = await axios.post(
-        "http://localhost:6001/genres/add",
+        `${url}/genres/add`,
         { genres: queue[queueIndex].genres },
         {
           headers: {
@@ -71,7 +72,7 @@ const PodcastPlayer = () => {
 
   const getListenedData = async () => {
     try {
-      const { data } = await axios.get("http://localhost:6001/listened/get", {
+      const { data } = await axios.get(`${url}/listened/get`, {
         headers: {
           episodeUuid: queue[queueIndex].uuid,
         },
@@ -92,7 +93,7 @@ const PodcastPlayer = () => {
   const updateServerDuration = async (playbackPosition, playbackDuration) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:6001/listened/add",
+        `${url}/listened/add`,
         {
           playbackPosition,
           playbackDuration,

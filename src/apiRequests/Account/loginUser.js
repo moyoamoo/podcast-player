@@ -6,10 +6,11 @@ import {
   setEmail,
   setWindow,
 } from "../../redux/librarySlice";
+import { url } from "../../config";
 
 export const loginUser = async (userInput) => {
   try {
-    const { data } = await axios.post("http://localhost:6001/login", userInput);
+    const { data } = await axios.post(`${url}/login`, userInput);
     console.log(data);
     if (data.status) {
       store.dispatch(setMessage("Login sucessful"));

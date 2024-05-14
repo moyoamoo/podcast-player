@@ -7,7 +7,7 @@ export const logout = async () => {
   const token = state.library.token;
 
   try {
-    const { data } = await axios.delete("http://localhost:6001/logout", {
+    const { data } = await axios.delete(`${url}/logout`, {
       headers: {
         token: token,
       },

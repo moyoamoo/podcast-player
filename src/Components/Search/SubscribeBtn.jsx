@@ -7,6 +7,7 @@ import {
 
 } from "../../redux/podcastSlice";
 import axios from "axios";
+import { url } from "../../config";
 
 const SubscribeBtn = ({ podcast }) => {
   const token = useSelector(selectToken);
@@ -18,7 +19,7 @@ const SubscribeBtn = ({ podcast }) => {
   const addPodcast = async (uuid) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:6001/library/add`,
+        `${url}/library/add`,
         { uuid: uuid },
         {
           headers: { token },

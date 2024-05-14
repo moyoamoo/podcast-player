@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header>
       <div className="headerContainer">
-        <h1>LaunchPod</h1>
+        <h1>PodLaunch</h1>
       </div>
       <Nav openMenu={openMenu} setOpenMenu={setOpenMenu} />
 

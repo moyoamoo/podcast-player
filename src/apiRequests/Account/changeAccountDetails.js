@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "../../redux/store";
 import { setMessage, setEmail } from "../../redux/librarySlice";
+import { url } from "../../config";
 
 export const changeAccDetails = async (userInput) => {
   const state = store.getState();
@@ -9,7 +10,7 @@ export const changeAccDetails = async (userInput) => {
 
   try {
     const { data } = await axios.patch(
-      "http://localhost:6001/user/update",
+      `${url}/user/update`,
       userInput,
       {
         headers: {

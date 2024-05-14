@@ -6,11 +6,12 @@ import {
   setEmail,
   setWindow,
 } from "../../redux/librarySlice";
+import { url } from "../../config";
 
 export const addNewUser = async (userInput) => {
   try {
     const { data } = await axios.post(
-      "http://localhost:6001/user/add",
+      `${url}/user/add`,
       userInput
     );
     console.log(data);

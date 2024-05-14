@@ -1,13 +1,14 @@
 import { store } from "../../redux/store";
 import { setMessage, setToken } from "../../redux/librarySlice";
 import axios from "axios";
+import { url } from "../../config";
 
 export const deleteAccount = async () => {
   const state = store.getState();
   const token = state.library.token;
   
   try {
-    const { data } = await axios.delete("http://localhost:6001/user/delete", {
+    const { data } = await axios.delete(`${url}/user/delete`, {
       headers: {
         token: token,
       },
