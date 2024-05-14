@@ -12,6 +12,8 @@ import axios from "axios";
 import { setListenData } from "../../redux/statsSlice";
 import { selectToken } from "../../redux/librarySlice";
 import { url } from "../../config";
+import { addGenres } from "../../apiRequests/PodcastPlayer/addGenres";
+import { updateServerDuration } from "../../apiRequests/PodcastPlayer/updateServerDuration";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
@@ -30,24 +32,6 @@ const PodcastPlayer = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
 
-  //add genres to database
-  const addGenres = async () => {
-    console.log("i ran");
-    try {
-      const { data } = await axios.post(
-        `${url}/genres/add`,
-        { genres: queue[queueIndex].genres },
-        {
-          headers: {
-            token,
-          },
-        }
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
     if (readyState && playButton && lastClick > 5000) {
       audioRef.current.play();
@@ -58,15 +42,12 @@ const PodcastPlayer = () => {
     }
   }, [playButton, readyState, audioRef]);
 
-
-
-
   useEffect(() => {
     const _elapsed = Math.round(elapsed);
     if (_elapsed === previousElapsed) {
       return;
     }
-    updateServerDuration(_elapsed, audioRef.current.duration);
+    updateServerDuration(_elapsed, audioRef.current.duration, queue, queueIndex);
     setPreviousElpased(_elapsed);
   }, [elapsed]);
 
@@ -90,26 +71,8 @@ const PodcastPlayer = () => {
       console.log(e);
     }
   };
-  const updateServerDuration = async (playbackPosition, playbackDuration) => {
-    try {
-      const { data } = await axios.post(
-        `${url}/listened/add`,
-        {
-          playbackPosition,
-          playbackDuration,
-          episodeUuid: queue[queueIndex].uuid,
-          podcastUuid: queue[queueIndex].podcastUuid,
-        },
-        {
-          headers: {
-            token,
-          },
-        }
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
+ 
+
 
   const setProgressDuration = () => {
     if (audioRef.current.currentTime) {
@@ -153,8 +116,11 @@ const PodcastPlayer = () => {
               setElapsed(e.currentTarget.currentTime);
               setProgressDuration();
 
-              if (Math.round(e.currentTarget.currentTime) === genreDuration) {
-                addGenres();
+              if (
+                Math.round(e.currentTarget.currentTime) === genreDuration &&
+                token
+              ) {
+                addGenres(queue, queueIndex);
                 return;
               }
             }}
