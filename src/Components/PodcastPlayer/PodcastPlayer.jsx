@@ -13,8 +13,10 @@ import axios from "axios";
 import { setListenData } from "../../redux/statsSlice";
 import { selectToken } from "../../redux/librarySlice";
 import { url } from "../../config";
+import { useAudioContext } from "./AudioContext";
 
 const PodcastPlayer = () => {
+  const audioRef = useAudioContext();
   const queue = useSelector(selectQueue);
   let [queueIndex, setQueueIndex] = useState(0);
   const playButton = useSelector(selectPlayButton);
@@ -25,7 +27,6 @@ const PodcastPlayer = () => {
   const [previousElapsed, setPreviousElpased] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const audioRef = useRef();
   const [genreDuration, setGenreDuration] = useState(0);
   const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
