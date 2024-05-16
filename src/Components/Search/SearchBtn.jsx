@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { getPodcastData } from "../../apiRequest";
+import { getPodcastData } from "../../apiRequests/PodcastData/getPodcastData";
 import { setIsLoading } from "../../redux/podcastSlice";
 
 const SearchBtn = ({ searchTerm }) => {

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Episode from "../Episode/Episode";
 import "../CSS/episodes.scss";
 import ShowMoreBtn from "./ShowMoreBtn";
-import { getPodcastByUuid } from "../../apiRequest";
+import { getPodcastByUuid } from "../../apiRequests/PodcastData/getPodcastByUuid";
 import { useSelector } from "react-redux";
 import { selectPodcast } from "../../redux/podcastSlice";
 import { formatGenres } from "../utils";

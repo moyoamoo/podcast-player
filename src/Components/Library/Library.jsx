@@ -3,6 +3,7 @@ import LibraryResults from "./LibraryResults";
 import LibrarySortBySelect from "./LibrarySortBySelect";
 import axios from "axios";
 import { clearApiData, selectPodcastsSeries } from "../../redux/podcastSlice";
+import { getPodcastByUuid } from "../../apiRequests/PodcastData/getPodcastByUuid";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -12,7 +13,6 @@ import {
   setSearchTerm,
   selectToken,
 } from "../../redux/librarySlice";
-import { getPodcastByUuid } from "../../apiRequest";
 import "../CSS/libraryPodcasts.scss";
 import None from "./None";
 import { url } from "../../config";

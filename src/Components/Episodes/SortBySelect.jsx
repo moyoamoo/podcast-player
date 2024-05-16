@@ -1,4 +1,4 @@
-import { getPodcastByUuid } from "../../apiRequest";
+import { getPodcastByUuid } from "../../apiRequests/PodcastData/getPodcastByUuid";
 import { setOrder } from "../../redux/podcastSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";

@@ -11,7 +11,7 @@ import {
   selectSearchTerm,
   setSearchTerm,
 } from "../../redux/podcastSlice";
-import { getPodcastData } from "../../apiRequest";
+import { getPodcastData } from "../../apiRequests/PodcastData/getPodcastData";
 import Spinner from "../Spinner";
 import { setMessage } from "../../redux/librarySlice";
 

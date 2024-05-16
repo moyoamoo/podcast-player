@@ -3,7 +3,7 @@ import { selectRankedPodcasts } from "../../redux/statsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPodcastsSeries } from "../../redux/podcastSlice";
 import { clearApiData } from "../../redux/podcastSlice";
-import { getPodcastByUuid } from "../../apiRequest";
+import { getPodcastByUuid } from "../../apiRequests/PodcastData/getPodcastByUuid";
 import TopPodcast from "./TopPodcast";
 
 const TopPodcasts = () => {

@@ -1,5 +1,4 @@
 import React from "react";
-import { getPodcastData } from "../../apiRequest";
 import { useState } from "react";
 import "../CSS/SearchBar.scss";
 import SearchBtn from "./SearchBtn";
