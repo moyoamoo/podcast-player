@@ -5,6 +5,7 @@ import {
   selectQueue,
   selectPlayButton,
   setIsLoading,
+  setCurrentlyPlaying,
 } from "../../redux/playerSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
@@ -15,9 +16,9 @@ import { url } from "../../config";
 
 const PodcastPlayer = () => {
   const queue = useSelector(selectQueue);
+  let [queueIndex, setQueueIndex] = useState(0);
   const playButton = useSelector(selectPlayButton);
   const [buffered, setBuffered] = useState(0);
-  let [queueIndex, setQueueIndex] = useState(0);
   const [readyState, setReadyState] = useState(false);
   const [podDuration, setPodDuration] = useState("00:00:00");
   const [elapsed, setElapsed] = useState(0);
@@ -57,9 +58,6 @@ const PodcastPlayer = () => {
       setIsPlaying(false);
     }
   }, [playButton, readyState, audioRef]);
-
-
-
 
   useEffect(() => {
     const _elapsed = Math.round(elapsed);
@@ -177,6 +175,7 @@ const PodcastPlayer = () => {
             }}
             onPlay={() => {
               getListenedData();
+              dispatch(setCurrentlyPlaying(queue[queueIndex].uuid));
             }}
           ></audio>
           <Controls

@@ -50,12 +50,13 @@
   transition: transform 0.2s;
   top: 0;
   right: 1rem;
-  z-index: 1;
+  z-index: 5;
   background: black;
   color: white;
   list-style: none;
   padding-top: 4rem;
   width: 100%;
+  height: 100vh;
 }
 
 .showMenu {
@@ -64,19 +65,19 @@
   transition: transform 0.2s;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 5;
   background: black;
   color: white;
   list-style: none;
   padding-top: 4rem;
-  height: 70vh;
+  height: 100vh;
   width: 100%;
 }
 
 nav {
   ul {
     li {
-      padding: 5rem;
+      padding: 2rem;
       width: 100%;
 
       &:hover {

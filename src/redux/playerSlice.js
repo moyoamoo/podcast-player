@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { saveStore, getStore } from "./diskUtils";
-import { isWithinInterval } from "date-fns";
 
 const diskData = getStore("player");
 
@@ -9,6 +8,7 @@ const defaultState = {
   status: "idle",
   playButton: false,
   queue: [],
+  currentlyPlaying: "",
 };
 
 const initialState = diskData ? diskData : defaultState;
@@ -52,6 +52,11 @@ export const playerSlice = createSlice({
       state.isPlaying = payload;
       saveStore("player", state);
     },
+
+    setCurrentlyPlaying: (state, { payload }) => {
+      state.currentlyPlaying = { payload };
+      saveStore("player", state);
+    },
   },
 });
 
@@ -62,10 +67,13 @@ export const {
   setPlayButton,
   setIsLoading,
   setIsPlaying,
+  setCurrentlyPlaying,
 } = playerSlice.actions;
 
 export const selectQueue = (state) => state.player.queue;
 export const selectIsLoading = (state) => state.player.isLoading;
 export const selectPlayButton = (state) => state.player.playButton;
 export const selectIsPlaying = (state) => state.player.isPlaying;
+export const selectCurrentlyPlaying = (state) => state.player.currentlyPlaying;
+
 export default playerSlice.reducer;
