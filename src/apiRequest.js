@@ -11,12 +11,11 @@ import {
   addTopPodcasts,
   addNewEpisodes,
 } from "./redux/podcastSlice";
-import { setMessage, selectToken } from "./redux/librarySlice";
+import { setMessage } from "./redux/librarySlice";
 import { url } from "./config";
 
 const state = store.getState();
 const token = state.library.token;
-console.log(token);
 
 ///search request
 export const getPodcastData = async (
@@ -25,19 +24,22 @@ export const getPodcastData = async (
   page,
   storeDestination
 ) => {
+
+  //set sort order
   if (order === "1") {
     order = "OLDEST";
   } else {
     order = "LATEST";
   }
 
+  //check search term is not empty 
   if (typeof searchTerm === "undefined") {
     store.dispatch(setMessage("Please enter a search term"));
     return;
   }
 
-  console.log(searchTerm, page, order, storeDestination);
   try {
+    //api call
     const { data } = await axios.get(`${url}/search`, {
       headers: {
         searchTerm: searchTerm,
@@ -45,12 +47,14 @@ export const getPodcastData = async (
         order: order,
       },
     });
+
+    //if there is no data 
     if (!data.data) {
-      console.log("undefined data");
-      store.dispatch(setMessage(`No results for ${searchTerm}, try again!`));
+      store.dispatch(setMessage(`Search Results Unavailable`));
       return;
     }
 
+    //if there are no search results 
     if (data.data.searchForTerm.podcastSeries.length === 0) {
       store.dispatch(
         setMessage(`No results found for ${searchTerm}, try again!`)
@@ -58,18 +62,25 @@ export const getPodcastData = async (
       return;
     }
 
+    //if logged in save results 
     if (token) {
       addSearchTerm(searchTerm);
     }
 
-    if (storeDestination === "search") {
-      store.dispatch(storeApiData(data.data));
-    } else if (storeDestination === "showMore") {
-      store.dispatch(appendApiDataSearch(data.data));
+    //place in store 
+    switch (storeDestination) {
+      case "search":
+        store.dispatch(storeApiData(data.data));
+        break;
+      case "search":
+        store.dispatch(appendApiDataSearch(data.data));
+        break;
+
+      default:
+        break;
     }
   } catch (error) {
     store.dispatch(setMessage("Podcast Search Unavailable"));
-
   }
 };
 
