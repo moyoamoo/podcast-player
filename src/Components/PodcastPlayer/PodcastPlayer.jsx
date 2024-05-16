@@ -14,6 +14,8 @@ import { setListenData } from "../../redux/statsSlice";
 import { selectToken } from "../../redux/librarySlice";
 import { url } from "../../config";
 import { useAudioContext } from "./AudioContext";
+import { addGenres } from "../../apiRequests/Player/addGenres";
+import { updateServerDuration } from "../../apiRequests/Player/updateServerDuration";
 
 const PodcastPlayer = () => {
   const audioRef = useAudioContext();
@@ -33,23 +35,7 @@ const PodcastPlayer = () => {
   const token = useSelector(selectToken);
 
   //add genres to database
-  const addGenres = async () => {
-    console.log("i ran");
-    try {
-      const { data } = await axios.post(
-        `${url}/genres/add`,
-        { genres: queue[queueIndex].genres },
-        {
-          headers: {
-            token,
-          },
-        }
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+ 
   useEffect(() => {
     if (readyState && playButton && lastClick > 5000) {
       audioRef.current.play();
@@ -65,7 +51,7 @@ const PodcastPlayer = () => {
     if (_elapsed === previousElapsed) {
       return;
     }
-    updateServerDuration(_elapsed, audioRef.current.duration);
+    updateServerDuration(_elapsed, audioRef.current.duration, queue, queueIndex);
     setPreviousElpased(_elapsed);
   }, [elapsed]);
 
@@ -85,26 +71,6 @@ const PodcastPlayer = () => {
           })
         );
       }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const updateServerDuration = async (playbackPosition, playbackDuration) => {
-    try {
-      const { data } = await axios.post(
-        `${url}/listened/add`,
-        {
-          playbackPosition,
-          playbackDuration,
-          episodeUuid: queue[queueIndex].uuid,
-          podcastUuid: queue[queueIndex].podcastUuid,
-        },
-        {
-          headers: {
-            token,
-          },
-        }
-      );
     } catch (e) {
       console.log(e);
     }
@@ -153,7 +119,7 @@ const PodcastPlayer = () => {
               setProgressDuration();
 
               if (Math.round(e.currentTarget.currentTime) === genreDuration) {
-                addGenres();
+                addGenres(queue, queueIndex);
                 return;
               }
             }}
