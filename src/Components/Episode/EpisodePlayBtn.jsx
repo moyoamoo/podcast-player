@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEpisode, selectIsLoading } from "../../redux/playerSlice";
+import { FaPause } from "react-icons/fa6";
+
+import {
+  getEpisode,
+  selectCurrentlyPlaying,
+  selectIsLoading,
+  selectIsPlaying,
+  setIsPlaying,
+} from "../../redux/playerSlice";
 import { FaPlay } from "react-icons/fa6";
 import {
   selectQueue,
@@ -9,54 +17,43 @@ import {
 } from "../../redux/playerSlice";
 import playingGif from "../CSS/assets/playing.gif";
 
+import { useAudioContext } from "../PodcastPlayer/AudioContext";
+
 const EpisodePlayBtn = ({ episodePod }) => {
   const queue = useSelector(selectQueue);
-  const isLoading = useSelector(selectIsLoading);
+  const [isLoading, setIsLoading] = useState();
   const dispatch = useDispatch();
-  const [playing, setPlaying] = useState(false);
+  const audioRef = useAudioContext();
+  const isPlaying = useSelector(selectIsPlaying);
+  const [clicked, setClicked] = useState(false);
+  const currentlyPlaying = useSelector(selectCurrentlyPlaying);
+
   useEffect(() => {
     if (!queue.length) {
       return;
     }
-    if (queue) {
-      if (queue[0].uuid === episodePod.uuid) {
-        console.log(episodePod.uuid);
-        setPlaying(true);
-      } else {
-        setPlaying(false);
-        console.log(episodePod.uuid);
-      }
-    }
-  }, [queue, episodePod]);
 
+    if (currentlyPlaying === episodePod.uuid && !audioRef.current.paused) {
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(false);
+    }
+  }, [queue]);
   return (
     <>
-    {!isLoading && <button></button>}
-      {/* {!isLoading ? (
+      
         <button
+          disabled={isPlaying ? true : false}
           onClick={() => {
-            if (queue.length === 0) {
-              dispatch(getEpisode(episodePod));
-              dispatch(setPlayButton(true));
-              dispatch(setIsLoading(true));
-            }
-            if (queue.length > 0) {
-              if (queue[0].uuid === episodePod.uuid) {
-                return;
-              }
-              dispatch(getEpisode(episodePod));
-              dispatch(setPlayButton(true));
-              dispatch(setIsLoading(true));
-            }
+            dispatch(getEpisode(episodePod));
+            audioRef.current.play();
+            console.log(audioRef.current.paused);
+            console.log(isPlaying);
           }}
         >
-          {playing ? <img src={playingGif} /> : <FaPlay />}
-        </button>
-      ) : (
-        <button>
           <FaPlay />
         </button>
-      )} */}
+
     </>
   );
 };

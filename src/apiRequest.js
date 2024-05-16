@@ -47,6 +47,14 @@ export const getPodcastData = async (
     });
     if (!data.data) {
       console.log("undefined data");
+      store.dispatch(setMessage(`No results for ${searchTerm}, try again!`));
+      return;
+    }
+
+    if (data.data.searchForTerm.podcastSeries.length === 0) {
+      store.dispatch(
+        setMessage(`No results found for ${searchTerm}, try again!`)
+      );
       return;
     }
 
@@ -59,10 +67,9 @@ export const getPodcastData = async (
     } else if (storeDestination === "showMore") {
       store.dispatch(appendApiDataSearch(data.data));
     }
-
-    // localStorage.setItem("getPodcastData", JSON.stringify(data.data));
   } catch (error) {
-    console.log(error);
+    store.dispatch(setMessage("Podcast Search Unavailable"));
+
   }
 };
 

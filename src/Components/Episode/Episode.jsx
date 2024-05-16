@@ -5,6 +5,7 @@ import EpisodePlayBtn from "./EpisodePlayBtn";
 import EpisodeQueueBtn from "./EpisodeQueueBtn";
 import ShowDescriptionBtn from "./ShowDescriptionBtn";
 import EpisodeDescription from "./EpisodeDescription";
+import { AudioContextProvider } from "../PodcastPlayer/AudioContext";
 
 const Episode = ({ episode, podcast }) => {
   const [showDescription, setDescription] = useState(false);
@@ -28,7 +29,10 @@ const Episode = ({ episode, podcast }) => {
           <EpisodeDate date={episode.datePublished} />
           <EpisodeName name={episode.name} />
         </div>
-        <EpisodePlayBtn episodePod={episodePod} />
+        <AudioContextProvider>
+          {" "}
+          <EpisodePlayBtn episodePod={episodePod} />
+        </AudioContextProvider>
       </div>
       <div className="btnContainer">
         <ShowDescriptionBtn

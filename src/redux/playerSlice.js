@@ -9,6 +9,7 @@ const defaultState = {
   playButton: false,
   queue: [],
   currentlyPlaying: "",
+  isPlaying: false,
 };
 
 const initialState = diskData ? diskData : defaultState;
@@ -48,13 +49,13 @@ export const playerSlice = createSlice({
       saveStore("player", state);
     },
 
-    setIsPlaying: (state, { payload }) => {
-      state.isPlaying = payload;
+    setCurrentlyPlaying: (state, { payload }) => {
+      state.currentlyPlaying = { payload };
       saveStore("player", state);
     },
 
-    setCurrentlyPlaying: (state, { payload }) => {
-      state.currentlyPlaying = { payload };
+    setIsPlaying: (state, { payload }) => {
+      state.isPlaying = { payload };
       saveStore("player", state);
     },
   },

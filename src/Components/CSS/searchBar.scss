@@ -24,6 +24,7 @@ main {
   font-family: "BDOGrotesk", Courier, monospace;
   font-weight: bold;
   text-transform: uppercase;
+  margin-bottom: 2rem;
 
   &:hover {
     background-color: #666a86;
@@ -34,8 +35,8 @@ main {
 
 .searchContainer {
   display: flex;
-  width: 100vw;
-  height: 25vh;
+  width: 100%;
+  height: 40%;
   flex-direction: column;
   align-items: center;
   align-content: center;
@@ -56,14 +57,14 @@ main {
 }
 
 input[type="text"] {
-  width: 80%;
-  font-size: 1rem;
+  width: 85%;
+  font-size: .7rem;
   background-color: #fff;
   border: none;
   border-bottom: 5px solid #fff;
   margin-bottom: 5rem;
   margin-top: 6rem;
-  padding: 2rem;
+  padding: 1rem;
   font-size: 2rem;
   text-align: center;
   font-family: "BDOGrotesk", Courier, monospace;

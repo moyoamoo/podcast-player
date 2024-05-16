@@ -36,15 +36,15 @@ const PodcastPlayer = () => {
 
   //add genres to database
  
-  useEffect(() => {
-    if (readyState && playButton && lastClick > 5000) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else if (readyState) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    }
-  }, [playButton, readyState, audioRef]);
+  // useEffect(() => {
+  //   if (readyState && playButton && lastClick > 5000) {
+  //     audioRef.current.play();
+  //     setIsPlaying(true);
+  //   } else if (readyState) {
+  //     audioRef.current.pause();
+  //     setIsPlaying(false);
+  //   }
+  // }, [playButton, readyState, audioRef]);
 
   useEffect(() => {
     const _elapsed = Math.round(elapsed);
@@ -124,9 +124,7 @@ const PodcastPlayer = () => {
               }
             }}
             onCanPlay={(e) => {
-              console.log(readyState);
               setReadyState(true);
-              setIsPlaying(true);
               dispatch(setIsLoading(false));
               setGenreDuration(Math.round(e.currentTarget.duration * 0.1));
             }}
