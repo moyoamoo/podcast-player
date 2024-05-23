@@ -7,6 +7,7 @@ import {
   selectCurrentlyPlaying,
   selectIsLoading,
   selectIsPlaying,
+  setEpisodeReadyState,
   setIsClicked,
   setIsPlaying,
 } from "../../redux/playerSlice";
@@ -53,33 +54,29 @@ const EpisodePlayBtn = ({ episodePod }) => {
   const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   const audioRef = useAudioContext();
-  const isPlaying = useSelector(selectIsPlaying);
+
   const [clicked, setClicked] = useState(false);
   const currentPlaying = useSelector(selectCurrentlyPlaying);
-
-  // useEffect(() => {
-  //   if (!queue.length) {
-  //     return;
-  //   }
-
-  //   if (clicked) {
-  //     console.log(currentPlaying);
-  //     if (currentPlaying.uuid === episodePod.uuid && !isLoading) {
-  //       audioRef.current.play();
-  //       dispatch(setIsPlaying(true));
-  //       setClicked(false);
-  //       console.log(audioRef.current.play());
-  //     }
-  //   }
-  // }, [queue, clicked]);
+  const [lastClick, setLastClick] = useState(Date.now());
 
   return (
     <>
       <button
         onClick={() => {
           dispatch(getEpisode(episodePod));
-       
-          audioRef.current.play();
+          let playPromise = audioRef.current.play();
+
+          if (playPromise !== undefined && lastClick > 5000) {
+            playPromise
+              .then((_) => {
+                audioRef.current.play();
+                // dispatch(setIsPlaying(true));
+                // dispatch(setEpisodeReadyState(audioRef.current.readyState));
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
         }}
       >
         <FaPlay />

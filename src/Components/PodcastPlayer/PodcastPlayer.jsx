@@ -8,6 +8,7 @@ import {
   setCurrentlyPlaying,
   selectIsClicked,
   setIsClicked,
+  setEpisodeReadyState,
 } from "../../redux/playerSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
@@ -39,19 +40,14 @@ const PodcastPlayer = () => {
 
 
   useEffect(() => {
-    console.log(isClicked)
-    if (isClicked &&  lastClick > 5000) {
-        audioRef.current.play();
-        setIsPlaying(true);
-      } else if (readyState) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      }
-      console.log(isClicked)
-
-  }, [audioRef, isClicked]);
-
-  
+    if (readyState && playButton && lastClick > 5000) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    } else if (readyState) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [playButton, readyState, audioRef]);
 
   useEffect(() => {
     if (!queue) {
@@ -81,7 +77,6 @@ const PodcastPlayer = () => {
     );
     setPreviousElpased(_elapsed);
   }, [elapsed]);
-
 
   const getListenedData = async () => {
     try {
@@ -119,7 +114,7 @@ const PodcastPlayer = () => {
           <PodcastPlayerDescription queue={queue} queueIndex={queueIndex} />
           <audio
             src={queue[queueIndex].audioUrl}
-            preload="metadata"
+            preload="auto"
             ref={audioRef}
             onProgress={(e) => {
               if (e.currentTarget.duration > 0) {
@@ -153,6 +148,7 @@ const PodcastPlayer = () => {
             onCanPlay={(e) => {
               setReadyState(true);
               dispatch(setIsLoading(false));
+              dispatch(setEpisodeReadyState(e.currentTarget.readyState))
               setGenreDuration(Math.round(e.currentTarget.duration * 0.1));
             }}
             onDurationChange={(e) => {
