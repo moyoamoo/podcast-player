@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     img {
-      width: 60%;
+      width: 40%;
       border-radius: 2rem;
     }
   }
@@ -84,8 +84,8 @@
   margin: 2rem;
   padding: 2.3rem;
   color: #fff;
-  border-radius: 2rem;
   border-radius: 1rem;
+  height: 15%;
   // border: 2px solid hsla(224, 85%, 76%, 1);
 
   font-family: "BDOGrotesk", Courier, monospace;
@@ -137,6 +137,7 @@
 }
 .genre {
   text-transform: capitalize;
+  font-size: 1.3rem;
   width: 100px;
   text-align: center;
   border: none;

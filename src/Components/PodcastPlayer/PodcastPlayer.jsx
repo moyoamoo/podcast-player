@@ -6,6 +6,8 @@ import {
   selectPlayButton,
   setIsLoading,
   setCurrentlyPlaying,
+  selectIsClicked,
+  setIsClicked,
 } from "../../redux/playerSlice";
 import PodcastPlayerDescription from "./PodcastPlayerDescription";
 import Controls from "./Controls";
@@ -33,27 +35,53 @@ const PodcastPlayer = () => {
   const [lastClick, setLastClick] = useState(Date.now());
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  const isClicked = useSelector(selectIsClicked);
 
-  //add genres to database
- 
-  // useEffect(() => {
-  //   if (readyState && playButton && lastClick > 5000) {
-  //     audioRef.current.play();
-  //     setIsPlaying(true);
-  //   } else if (readyState) {
-  //     audioRef.current.pause();
-  //     setIsPlaying(false);
+
+  useEffect(() => {
+    console.log(isClicked)
+    if (isClicked &&  lastClick > 5000) {
+        audioRef.current.play();
+        setIsPlaying(true);
+      } else if (readyState) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+      console.log(isClicked)
+
+  }, [audioRef, isClicked]);
+
+  
+
+  useEffect(() => {
+    if (!queue) {
+      return;
+    }
+
+    dispatch(setCurrentlyPlaying(queue[queueIndex].uuid));
+  }, [queue, queueIndex]);
+
+  // useEffect(()=>{
+  //   if(isClicked){
+  //     audioRef.curr
   //   }
-  // }, [playButton, readyState, audioRef]);
+
+  // }, [isClicked])
 
   useEffect(() => {
     const _elapsed = Math.round(elapsed);
     if (_elapsed === previousElapsed) {
       return;
     }
-    updateServerDuration(_elapsed, audioRef.current.duration, queue, queueIndex);
+    updateServerDuration(
+      _elapsed,
+      audioRef.current.duration,
+      queue,
+      queueIndex
+    );
     setPreviousElpased(_elapsed);
   }, [elapsed]);
+
 
   const getListenedData = async () => {
     try {
@@ -75,7 +103,6 @@ const PodcastPlayer = () => {
       console.log(e);
     }
   };
-
   const setProgressDuration = () => {
     if (audioRef.current.currentTime) {
       const progress = Math.round(
@@ -140,7 +167,7 @@ const PodcastPlayer = () => {
             }}
             onPlay={() => {
               getListenedData();
-              dispatch(setCurrentlyPlaying(queue[queueIndex].uuid));
+              setIsPlaying(true);
             }}
           ></audio>
           <Controls

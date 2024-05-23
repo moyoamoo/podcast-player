@@ -8,7 +8,7 @@
 
 .accountForm {
   margin-top: 10rem;
-  width: 70vw;
+  width: 80vw;
   height: 60vh;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 9);
   background-color: #242423;
@@ -73,6 +73,7 @@ form {
   flex-direction: column;
   width: 100%;
   height: 11vh;
+  margin-bottom: 22px;
 
   button {
     background-color: #ccef4d;
@@ -175,5 +176,25 @@ form {
     &:hover {
       background-color: #c76664;
     }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .accountForm {
+    width: 60%;
+  }
+}
+
+
+@media only screen and (min-width: 991px) {
+  .accountForm {
+    width: 40%;
+  }
+}
+
+
+@media only screen and (min-width: 1500px) {
+  .accountForm {
+    width: 30%;
   }
 }

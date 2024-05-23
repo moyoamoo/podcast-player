@@ -30,7 +30,6 @@ const Episode = ({ episode, podcast }) => {
           <EpisodeName name={episode.name} />
         </div>
         <AudioContextProvider>
-          {" "}
           <EpisodePlayBtn episodePod={episodePod} />
         </AudioContextProvider>
       </div>

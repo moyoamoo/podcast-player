@@ -3,7 +3,6 @@ import { getPodcastData } from "../../apiRequests/PodcastData/getPodcastData";
 import { setIsLoading } from "../../redux/podcastSlice";
 
 const SearchBtn = ({ searchTerm }) => {
-  console.log(searchTerm);
   const dispatch = useDispatch();
   return (
     <>

@@ -10,6 +10,7 @@ const defaultState = {
   queue: [],
   currentlyPlaying: "",
   isPlaying: false,
+  isCLicked: false,
 };
 
 const initialState = diskData ? diskData : defaultState;
@@ -58,6 +59,11 @@ export const playerSlice = createSlice({
       state.isPlaying = { payload };
       saveStore("player", state);
     },
+
+    setIsClicked: (state, { payload }) => {
+      state.isClicked = { payload };
+      saveStore("player", state);
+    },
   },
 });
 
@@ -69,6 +75,7 @@ export const {
   setIsLoading,
   setIsPlaying,
   setCurrentlyPlaying,
+  setIsClicked,
 } = playerSlice.actions;
 
 export const selectQueue = (state) => state.player.queue;
@@ -76,5 +83,6 @@ export const selectIsLoading = (state) => state.player.isLoading;
 export const selectPlayButton = (state) => state.player.playButton;
 export const selectIsPlaying = (state) => state.player.isPlaying;
 export const selectCurrentlyPlaying = (state) => state.player.currentlyPlaying;
+export const selectIsClicked = (state) => state.player.isClicked;
 
 export default playerSlice.reducer;
