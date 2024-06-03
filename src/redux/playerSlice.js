@@ -12,6 +12,7 @@ const defaultState = {
   isPlaying: false,
   isCLicked: false,
   episodeReadyState: 0,
+  lastClicked: Date.now(),
 };
 
 const initialState = diskData ? diskData : defaultState;
@@ -52,22 +53,28 @@ export const playerSlice = createSlice({
     },
 
     setCurrentlyPlaying: (state, { payload }) => {
-      state.currentlyPlaying = { payload };
+      state.currentlyPlaying = payload;
+      console.log(state.currentlyPlaying);
       saveStore("player", state);
     },
 
     setIsPlaying: (state, { payload }) => {
-      state.isPlaying = { payload };
+      state.isPlaying = payload;
       saveStore("player", state);
     },
 
     setIsClicked: (state, { payload }) => {
-      state.isClicked = { payload };
+      state.isClicked = payload;
       saveStore("player", state);
     },
 
     setEpisodeReadyState: (state, { payload }) => {
-      state.episodeReadyState = { payload };
+      state.episodeReadyState = payload;
+      saveStore("player", state);
+    },
+
+    setLastClicked: (state, { payload }) => {
+      state.lastClicked = payload;
       saveStore("player", state);
     },
   },
@@ -83,6 +90,7 @@ export const {
   setCurrentlyPlaying,
   setIsClicked,
   setEpisodeReadyState,
+  setLastClicked
 } = playerSlice.actions;
 
 export const selectQueue = (state) => state.player.queue;
@@ -93,5 +101,6 @@ export const selectCurrentlyPlaying = (state) => state.player.currentlyPlaying;
 export const selectIsClicked = (state) => state.player.isClicked;
 export const selectEpisodeReadyState = (state) =>
   state.player.episodeReadyState;
+export const selectLastClicked = (state) => state.player.lastClicked;
 
 export default playerSlice.reducer;

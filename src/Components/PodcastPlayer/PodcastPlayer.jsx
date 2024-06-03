@@ -26,7 +26,7 @@ const PodcastPlayer = () => {
   let [queueIndex, setQueueIndex] = useState(0);
   const playButton = useSelector(selectPlayButton);
   const [buffered, setBuffered] = useState(0);
-  const [readyState, setReadyState] = useState(false);
+  const [readyState, setReadyState] = useState(0);
   const [podDuration, setPodDuration] = useState("00:00:00");
   const [elapsed, setElapsed] = useState(0);
   const [previousElapsed, setPreviousElpased] = useState(0);
@@ -39,21 +39,21 @@ const PodcastPlayer = () => {
   const isClicked = useSelector(selectIsClicked);
 
 
-  useEffect(() => {
-    if (readyState && playButton && lastClick > 5000) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else if (readyState) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    }
-  }, [playButton, readyState, audioRef]);
+  // useEffect(() => {
+  //   if (readyState && playButton && lastClick > 5000) {
+  //     audioRef.current.play();
+  //     setIsPlaying(true);
+  //   } else if (readyState) {
+  //     audioRef.current.pause();
+  //     setIsPlaying(false);
+  //   }
+  // }, [playButton, readyState, audioRef]);
 
   useEffect(() => {
-    if (!queue) {
+    if (!queue.length) {
       return;
     }
-
+    console.log("ran")
     dispatch(setCurrentlyPlaying(queue[queueIndex].uuid));
   }, [queue, queueIndex]);
 
@@ -146,7 +146,8 @@ const PodcastPlayer = () => {
               }
             }}
             onCanPlay={(e) => {
-              setReadyState(true);
+              setReadyState(e.currentTarget.readyState);
+              console.log(readyState)
               dispatch(setIsLoading(false));
               dispatch(setEpisodeReadyState(e.currentTarget.readyState))
               setGenreDuration(Math.round(e.currentTarget.duration * 0.1));
@@ -161,9 +162,10 @@ const PodcastPlayer = () => {
                 queueIndex = 0;
               }
             }}
-            onPlay={() => {
+            onPlay={(e) => {
               getListenedData();
               setIsPlaying(true);
+              dispatch(setEpisodeReadyState(e.currentTarget.readyState))
             }}
           ></audio>
           <Controls

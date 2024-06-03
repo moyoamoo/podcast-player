@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
 import { selectEpisodeReadyState, setIsLoading } from "../../redux/playerSlice";
@@ -10,24 +10,34 @@ const PlayButton = forwardRef(function PlayButton(
 ) {
   const episodeReadyState = useSelector(selectEpisodeReadyState);
   const togglePlay = () => {
-    if (isPlaying && readyState) {
-      audioRef.current.pause();
-    } else {
+    //   audioRef.current.pause();
+    //   setIsPlaying(!isPlaying);
+    // } else if (!isPlaying && !readyState) {
+    //   audioRef.current.play();
+    //   setIsPlaying(!isPlaying);
+    if (
+      audioRef.current.paused &&
+      !audioRef.current.ended &&
+      audioRef.current.readyState > 2
+    ) {
       audioRef.current.play();
+      setIsPlaying(true);
+    } else {
+      audioRef.current.pause();
+      setIsPlaying(false);
     }
-    setIsPlaying(!isPlaying);
   };
+
 
   return (
     <>
       <button className="playBtn">
-        {!readyState || !episodeReadyState || episodeReadyState <= 3 ? (
+        {readyState <= 2 ? (
           <div className="pulsing"></div>
         ) : (
           <div
             onClick={() => {
               togglePlay();
-              console.log(audioRef.current.readyState);
             }}
           >
             {isPlaying ? <FaPause /> : <FaPlay />}

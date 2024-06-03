@@ -5,11 +5,13 @@ import { FaPause } from "react-icons/fa6";
 import {
   getEpisode,
   selectCurrentlyPlaying,
+  selectEpisodeReadyState,
   selectIsLoading,
   selectIsPlaying,
+  selectLastClicked,
   setEpisodeReadyState,
   setIsClicked,
-  setIsPlaying,
+  setLastClicked,
 } from "../../redux/playerSlice";
 import { FaPlay } from "react-icons/fa6";
 import {
@@ -20,6 +22,8 @@ import {
 import playingGif from "../CSS/assets/playing.gif";
 
 import { useAudioContext } from "../PodcastPlayer/AudioContext";
+import { isPlain } from "@reduxjs/toolkit";
+import { set } from "lodash";
 
 // const EpisodePlayBtn = ({ episodePod }) => {
 //   const queue = useSelector(selectQueue);
@@ -51,29 +55,73 @@ import { useAudioContext } from "../PodcastPlayer/AudioContext";
 
 const EpisodePlayBtn = ({ episodePod }) => {
   const queue = useSelector(selectQueue);
-  const isLoading = useSelector(selectIsLoading);
+  // const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   const audioRef = useAudioContext();
-
+  const [isPlaying, setIsPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
   const currentPlaying = useSelector(selectCurrentlyPlaying);
-  const [lastClick, setLastClick] = useState(Date.now());
+  const lastClick = useSelector(selectLastClicked);
+  const isLoading = useSelector(selectIsLoading);
+  const episodeReadyState = useSelector(selectEpisodeReadyState);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      return;
+    }
+    if (currentPlaying != episodePod.uuid) {
+      setIsPlaying(false);
+    } else if (audioRef.current.paused) {
+      setIsPlaying(false);
+    } else {
+      setIsPlaying(true);
+    }
+  }, [queue, audioRef]);
 
   return (
     <>
+      {/* {!isLoading ? (
+        <button
+          disabled={isPlaying ? true : false}
+          onClick={() => {
+            dispatch(getEpisode(episodePod));
+            dispatch(setIsLoading(true));
+            audioRef.current.load();
+            let playPromise = audioRef.current.play();
+            dispatch(setLastClicked(Date.now()));
+            if (
+              playPromise !== undefined &&
+              isLoading <= 3 &&
+              lastClick > 5000
+            ) {
+              playPromise
+                .then((_) => {
+                  audioRef.current.play();
+                })
+                .catch((e) => {
+                  console.log(playPromise);
+                  console.log(e);
+                });
+            }
+          }}
+        >
+          {isPlaying ? <img src={playingGif} /> : <FaPlay />}
+        </button>
+      ) : null} */}
       <button
         onClick={() => {
           dispatch(getEpisode(episodePod));
+          if (audioRef.current.readyState !== 4) {
+            audioRef.current.load();
+          }
           let playPromise = audioRef.current.play();
-
-          if (playPromise !== undefined && lastClick > 5000) {
+          if (playPromise !== undefined) {
             playPromise
               .then((_) => {
                 audioRef.current.play();
-                // dispatch(setIsPlaying(true));
-                // dispatch(setEpisodeReadyState(audioRef.current.readyState));
               })
               .catch((e) => {
+                console.log(playPromise);
                 console.log(e);
               });
           }
